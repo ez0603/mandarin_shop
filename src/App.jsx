@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   return (
     <div>
-      히이
+      히이ㄴ
     </div>
   );
 }
