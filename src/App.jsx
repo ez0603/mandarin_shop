@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   return (
     <div>
-      하이dyfsd
+      하이
     </div>
   );
 }
