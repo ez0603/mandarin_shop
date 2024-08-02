@@ -4,7 +4,7 @@ import './App.css';
 function App() {
   return (
     <div>
-      gdd
+      하이
     </div>
   );
 }
