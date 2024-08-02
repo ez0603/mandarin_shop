@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/mandarin_shop/static/css/main.f855e6bc.css",
-    "main.js": "/mandarin_shop/static/js/main.ef5c95b4.js",
+    "main.js": "/mandarin_shop/static/js/main.c6307cd3.js",
     "static/js/453.37d99d71.chunk.js": "/mandarin_shop/static/js/453.37d99d71.chunk.js",
     "index.html": "/mandarin_shop/index.html",
     "main.f855e6bc.css.map": "/mandarin_shop/static/css/main.f855e6bc.css.map",
-    "main.ef5c95b4.js.map": "/mandarin_shop/static/js/main.ef5c95b4.js.map",
+    "main.c6307cd3.js.map": "/mandarin_shop/static/js/main.c6307cd3.js.map",
     "453.37d99d71.chunk.js.map": "/mandarin_shop/static/js/453.37d99d71.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f855e6bc.css",
-    "static/js/main.ef5c95b4.js"
+    "static/js/main.c6307cd3.js"
   ]
 }
