@@ -1,14 +1,14 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import TermsAndConditions from './TACPage/TACPage'
-import AdminInfo from './AdminInfoPage/AdminInfoPage'
+import AdminInfoPage from './AdminInfoPage/AdminInfoPage'
 
 function SignupPage() {
     return (
         <>
             <Routes>
                 <Route path='/TAC' element={<TermsAndConditions/>} />
-                <Route path='/adminInfo' element={<AdminInfo/>} />
+                <Route path='/adminInfo' element={<AdminInfoPage/>} />
             </Routes>
         </>
     )

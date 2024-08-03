@@ -10,7 +10,7 @@ export const layout = css`
 
 export const container = css`
   width: 85%;
-  height: 100%;
+  height: 180px;
   display: flex;
   flex-direction: column;
   align-items: center;

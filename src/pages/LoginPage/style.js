@@ -11,7 +11,7 @@ export const loginLayout = css`
 export const loginContainer = css`
   box-sizing: border-box;
   width: 30%;
-  height: 55%;
+  height: 65%;
   /* background-color: white; */
   display: flex;
   flex-direction: column;
