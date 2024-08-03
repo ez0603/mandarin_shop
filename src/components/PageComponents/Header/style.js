@@ -2,40 +2,20 @@ import { css } from "@emotion/react";
 
 export const layout = css`
   position: relative;
-  min-width: 100%; //모니터 기준
-  height: 100px;
+  width: 100%;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 export const container = css`
-  width: 95%;
+  width: 85%;
   height: 100%;
-  background-color: orange;
+  /* background-color: orange; */
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-`;
-
-export const list = css`
-  width: 43%;
-  list-style-type: none;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0;
-  margin: 0;
-  /* background-color: aqua; */
-
-  li {
-    cursor: pointer;
-  }
-`;
-
-export const listItem = css`
-  padding: 10px;
 `;
 
 export const logoLayout = css`
@@ -56,15 +36,53 @@ export const logoLayout = css`
 `;
 
 export const mypageLayout = css`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+`;
+
+export const icon = css`
   width: 20%;
   height: 100%;
-  margin-right: 20px;
   display: flex;
   align-items: center;
   justify-content: space-around;
   /* background-color: aqua; */
-  
-  svg, p {
-      cursor: pointer;
+
+  svg,
+  p {
+    cursor: pointer;
   }
+`;
+
+export const category = css`
+  width: 80%;
+  height: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  /* background-color: aqua; */
+`;
+
+export const list = css`
+  width: 100%;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+  /* background-color: aqua; */
+
+  li {
+    cursor: pointer;
+  }
+`;
+
+export const listItem = css`
+  padding: 10px;
+  margin-bottom: 10px;
 `;

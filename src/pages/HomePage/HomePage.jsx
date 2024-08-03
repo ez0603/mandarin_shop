@@ -1,11 +1,10 @@
-import Header from "../../components/PageComponents/Header/Header";
-import PageLayout from "../../components/PageComponents/PageLayout/PageLayout";
+/**@jsxImportSource @emotion/react */
+// import * as s from "./style";
 
 function HomePage(props) {
   return (
-    <PageLayout>
-      <Header />
-    </PageLayout>
+    <>
+    </>
   );
 }
 
