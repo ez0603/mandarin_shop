@@ -48,6 +48,7 @@ export const textarea = (isShow) => css`
   margin-top: 20px;
   padding: 0;
   width: 100%;
+  border-radius: 10px;
   height: ${isShow ? "170px" : "0px"};
   visibility: ${isShow ? "visible" : "hidden"};
   opacity: ${isShow ? "1" : "0"};
@@ -66,6 +67,7 @@ export const textarea = (isShow) => css`
   &::-webkit-scrollbar-thumb {
     background: rgba(173, 173, 173, 1); 
     border-radius: 5px; 
+    height: 60px;
   }
 
   &::-webkit-scrollbar-track {

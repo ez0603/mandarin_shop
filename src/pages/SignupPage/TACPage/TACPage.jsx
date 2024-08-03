@@ -6,7 +6,6 @@ import { agreedState } from "../../../atoms/agreedStateAtom";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Agreement from "../../../components/AuthPage/Agreement/Agreement";
 import { marketingTerms, serviceTerms } from "./terms";
-import { IoIosArrowBack } from "react-icons/io";
 
 function TACPage() {
   const [agreed, setAgreed] = useRecoilState(agreedState);
@@ -49,7 +48,6 @@ function TACPage() {
 
   return (
     <div css={s.pageLayout}>
-        <button onClick={handleClick} css={s.backButton}><IoIosArrowBack size={"40"}/></button>
       <div css={s.header}>
         <h1>약관동의</h1>
       </div>
@@ -87,7 +85,7 @@ function TACPage() {
         </div>
         <div css={s.buttonBox}>
           <button onClick={handleNextClick} css={s.button(isAgreedRequired)}>
-            다음
+            동의 후 넘어가기
           </button>
         </div>
       </div>

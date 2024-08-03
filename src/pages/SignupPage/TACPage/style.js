@@ -13,55 +13,49 @@ export const pageLayout = css`
   /* background-color: aqua; */
 `;
 
-export const backButton = css`
-position: fixed;
-top: 60px;
-left: 140px;
-background-color: transparent;
-border: none;
-`
-
 export const header = css`
   width: 100%;
-  height: 20%;
+  height: 15%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: end;
+  justify-content: center;
+  /* background-color: aqua; */
 
   & h1 {
     margin: 0;
   }
 `;
 export const pageContainer = css`
-  width: 100%;
-  height: auto;
+  width: 60%;
+  height: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
   overflow: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  
-  /* background-color: aqua; */
+  border: 1px solid #dbdbdb;
+  background-color: #f3f3f3;
+  border-radius: 20px;
 `;
 export const agreeBox = css`
   width: 100%;
-  height: 500px;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   overflow: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
 `;
 export const container = css`
   width: 90%;
-  height: auto;
+  height: 90%;
   background-color: transparent;
-  overflow: scroll;
+  overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
   display: flex;
@@ -69,8 +63,7 @@ export const container = css`
   justify-content: center;
 `;
 export const agree = css`
-width: 70%;
-padding: 20px 0;
+width: 100%;
 `;
 
 export const buttonBox = css`
@@ -78,9 +71,8 @@ export const buttonBox = css`
     display: flex;
     align-items: center;
     justify-content: end;
-    width: 70%;
-    /* height: 15%; */
-    margin-top: 15px;
+    width: 90%;
+    margin-bottom: 30px;
 `;
 
 export const button  = (agreed) => css`
