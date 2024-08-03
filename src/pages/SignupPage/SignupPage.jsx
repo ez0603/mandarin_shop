@@ -1,18 +1,17 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import TermsAndConditions from './TACPage/TACPage'
-import AdminInfoPage from './AdminInfoPage/AdminInfoPage'
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import TermsAndConditions from "./TACPage/TACPage";
+import UserInfoPage from "./UserInfoPage/UserInfoPage";
 
 function SignupPage() {
-    return (
-        <>
-            <Routes>
-                <Route path='/TAC' element={<TermsAndConditions/>} />
-                <Route path='/adminInfo' element={<AdminInfoPage/>} />
-            </Routes>
-        </>
-    )
+  return (
+    <>
+      <Routes>
+        <Route path="/agreement" element={<TermsAndConditions />} />
+        <Route path="/userInfo" element={<UserInfoPage />} />
+      </Routes>
+    </>
+  );
 }
 
-export default SignupPage
-
+export default SignupPage;

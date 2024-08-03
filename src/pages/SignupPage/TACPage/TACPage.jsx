@@ -16,9 +16,6 @@ function TACPage() {
     "만 14세 이상 동의 (필수)": false,
     전체동의: false,
   });
-  const [searchParams] = useSearchParams();
-  const oAuth2Name = searchParams.get("name");
-  const provider = searchParams.get("provider");
   const navigator = useNavigate();
 
   useEffect(() => {
@@ -37,14 +34,9 @@ function TACPage() {
       alert("필수 항목에 동의해야 합니다.");
       return;
     } else {
-      navigator("/auth/signup/adminInfo");
+      navigator("/auth/signup/userInfo");
     }
   };
-
-  const handleClick = () => {
-    navigator("/auth/signin");
-  };
-
 
   return (
     <div css={s.pageLayout}>

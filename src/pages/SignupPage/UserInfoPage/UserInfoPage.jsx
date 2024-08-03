@@ -17,8 +17,8 @@ const formatTime = (time) => {
   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 };
 
-function AdminInfoPage() {
-  const [adminName, adminNameChange, adminNameMessage] = useInput("adminName");
+function UserInfoPage() {
+  const [customerName, customerNameChange, customerNameMessage] = useInput("customerName");
   const [
     username,
     userNameChange,
@@ -31,22 +31,19 @@ function AdminInfoPage() {
   const [checkPasswordMessage, setCheckPasswordMessage] = useState(null);
   const [email, emailChange, emailMessage] = useInput("email");
   const [
-    companyNumberST,
-    companyNumberChange,
-    companyNumberMessage,
+    phone,
+    phoneChange,
+    phoneMessage,
     setCompanyNumberValue,
-    setCompanyNumberMessage,
-  ] = useInput("companyNumber");
-  const [companyName, companyNameChange, companyNameMessage] =
-    useInput("companyName");
-  const [ownerName, ownerNameChange, ownerNameMessage] = useInput("ownerName");
+    setPhoneMessage,
+  ] = useInput("phone");
   const [
-    companyAddress,
-    companyAddressChange,
-    companyAddressMessage,
+    address,
+    addressChange,
+    addressMessage,
     setCompanyAddressValue,
-    setCompanyAddressMessage,
-  ] = useInput("companyAddress");
+    setAddressMessage,
+  ] = useInput("address");
   const [authCode, authCodeChange, authCodeMessage] = useInput("authCode");
 
   const [emailButton, setEmailButton] = useState(false);
@@ -60,7 +57,7 @@ function AdminInfoPage() {
   // 모든 필드가 채워졌는지 확인하는 함수
   const allFieldsFilled = () => {
     return (
-      adminName && username && password && checkPassword && email && authCode
+      customerName && username && password && checkPassword && email && authCode
     );
   };
 
@@ -125,9 +122,11 @@ function AdminInfoPage() {
     onSuccess: (response) => {
       setSecond(() => 180);
       setIsEmailAuthCode(() => true);
+      alert("인증 코드가 전송되었습니다. 이메일을 확인해주세요.");
     },
     onError: (error) => {
       console.log(error);
+      alert("인증 코드 전송에 실패했습니다. 다시 시도해주세요.");
     },
   });
 
@@ -162,15 +161,13 @@ function AdminInfoPage() {
       usernameMessage?.type,
       passwordMessage?.type,
       checkPasswordMessage?.type,
-      adminNameMessage?.type,
+      customerNameMessage?.type,
       emailMessage?.type,
       authCodeMessage?.type,
     ];
 
     if (
-      checkFlags.includes("error") ||
-      checkFlags.includes(undefined) ||
-      checkFlags.includes(null)
+      checkFlags.includes("error")
     ) {
       alert("가입 정보를 다시 확인하세요.");
       return;
@@ -186,38 +183,30 @@ function AdminInfoPage() {
   // 회원가입 버튼
   const handleSignupSubmit = () => {
     const checkFlags = [
-      companyNumberMessage?.type,
-      companyNameMessage?.type,
-      ownerNameMessage?.type,
-      companyAddressMessage?.type,
+      phoneMessage?.type,
+      addressMessage?.type,
     ];
 
     if (
-      checkFlags.includes("error") ||
-      checkFlags.includes(undefined) ||
-      checkFlags.includes(null)
+      checkFlags.includes("error") 
     ) {
       alert("매장 정보를 다시 확인하세요.");
       return;
     }
 
-    let companyNumber = parseInt(companyNumberST);
-
     adminSignupRequest({
-      adminName,
+      customerName,
       username,
       password,
       email,
-      companyNumber,
-      companyName,
-      ownerName,
-      companyAddress,
+      phone: parseInt(phone),
+      address,
     })
       .then((response) => {
         console.log(response);
         if (response.status === 201) {
           alert("회원가입이 완료되었습니다. 로그인 해주세요.");
-          // navigate("/auth/signin");
+          navigate("/auth/login");
         }
       })
       .catch((error) => {
@@ -233,15 +222,15 @@ function AdminInfoPage() {
                   text: v,
                 };
               });
-            } else if (k === "companyNumber") {
-              setCompanyNumberMessage(() => {
+            } else if (k === "phoneNumber") {
+              setPhoneMessage(() => {
                 return {
                   type: "error",
                   text: v,
                 };
               });
-            } else if (k === "companyAddress") {
-              setCompanyAddressMessage(() => {
+            } else if (k === "address") {
+              setAddressMessage(() => {
                 return {
                   type: "error",
                   text: v,
@@ -253,10 +242,6 @@ function AdminInfoPage() {
           alert("회원가입 오류");
         }
       });
-  };
-
-  const handleClick = () => {
-    navigate("/auth/signin");
   };
 
   return (
@@ -271,11 +256,11 @@ function AdminInfoPage() {
               <div css={s.inputContainer}>
                 <AuthPageInput
                   type={"text"}
-                  name={"adminName"}
+                  name={"customerName"}
                   placeholder={"성명"}
-                  value={adminName}
-                  onChange={adminNameChange}
-                  message={adminNameMessage}
+                  value={customerName}
+                  onChange={customerNameChange}
+                  message={customerNameMessage}
                 />
                 <AuthPageInput
                   type={"text"}
@@ -300,22 +285,6 @@ function AdminInfoPage() {
                   value={checkPassword}
                   onChange={checkPasswordChange}
                   message={checkPasswordMessage}
-                />
-                <AuthPageInput
-                  type={"text"}
-                  name={"email"}
-                  placeholder={"이메일"}
-                  value={email}
-                  onChange={emailChange}
-                  message={emailMessage}
-                />
-                <AuthPageInput
-                  type={"text"}
-                  name={"email"}
-                  placeholder={"이메일"}
-                  value={email}
-                  onChange={emailChange}
-                  message={emailMessage}
                 />
                 <AuthPageInput
                   type={"text"}
@@ -364,11 +333,11 @@ function AdminInfoPage() {
               <div>
                 <AuthPageInput
                   type={"text"}
-                  name={"adminName"}
+                  name={"customerName"}
                   placeholder={"성명"}
-                  value={adminName}
-                  onChange={adminNameChange}
-                  message={adminNameMessage}
+                  value={customerName}
+                  onChange={customerNameChange}
+                  message={customerNameMessage}
                   disabled
                 />
                 <AuthPageInput
@@ -399,24 +368,6 @@ function AdminInfoPage() {
                   disabled
                 />
                 <AuthPageInput
-                  type={"password"}
-                  name={"checkPassword"}
-                  placeholder={"비밀번호 확인"}
-                  value={checkPassword}
-                  onChange={checkPasswordChange}
-                  message={checkPasswordMessage}
-                  disabled
-                />
-                <AuthPageInput
-                  type={"password"}
-                  name={"checkPassword"}
-                  placeholder={"비밀번호 확인"}
-                  value={checkPassword}
-                  onChange={checkPasswordChange}
-                  message={checkPasswordMessage}
-                  disabled
-                />
-                <AuthPageInput
                   type={"text"}
                   name={"email"}
                   placeholder={"이메일"}
@@ -430,35 +381,19 @@ function AdminInfoPage() {
               <div>
                 <AuthPageInput
                   type={"number"}
-                  name={"companyNumber"}
-                  placeholder={"사업자등록번호"}
-                  value={companyNumberST}
-                  onChange={companyNumberChange}
-                  message={companyNumberMessage}
+                  name={"phone"}
+                  placeholder={"휴대폰번호"}
+                  value={phone}
+                  onChange={phoneChange}
+                  message={phoneMessage}
                 />
                 <AuthPageInput
                   type={"text"}
-                  name={"companyName"}
-                  placeholder={"매장명"}
-                  value={companyName}
-                  onChange={companyNameChange}
-                  message={companyNameMessage}
-                />
-                <AuthPageInput
-                  type={"text"}
-                  name={"ownerName"}
-                  placeholder={"대표자명"}
-                  value={ownerName}
-                  onChange={ownerNameChange}
-                  message={ownerNameMessage}
-                />
-                <AuthPageInput
-                  type={"text"}
-                  name={"companyAddress"}
+                  name={"address"}
                   placeholder={"사업장 주소"}
-                  value={companyAddress}
-                  onChange={companyAddressChange}
-                  message={companyAddressMessage}
+                  value={address}
+                  onChange={addressChange}
+                  message={addressMessage}
                 />
               </div>
 
@@ -477,4 +412,4 @@ function AdminInfoPage() {
   );
 }
 
-export default AdminInfoPage;
+export default UserInfoPage;

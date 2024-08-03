@@ -59,6 +59,6 @@ export const inputMessage = (type) => css`
   padding: 0;
   width: 100%;
   color: ${type === "error" ? "#ff6161" : "#00921b"};
-  font-size: 20px;
+  font-size: 12px;
   font-weight: 600;
 `;

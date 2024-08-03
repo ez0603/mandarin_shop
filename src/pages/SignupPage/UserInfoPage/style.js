@@ -4,18 +4,17 @@ export const layout = css`
   width: 100%;
   height: 100%;
   position: relative;
-  top: 50px;
   
-  &::after {
+  /* &::after {
     content: '';
     display: block;
-    height: 50px; /* 원하는 여유 공간 크기 */
-  }
+    height: 50px; 
+  } */
 `;
 
 export const container = css`
   width: 100%;
-  height: 100%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,7 +30,6 @@ export const containerBox = css`
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  border: 1px solid #dbdbdb;
 `;
 
 export const header = css`
