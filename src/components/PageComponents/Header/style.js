@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 export const layout = css`
   position: relative;
   width: 100%;
-  height: 150px;
+  height: 170px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,6 +23,7 @@ export const logoLayout = css`
   height: 100px;
   position: fixed;
   left: 45%;
+  top: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,5 +85,7 @@ export const list = css`
 
 export const listItem = css`
   padding: 10px;
+  padding-top: 0;
   margin-bottom: 10px;
+  /* background-color: aqua; */
 `;

@@ -5,7 +5,7 @@ function LoginPage(props) {
   return (
     <div css={s.layout}>
       <div css={s.container}>
-        <h1>로그인</h1>
+        <h1>LogIn</h1>
       </div>
     </div>
   );
