@@ -1,12 +1,12 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import LoginPage from "../pages/LoginPage/LoginPage";
 import { authState } from "../atoms/authAtom";
 import AdminRouter from "./AdminRouter";
 import UserRouter from "./UserRouter";
 import HomePage from "../pages/HomePage/HomePage";
 import Header from "../components/PageComponents/Header/Header";
 import PageLayout from "../components/PageComponents/PageLayout/PageLayout";
+import AuthRoute from "./AuthRoute";
 
 function HomeRoute(props) {
   const auth = useRecoilValue(authState);
@@ -17,7 +17,7 @@ function HomeRoute(props) {
       <PageLayout>
         <Header />
         <Routes>
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/auth/*" element={<AuthRoute />} />
           <Route path="*" element={<HomePage />} />
         </Routes>
       </PageLayout>
@@ -32,7 +32,6 @@ function HomeRoute(props) {
       ) : (
         <Route path="/*" element={<UserRouter />} />
       )}
-      <Route path="/login" element={<LoginPage />} />
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );

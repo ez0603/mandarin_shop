@@ -38,7 +38,7 @@ function Header(props) {
     if (auth.principal) {
       navigate("/myPage");
     } else {
-      navigate("/login");
+      navigate("/auth/login");
     }
   };
 
