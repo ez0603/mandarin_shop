@@ -1,4 +1,3 @@
-import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import LoginPage from '../pages/LoginPage/LoginPage';
@@ -14,7 +13,6 @@ function HomeRoute(props) {
     if (!principal) {
         return (
             <Routes>
-                
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="*" element={<HomePage />} />
             </Routes>
