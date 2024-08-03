@@ -186,14 +186,12 @@ function UserInfoPage() {
       phoneMessage?.type,
       addressMessage?.type,
     ];
-
-    if (
-      checkFlags.includes("error") 
-    ) {
+  
+    if (checkFlags.includes("error")) {
       alert("매장 정보를 다시 확인하세요.");
       return;
     }
-
+  
     adminSignupRequest({
       customerName,
       username,
@@ -210,40 +208,18 @@ function UserInfoPage() {
         }
       })
       .catch((error) => {
-        if (error.response.status === 400) {
-          const errorMap = error.response.data;
-          const errorEntries = Object.entries(errorMap);
-          console.log(errorMap);
-          for (let [k, v] of errorEntries) {
-            if (k === "username") {
-              setUsernameMessage(() => {
-                return {
-                  type: "error",
-                  text: v,
-                };
-              });
-            } else if (k === "phoneNumber") {
-              setPhoneMessage(() => {
-                return {
-                  type: "error",
-                  text: v,
-                };
-              });
-            } else if (k === "address") {
-              setAddressMessage(() => {
-                return {
-                  type: "error",
-                  text: v,
-                };
-              });
-            }
+        if (error.response) {
+          if (error.response.status === 409) { // Conflict status code for duplicate entries
+            alert("회원가입 실패: " + (error.response.data.message || JSON.stringify(error.response.data)));
+          } else {
+            alert("회원가입 오류: " + (error.response.data.message || JSON.stringify(error.response.data)));
           }
         } else {
-          alert("회원가입 오류");
+          alert("회원가입 오류: 서버와의 통신에 실패했습니다.");
         }
       });
   };
-
+  
   return (
     <div css={s.layout}>
       <div css={s.container}>
@@ -330,7 +306,7 @@ function UserInfoPage() {
             </>
           ) : (
             <>
-              <div>
+              <div css={s.nextInput}>
                 <AuthPageInput
                   type={"text"}
                   name={"customerName"}
@@ -378,7 +354,7 @@ function UserInfoPage() {
                 />
               </div>
 
-              <div>
+              <div css={s.nextInput}>
                 <AuthPageInput
                   type={"number"}
                   name={"phone"}
@@ -390,7 +366,7 @@ function UserInfoPage() {
                 <AuthPageInput
                   type={"text"}
                   name={"address"}
-                  placeholder={"사업장 주소"}
+                  placeholder={"주소"}
                   value={address}
                   onChange={addressChange}
                   message={addressMessage}
