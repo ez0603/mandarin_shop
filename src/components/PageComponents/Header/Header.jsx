@@ -15,11 +15,10 @@ function Header(props) {
   const auth = useRecoilValue(authState);
   const navigate = useNavigate();
 
-  const categoryQuery = useQuery(["categoryQuery"], searchAllCategoryRequest, {
+  useQuery(["categoryQuery"], searchAllCategoryRequest, {
     onSuccess: (response) => {
       setCategories(() =>
         response.data.map((category) => {
-          console.log(response.data);
           return {
             value: category.categoryId,
             label: category.categoryName,
@@ -42,16 +41,14 @@ function Header(props) {
     }
   };
 
-  console.log(categories);
-
   return (
     <div css={s.layout}>
       <div css={s.container}>
-        <div css={s.logoLayout}>
-          <img src={logo} alt="" />
-        </div>
-        <div css={s.mypageLayout}>
-          <div css={s.icon}>
+        <div css={s.headerContent}>
+          <div css={s.logoLayout}>
+            <img src={logo} alt="Logo" />
+          </div>
+          <div css={s.mypageLayout}>
             <p>Manager</p>
             <GoPerson size={30} onClick={handleIconClick} />
             <MdOutlineShoppingBag size={30} />

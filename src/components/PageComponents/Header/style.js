@@ -12,48 +12,45 @@ export const layout = css`
 export const container = css`
   width: 85%;
   height: 100%;
-  /* background-color: orange; */
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
 `;
 
-export const logoLayout = css`
-  width: 180px;
-  height: 100px;
-  position: fixed;
-  left: 45%;
-  top: 15px;
+export const headerContent = css`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: aqua; */
+  position: relative;
+  margin-top: 30px;
+`;
+
+export const logoLayout = css`
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   img {
-    margin-top: 10px;
     width: 170px;
     height: 140px;
   }
 `;
 
 export const mypageLayout = css`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: end;
-`;
-
-export const icon = css`
   width: 20%;
-  height: 100%;
+  margin-left: auto;
   display: flex;
-  align-items: center;
   justify-content: space-around;
-  /* background-color: aqua; */
+  align-items: center;
 
-  svg,
-  p {
+  p,
+  svg {
+    margin-left: 10px;
     cursor: pointer;
   }
 `;
@@ -63,8 +60,7 @@ export const category = css`
   height: 30%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  /* background-color: aqua; */
+  
 `;
 
 export const list = css`
@@ -73,10 +69,9 @@ export const list = css`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  gap: 50px;
   padding: 0;
   margin: 0;
-  /* background-color: aqua; */
 
   li {
     cursor: pointer;
@@ -85,7 +80,4 @@ export const list = css`
 
 export const listItem = css`
   padding: 10px;
-  padding-top: 0;
-  margin-bottom: 10px;
-  /* background-color: aqua; */
 `;
