@@ -1,7 +1,6 @@
 import { css } from "@emotion/react";
 
 export const layout = css`
-  position: relative;
   width: 100%;
   height: 180px;
   display: flex;

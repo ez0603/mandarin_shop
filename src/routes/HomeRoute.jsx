@@ -14,13 +14,17 @@ function HomeRoute(props) {
 
   if (!principal) {
     return (
-      <PageLayout>
+      <div
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh"}}
+      >
         <Header />
-        <Routes>
-          <Route path="/auth/*" element={<AuthRoute />} />
-          <Route path="*" element={<HomePage />} />
-        </Routes>
-      </PageLayout>
+        <PageLayout>
+          <Routes>
+            <Route path="/auth/*" element={<AuthRoute />} />
+            <Route path="*" element={<HomePage />} />
+          </Routes>
+        </PageLayout>
+      </div>
     );
   }
   console.log(principal);

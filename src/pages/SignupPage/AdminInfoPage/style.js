@@ -3,14 +3,14 @@ import { css } from "@emotion/react";
 export const layout = css`
   width: 100%;
   height: 100%; 
-  overflow: scroll;
+  overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
 `;
 
 export const container = css`
   width: 100%;
-  height: 100%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;

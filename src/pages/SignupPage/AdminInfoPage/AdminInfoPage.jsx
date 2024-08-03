@@ -9,7 +9,6 @@ import {
   sendAuthMailRequest,
   verifyCodeRequest,
 } from "../../../apis/api/sendAuthMail";
-import { IoIosArrowBack } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
 const formatTime = (time) => {
@@ -310,6 +309,22 @@ function AdminInfoPage() {
                   onChange={emailChange}
                   message={emailMessage}
                 />
+                <AuthPageInput
+                  type={"text"}
+                  name={"email"}
+                  placeholder={"이메일"}
+                  value={email}
+                  onChange={emailChange}
+                  message={emailMessage}
+                />
+                <AuthPageInput
+                  type={"text"}
+                  name={"email"}
+                  placeholder={"이메일"}
+                  value={email}
+                  onChange={emailChange}
+                  message={emailMessage}
+                />
                 <button
                   css={s.authentiCation(emailButton)}
                   disabled={!emailButton}
@@ -372,6 +387,24 @@ function AdminInfoPage() {
                   value={password}
                   onChange={passwordChange}
                   message={passwordMessage}
+                  disabled
+                />
+                <AuthPageInput
+                  type={"password"}
+                  name={"checkPassword"}
+                  placeholder={"비밀번호 확인"}
+                  value={checkPassword}
+                  onChange={checkPasswordChange}
+                  message={checkPasswordMessage}
+                  disabled
+                />
+                <AuthPageInput
+                  type={"password"}
+                  name={"checkPassword"}
+                  placeholder={"비밀번호 확인"}
+                  value={checkPassword}
+                  onChange={checkPasswordChange}
+                  message={checkPasswordMessage}
                   disabled
                 />
                 <AuthPageInput
