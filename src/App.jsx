@@ -1,12 +1,10 @@
-
-import './App.css';
-
+import HomeRoute from "./routes/HomeRoute";
 function App() {
-  return (
-    <div>
-      하이ㅎㅇㅎㅇ
-    </div>
-  );
+    return (
+        <>
+            <HomeRoute />
+        </>
+    );
 }
-
 export default App;
+
