@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/mandarin_shop/static/css/main.e6c13ad2.css",
-    "main.js": "/mandarin_shop/static/js/main.31da8dfc.js",
+    "main.js": "/mandarin_shop/static/js/main.d9413481.js",
     "static/js/453.37d99d71.chunk.js": "/mandarin_shop/static/js/453.37d99d71.chunk.js",
     "static/media/logo.png": "/mandarin_shop/static/media/logo.fa96d6a7c898793b0cd1.png",
     "index.html": "/mandarin_shop/index.html",
     "main.e6c13ad2.css.map": "/mandarin_shop/static/css/main.e6c13ad2.css.map",
-    "main.31da8dfc.js.map": "/mandarin_shop/static/js/main.31da8dfc.js.map",
+    "main.d9413481.js.map": "/mandarin_shop/static/js/main.d9413481.js.map",
     "453.37d99d71.chunk.js.map": "/mandarin_shop/static/js/453.37d99d71.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.31da8dfc.js"
+    "static/js/main.d9413481.js"
   ]
 }
