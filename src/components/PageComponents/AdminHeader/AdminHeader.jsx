@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Mypage(props) {
+function AdminHeader(props) {
 	return (
 		<div>
-			dsffdsfd
+			
 		</div>
 	);
 }
 
-export default Mypage;
+export default AdminHeader;

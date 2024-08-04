@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Mypage(props) {
+function UserHeader(props) {
 	return (
 		<div>
-			dsffdsfd
+			fds
 		</div>
 	);
 }
 
-export default Mypage;
+export default UserHeader;

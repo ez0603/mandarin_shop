@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { authState } from "../../atoms/authAtom";
-import { getPrincipalRequest } from "../../apis/api/principal";
+import { getAdminPrincipalRequest, getUserPrincipalRequest } from "../../apis/api/principal";
 
 const AuthProvider = ({ children }) => {
   const setAuth = useSetRecoilState(authState);
@@ -10,38 +10,46 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchPrincipal = async () => {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("AccessToken");
+      console.log("Token from localStorage in AuthProvider:", token);
       if (token) {
         try {
-          const response = await getPrincipalRequest();
-          setAuth({
-            token,
-            principal: response.data,
-          });
+          let response;
+          response = await getUserPrincipalRequest(token);
+          if (response && response.data) {
+            setAuth({
+              token,
+              principal: response.data,
+            });
+          } else {
+            throw new Error("No data in response");
+          }
         } catch (error) {
           console.error("Failed to fetch principal:", error);
           setAuth({
             token: null,
             principal: null,
           });
-          localStorage.removeItem("token");
+          localStorage.removeItem("AccessToken");
+          navigate("/auth/login");
         }
       }
     };
 
     fetchPrincipal();
-  }, [setAuth]);
+  }, [setAuth, navigate]);
 
   const login = (token, principal) => {
     setAuth({ token, principal });
-    localStorage.setItem("token", token);
-    navigate("/");
+    localStorage.setItem("AccessToken", token);
+    console.log("Token saved to localStorage:", localStorage.getItem("AccessToken"));
+    navigate("/user/home");
   };
 
   const logout = () => {
     setAuth({ token: null, principal: null });
-    localStorage.removeItem("token");
-    navigate("/login");
+    localStorage.removeItem("AccessToken");
+    navigate("/auth/login");
   };
 
   return (

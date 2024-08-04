@@ -4,21 +4,25 @@ import { useInput } from "../../../hooks/useInput";
 import AuthPageInput from "../../../components/AuthPage/AuthPageInput/AuthPageInput";
 import * as s from "./style";
 import { useMutation } from "react-query";
-import { signinRequest } from "../../../apis/api/signin";  
+import { signinRequest } from "../../../apis/api/signin";
+import { useLogin } from "../../../components/AuthProvider/AuthProvider";
 
-function LoginPage(props) {
+
+function LoginPage() {
   const [username, userNameChange] = useInput("username");
   const [password, passwordChange] = useInput("password");
   const navigate = useNavigate();
+  const login = useLogin(); // 로그인 함수를 가져옵니다.
 
   const loginMutation = useMutation(signinRequest, {
     onSuccess: (response) => {
-      console.log("API response:", response); 
+      console.log("API response:", response);
 
       if (response.data && response.data !== '') {  
         const accessToken = response.data;  
-        localStorage.setItem("AccessToken", accessToken);
-        navigate("/");  
+        localStorage.setItem('AccessToken', `Bearer ${accessToken}`);
+        login(accessToken, {}); // 로그인 함수를 호출하여 토큰을 저장합니다.
+        navigate("/user/home");  // 로그인 후 /user/home으로 이동합니다.
       } else {
         alert("로그인에 실패했습니다. 다시 시도해주세요.");  
       }
@@ -31,11 +35,13 @@ function LoginPage(props) {
   });
 
   const handleClick = () => {
+    console.log("Logging in with:", username, password); // 추가된 로그
     loginMutation.mutate({
       username: username,
       password: password,
     });
   };
+  
 
   return (
     <div css={s.loginLayout}>
