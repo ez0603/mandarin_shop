@@ -6,13 +6,12 @@ import { searchUsernameByEmailRequest } from "../../../apis/api/account";
 import { useMutation } from "react-query";
 import { useState, useEffect } from "react";
 import { MdPeopleAlt } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 
 function SearchUserNamePage() {
   const [customerName, customerNameChange, customerNameMessage] = useInput("adminName");
   const [email, emailChange, emailMessage] = useInput("email");
   const [isFormValid, setIsFormValid] = useState(false);
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
     setIsFormValid(customerName.trim() !== "" || email.trim() !== "");
@@ -42,10 +41,6 @@ function SearchUserNamePage() {
         email: email,
       });
     }
-  };
-
-  const handleClick = () => {
-    navigate("/auth/signin");
   };
 
   return (
