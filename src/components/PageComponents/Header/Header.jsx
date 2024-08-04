@@ -48,20 +48,22 @@ function Header(props) {
           <div css={s.logoLayout}>
             <img src={logo} alt="Logo" />
           </div>
-          <div css={s.mypageLayout}>
-            <p>Manager</p>
-            <GoPerson size={30} onClick={handleIconClick} />
-            <MdOutlineShoppingBag size={30} />
+            <div css={s.category}>
+              <ul css={s.list}>
+                {categories.map((category) => (
+                  <li key={category.value} css={s.listItem}>
+                    {category.label}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          <div css={s.mypageAndCategory}>
+            <div css={s.mypageLayout}>
+              <p>Manager</p>
+              <GoPerson size={30} onClick={handleIconClick} />
+              <MdOutlineShoppingBag size={30} />
+            </div>
           </div>
-        </div>
-        <div css={s.category}>
-          <ul css={s.list}>
-            {categories.map((category) => (
-              <li key={category.value} css={s.listItem}>
-                {category.label}
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </div>

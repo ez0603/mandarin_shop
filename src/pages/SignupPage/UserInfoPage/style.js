@@ -14,7 +14,7 @@ export const layout = css`
 
 export const container = css`
   width: 100%;
-  height: 90%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,7 +40,7 @@ export const header = css`
   justify-content: center;
 
   & h1 {
-    font-weight: 400;
+    font-weight: 700;
     font-size: 25px;
   }
 `;
@@ -63,7 +63,7 @@ export const inputContainer = css`
 export const signinButton = (active) => css`
   box-sizing: border-box;
   border: none;
-  padding: 10px;
+  padding: 15px;
   width: 80%;
   border-radius: 8px;
   margin-bottom: 15px;
@@ -73,7 +73,7 @@ export const signinButton = (active) => css`
 
   &:hover {
     background-color: ${active ? "#4494fc" : "#a2cbff"};
-    color: ${active ? "#c2dbff" : "black"};
+    color: ${active ? "#c2dbff" : "white"};
   }
   &:active {
     background-color: ${active ? "#1071fa" : "#a2cbff"};
@@ -93,7 +93,7 @@ export const signinButton = (active) => css`
 export const authentiCation = (state) => css`
   box-sizing: border-box;
   border: none;
-  height: 40px;
+  padding: 15px;
   width: 80%;
   border-radius: 8px;
   margin-bottom: 10px;

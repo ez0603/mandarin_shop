@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import SignupPage from "../pages/SignupPage/SignupPage";
+import SearchUserNamePage from "../pages/AuthPage/SearchUserNamePage/SearchUserNamePage";
 
 function AuthRoute() {
   const queryClient = useQueryClient();
@@ -20,6 +21,7 @@ function AuthRoute() {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup/*" element={<SignupPage />} />
+      <Route path="/search/username" element={<SearchUserNamePage />} />
     </Routes>
   );
 }

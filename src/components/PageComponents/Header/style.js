@@ -6,6 +6,7 @@ export const layout = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  /* background-color: #F9F5EA; */
 `;
 
 export const container = css`
@@ -21,7 +22,7 @@ export const headerContent = css`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   position: relative;
   margin-top: 30px;
 `;
@@ -33,6 +34,7 @@ export const logoLayout = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  top: -70px;
 
   img {
     width: 170px;
@@ -40,12 +42,16 @@ export const logoLayout = css`
   }
 `;
 
+export const mypageAndCategory = css`
+  display: flex;
+  align-items: center;
+`;
+
 export const mypageLayout = css`
-  width: 20%;
-  margin-left: auto;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 25px;
 
   p,
   svg {
@@ -55,20 +61,17 @@ export const mypageLayout = css`
 `;
 
 export const category = css`
-  width: 80%;
-  height: 30%;
   display: flex;
   align-items: center;
-  
+  margin-left: 20px;
 `;
 
 export const list = css`
-  width: 100%;
   list-style-type: none;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 50px;
+  gap: 20px;
   padding: 0;
   margin: 0;
 
