@@ -23,8 +23,7 @@ function SearchPasswordPage() {
     mutationFn: searchPasswordByEmailRequest,
     retry: 0,
     onSuccess: (response) => {
-      console.log("API response:", response);
-      if (response.data === false || response.data.success === false) {
+      if (response.data === false) {
         alert("해당 사용자가 존재하지 않습니다");
         return;
       }
@@ -32,9 +31,8 @@ function SearchPasswordPage() {
       navigate("/auth/login"); 
     },
     onError: (error) => {
-      console.error("Error:", error);
-      alert("오류가 발생했습니다. 다시 시도해주세요.");
-    }
+      alert(error.response.data);
+    },
   });
 
   const handleEmailSendClick = () => {
