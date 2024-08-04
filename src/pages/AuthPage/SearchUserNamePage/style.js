@@ -13,23 +13,35 @@ export const userNameContainer = css`
   box-sizing: border-box;
   background-color: white;
   width: 30%;
-  height: 80%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
   /* border: 1px solid #dbdbdb; */
   border-radius: 20px;
+
+  &::after {
+    content: '';
+    display: block;
+    height: 50px; 
+  }
 `;
 
 export const header = css`
   width: 100%;
-  height: 40%;
+  height: 35%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   cursor: default;
+
+  &::after {
+    content: '';
+    display: block;
+    height: 15px; 
+  }
 
   & h1 {
     font-size: 23px;

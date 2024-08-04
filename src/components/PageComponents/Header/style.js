@@ -10,7 +10,7 @@ export const layout = css`
 `;
 
 export const container = css`
-  width: 85%;
+  width: 75%;
   height: 180px;
   display: flex;
   flex-direction: column;
@@ -39,12 +39,14 @@ export const logoLayout = css`
   img {
     width: 170px;
     height: 140px;
+    cursor: pointer;
   }
 `;
 
 export const mypageAndCategory = css`
   display: flex;
   align-items: center;
+  padding-top: 20px;
 `;
 
 export const mypageLayout = css`
@@ -63,7 +65,7 @@ export const mypageLayout = css`
 export const category = css`
   display: flex;
   align-items: center;
-  margin-left: 20px;
+  padding-top: 20px;
 `;
 
 export const list = css`
@@ -82,4 +84,22 @@ export const list = css`
 
 export const listItem = css`
   padding: 10px;
+  position: relative;
+
+  ::after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #dbdbdb;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+  }
+
+  :hover::after {
+    visibility: visible;
+    width: 100%;
+  }
 `;

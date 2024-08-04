@@ -41,11 +41,16 @@ function Header(props) {
     }
   };
 
+  const handleLogoClick = () => {
+      navigate("/");
+
+  };
+
   return (
     <div css={s.layout}>
       <div css={s.container}>
         <div css={s.headerContent}>
-          <div css={s.logoLayout}>
+          <div css={s.logoLayout} onClick={handleLogoClick} >
             <img src={logo} alt="Logo" />
           </div>
             <div css={s.category}>
