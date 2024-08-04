@@ -42,26 +42,25 @@ function Header(props) {
   };
 
   const handleLogoClick = () => {
-      navigate("/");
-
+    navigate("/");
   };
 
   return (
     <div css={s.layout}>
       <div css={s.container}>
         <div css={s.headerContent}>
-          <div css={s.logoLayout} onClick={handleLogoClick} >
+          <div css={s.logoLayout} onClick={handleLogoClick}>
             <img src={logo} alt="Logo" />
           </div>
-            <div css={s.category}>
-              <ul css={s.list}>
-                {categories.map((category) => (
-                  <li key={category.value} css={s.listItem}>
-                    {category.label}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <div css={s.category}>
+            <ul css={s.list}>
+              {categories.map((category) => (
+                <li key={category.value} css={s.listItem}>
+                  {category.label}
+                </li>
+              ))}
+            </ul>
+          </div>
           <div css={s.mypageAndCategory}>
             <div css={s.mypageLayout}>
               <p>Manager</p>

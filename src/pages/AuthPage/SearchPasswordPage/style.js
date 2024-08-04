@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 
-export const userNameLayout = css`
+export const userPasswordLayout = css`
   width: 100%;
   height: 100%;
   display: flex;
@@ -9,7 +9,7 @@ export const userNameLayout = css`
   justify-content: center;
 `;
 
-export const userNameContainer = css`
+export const userPasswordContainer = css`
   box-sizing: border-box;
   background-color: white;
   width: 30%;
@@ -18,14 +18,14 @@ export const userNameContainer = css`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  /* border: 1px solid #dbdbdb; */
   border-radius: 20px;
 
-  &::after {
-    content: '';
-    display: block;
-    height: 50px; 
+  & h1 {
+    font-size: 35px;
+    margin: 5px 0 10px 0;
+    cursor: default;
   }
+
 `;
 
 export const header = css`
@@ -42,20 +42,18 @@ export const header = css`
     display: block;
     height: 15px; 
   }
-
   & h1 {
     font-size: 23px;
     margin: 5px 0 10px 0;
     margin-bottom: 20px;
+    cursor: default;
   }
-
   & h3 {
     margin: 0;
     margin-bottom: 10px;
     font-size: 13px;
     font-weight: 300;
   }
-
 `;
 
 export const input = css`

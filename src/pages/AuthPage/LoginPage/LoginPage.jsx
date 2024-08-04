@@ -1,7 +1,7 @@
 /**@jsxImportSource @emotion/react */
 import { Link } from "react-router-dom";
-import { useInput } from "../../hooks/useInput";
-import AuthPageInput from "../../components/AuthPage/AuthPageInput/AuthPageInput";
+import { useInput } from "../../../hooks/useInput";
+import AuthPageInput from "../../../components/AuthPage/AuthPageInput/AuthPageInput";
 import * as s from "./style";
 
 function LoginPage(props) {
