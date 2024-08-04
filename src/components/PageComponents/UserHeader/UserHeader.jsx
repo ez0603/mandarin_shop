@@ -1,9 +1,10 @@
-import React from 'react';
+/**@jsxImportSource @emotion/react */
+import * as s from "./style";
 
 function UserHeader(props) {
 	return (
-		<div>
-			fds
+		<div css={s.layout}>
+			fdsfdsf
 		</div>
 	);
 }

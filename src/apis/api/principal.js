@@ -1,18 +1,19 @@
-
-import instance from '../utils/instance';
+import instance from "../utils/instance"
 
 export const getAdminPrincipalRequest = async (token) => {
-    return await instance.get("/account/principal", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    const response = await instance.get("/account/principal", {
+        headers: {
+            Authorization: token
+        }
     });
-  };
-  
-  export const getUserPrincipalRequest = async (token) => {
-    return await instance.get("/account/user/principal", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    return response.data;
+}
+
+export const getUserPrincipalRequest = async (token) => {
+    const response = await instance.get("/account/user/principal", {
+        headers: {
+            Authorization: token
+        }
     });
-  };
+    return response.data;
+}

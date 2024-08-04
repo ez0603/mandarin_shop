@@ -1,12 +1,12 @@
-/**@jsxImportSource @emotion/react */
-import { Link, useNavigate } from "react-router-dom";
-import { useInput } from "../../../hooks/useInput";
-import AuthPageInput from "../../../components/AuthPage/AuthPageInput/AuthPageInput";
-import * as s from "./style";
+/** @jsxImportSource @emotion/react */
+import { useState } from "react";
 import { useMutation } from "react-query";
+import { Link, useNavigate } from "react-router-dom";
+import AuthPageInput from "../../../components/AuthPage/AuthPageInput/AuthPageInput";
 import { signinRequest } from "../../../apis/api/signin";
 import { useLogin } from "../../../components/AuthProvider/AuthProvider";
-
+import * as s from "./style";
+import { useInput } from "../../../hooks/useInput";
 
 function LoginPage() {
   const [username, userNameChange] = useInput("username");
@@ -41,13 +41,12 @@ function LoginPage() {
       password: password,
     });
   };
-  
 
   return (
     <div css={s.loginLayout}>
       <div css={s.loginContainer}>
         <div css={s.header}>
-          <h1>LogIn </h1>
+          <h1>LogIn</h1>
         </div>
         <div css={s.input}>
           <AuthPageInput
@@ -64,7 +63,6 @@ function LoginPage() {
             value={password}
             onChange={passwordChange}
           />
-
           <button css={s.signinButton} onClick={handleClick}>로그인</button>
           <div css={s.search}>
             <Link to={"/auth/search/username"} css={s.link}>

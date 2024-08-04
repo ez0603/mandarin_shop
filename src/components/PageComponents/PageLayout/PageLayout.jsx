@@ -11,13 +11,17 @@ function PageLayout({ children }) {
   const token = localStorage.getItem('AccessToken');
   console.log("AccessToken from localStorage:", token);
 
+  useEffect(() => {
+    console.log("UseEffect Token from localStorage:", localStorage.getItem('AccessToken'));
+  }, []);
+
   const { data: adminData, isLoading: isAdminLoading, isError: isAdminError, refetch: refetchAdmin } = useQuery(
     'getAdminPrincipal',
     () => getAdminPrincipalRequest(token),
     {
       enabled: roleId === null && !!token,
       onSuccess: (data) => {
-        if (data.role_id === 1) {
+        if (data && data.role_id === 1) {
           setRoleId(1);
         }
       },
@@ -33,7 +37,7 @@ function PageLayout({ children }) {
     {
       enabled: roleId === null && !!token,
       onSuccess: (data) => {
-        if (data.role_id === 2) {
+        if (data && data.role_id === 2) {
           setRoleId(2);
         }
       },
@@ -59,7 +63,7 @@ function PageLayout({ children }) {
       return <Header />;
     }
   };
-
+  
   if (isAdminLoading || isUserLoading) {
     return <div>Loading...</div>;
   }
