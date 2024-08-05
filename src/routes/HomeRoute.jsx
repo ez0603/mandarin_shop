@@ -14,7 +14,6 @@ import { useEffect } from "react";
 function HomeRoute(props) {
   const auth = useRecoilValue(authState);
   const { principal } = auth;
-  console.log("프린시퍼 :", principal);
 
   useEffect(() => {
     const token = localStorage.getItem("AccessToken");
@@ -42,7 +41,6 @@ function HomeRoute(props) {
   );
 
   if (!principal) {
-    console.log("Principal is null, rendering AuthRoute");
     return (
       <PageLayout>
         <Routes>

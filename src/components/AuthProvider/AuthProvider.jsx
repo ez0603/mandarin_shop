@@ -11,7 +11,6 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const fetchPrincipal = async () => {
       const token = localStorage.getItem("AccessToken");
-      console.log("Token from localStorage in AuthProvider:", token);
       if (token) {
         try {
           let response;
@@ -19,7 +18,6 @@ const AuthProvider = ({ children }) => {
           // 사용자 프린시펄 요청
           try {
             response = await getUserPrincipalRequest(token);
-            console.log("User Principal response:", response);
             if (response && response.data) {
               setAuth({
                 token,
@@ -35,7 +33,6 @@ const AuthProvider = ({ children }) => {
           // 관리자 프린시펄 요청
           try {
             response = await getAdminPrincipalRequest(token);
-            console.log("Admin Principal response:", response);
             if (response && response.data) {
               setAuth({
                 token,
@@ -69,7 +66,6 @@ const AuthProvider = ({ children }) => {
   const login = (token, principal) => {
     setAuth({ token, principal });
     localStorage.setItem("AccessToken", token);
-    console.log("Token saved to localStorage:", localStorage.getItem("AccessToken"));
 
     if (principal.roleId === 1) {
       navigate("/admin/home");
