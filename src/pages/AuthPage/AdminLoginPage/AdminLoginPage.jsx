@@ -1,24 +1,24 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import AuthPageInput from "../../../components/AuthPage/AuthPageInput/AuthPageInput";
-import { userSigninRequest } from "../../../apis/api/signin";
+/** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import { useInput } from "../../../hooks/useInput";
-import instance from "../../../apis/utils/instance";
 import { useLogin } from "../../../components/AuthProvider/AuthProvider";
-import { getUserPrincipalRequest } from "../../../apis/api/principal";
+import { useInput } from "../../../hooks/useInput";
+import AuthPageInput from "../../../components/AuthPage/AuthPageInput/AuthPageInput";
+import { useNavigate } from "react-router-dom";
+import { adminSigninRequest } from "../../../apis/api/signin";
+import instance from "../../../apis/utils/instance";
+import { getAdminPrincipalRequest } from "../../../apis/api/principal";
 
-function LoginPage() {
-  const [username, userNameChange] = useInput();
-  const [password, passwordChange] = useInput();
+function AdminLoginPage(props) {
+  const [adminName, adminNameChange] = useInput();
+  const [adminPassword, adminPasswordChange] = useInput();
   const login = useLogin();
+  const navigate = useNavigate();
 
   const handleSigninClick = () => {
-    const requestData = { username, password };
+    const requestData = { adminName, adminPassword };
+    console.log("Sending admin signin request with data:", requestData);
 
-    console.log("Sending user signin request with data:", requestData);
-
-    userSigninRequest(requestData)
+    adminSigninRequest(requestData)
       .then((response) => {
         console.log("Signin response:", response);
         const accessToken = response.data.accessToken || response.data.token || response.data;
@@ -27,6 +27,7 @@ function LoginPage() {
           window.alert("로그인에 실패했습니다. 다시 시도해주세요.");
           return;
         }
+
         // 로컬 스토리지에 토큰 저장
         localStorage.setItem("AccessToken", accessToken);
         console.log("AccessToken 저장 완료:", localStorage.getItem("AccessToken"));
@@ -39,12 +40,13 @@ function LoginPage() {
         // 프린시펄 정보 가져오기
         const fetchPrincipal = async () => {
           try {
-            const principalResponse = await getUserPrincipalRequest(accessToken);
-            if (principalResponse && principalResponse.data) {
-              console.log("Principal response:", principalResponse.data);
-              login(accessToken, principalResponse.data);
+            const adminResponse = await getAdminPrincipalRequest(accessToken);
+            if (adminResponse && adminResponse.data) {
+              console.log("Admin principal response:", adminResponse.data);
+              login(accessToken, adminResponse.data);
+              navigate("/admin/home"); // 성공적으로 로그인되면 /admin/home으로 이동
             } else {
-              throw new Error("Principal data not found");
+              throw new Error("Admin data not found");
             }
           } catch (error) {
             console.error("Failed to fetch principal:", error);
@@ -71,22 +73,22 @@ function LoginPage() {
     <div css={s.loginLayout}>
       <div css={s.loginContainer}>
         <div css={s.header}>
-          <h1>LogIn</h1>
+          <h1>Admin LogIn</h1>
         </div>
         <div css={s.input}>
           <AuthPageInput
             type={"text"}
-            name={"username"}
+            name={"adminName"}
             placeholder={"아이디"}
-            value={username}
-            onChange={userNameChange}
+            value={adminName}
+            onChange={adminNameChange}
           />
           <AuthPageInput
             type={"password"}
-            name={"password"}
+            name={"adminPassword"}
             placeholder={"비밀번호"}
-            value={password}
-            onChange={passwordChange}
+            value={adminPassword}
+            onChange={adminPasswordChange}
           />
           <button
             css={s.signinButton}
@@ -95,26 +97,10 @@ function LoginPage() {
           >
             로그인
           </button>
-          <div css={s.search}>
-            <Link to={"/auth/search/username"} css={s.link}>
-              아이디 찾기
-            </Link>
-            <Link to={"/auth/search/password"} css={s.link}>
-              비밀번호 찾기
-            </Link>
-          </div>
         </div>
-      </div>
-      <div css={s.singUpBox}>
-        <span css={s.singUp}>
-          <p>계정이 없으신가요 ?</p>
-          <Link to={"/auth/signup/agreement"} css={s.link2}>
-            가입하기
-          </Link>
-        </span>
       </div>
     </div>
   );
 }
 
-export default LoginPage;
+export default AdminLoginPage;

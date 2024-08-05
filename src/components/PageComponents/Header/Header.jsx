@@ -45,6 +45,10 @@ function Header(props) {
     navigate("/");
   };
 
+  const handleManagerClick = () => {
+    navigate("/auth/login/admin");
+  };
+
   return (
     <div css={s.layout}>
       <div css={s.container}>
@@ -63,7 +67,7 @@ function Header(props) {
           </div>
           <div css={s.mypageAndCategory}>
             <div css={s.mypageLayout}>
-              <p>Manager</p>
+              <p onClick={handleManagerClick}>Manager</p>
               <GoPerson size={30} onClick={handleIconClick} />
               <MdOutlineShoppingBag size={30} />
             </div>

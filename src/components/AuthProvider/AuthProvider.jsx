@@ -15,16 +15,42 @@ const AuthProvider = ({ children }) => {
       if (token) {
         try {
           let response;
-          response = await getUserPrincipalRequest(token); // 사용자 프린시플 요청
-          console.log("Principal response:", response);
-          if (response && response.data) {
-            setAuth({
-              token,
-              principal: response.data,
-            });
-          } else {
-            throw new Error("No data in response");
+          
+          // 사용자 프린시펄 요청
+          try {
+            response = await getUserPrincipalRequest(token);
+            console.log("User Principal response:", response);
+            if (response && response.data) {
+              setAuth({
+                token,
+                principal: response.data,
+              });
+              navigate("/user/home");
+              return;
+            }
+          } catch (userError) {
+            console.error("Failed to fetch user principal:", userError);
           }
+
+          // 관리자 프린시펄 요청
+          try {
+            response = await getAdminPrincipalRequest(token);
+            console.log("Admin Principal response:", response);
+            if (response && response.data) {
+              setAuth({
+                token,
+                principal: response.data,
+              });
+              navigate("/admin/home");
+              return;
+            }
+          } catch (adminError) {
+            console.error("Failed to fetch admin principal:", adminError);
+          }
+
+          // 프린시펄 데이터를 찾지 못했을 경우
+          throw new Error("No principal data found");
+
         } catch (error) {
           console.error("Failed to fetch principal:", error);
           setAuth({
@@ -45,7 +71,6 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem("AccessToken", token);
     console.log("Token saved to localStorage:", localStorage.getItem("AccessToken"));
 
-    // 역할에 따른 경로 설정
     if (principal.roleId === 1) {
       navigate("/admin/home");
     } else if (principal.roleId === 2) {
