@@ -9,6 +9,7 @@ import * as s from "./style";
 import { GoPerson } from "react-icons/go";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { authState } from "../../../atoms/authAtom";
+import { IoSettingsOutline } from "react-icons/io5";
 
 function Header(props) {
   const [categories, setCategories] = useState([]);
@@ -67,9 +68,18 @@ function Header(props) {
           </div>
           <div css={s.mypageAndCategory}>
             <div css={s.mypageLayout}>
-              <p onClick={handleManagerClick}>Manager</p>
-              <GoPerson size={30} onClick={handleIconClick} />
-              <MdOutlineShoppingBag size={30} />
+              <div css={s.iconWithText} onClick={handleManagerClick}>
+                <IoSettingsOutline size={28}/>
+                <span>관리자</span>
+              </div>
+              <div css={s.iconWithText} onClick={handleIconClick}>
+                <GoPerson size={30} />
+                <span>마이페이지</span>
+              </div>
+              <div css={s.iconWithText}>
+                <MdOutlineShoppingBag size={30} />
+                <span>장바구니</span>
+              </div>
             </div>
           </div>
         </div>

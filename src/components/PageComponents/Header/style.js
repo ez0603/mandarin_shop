@@ -6,7 +6,6 @@ export const layout = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: #F9F5EA; */
 `;
 
 export const container = css`
@@ -51,14 +50,53 @@ export const mypageAndCategory = css`
 
 export const mypageLayout = css`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   gap: 25px;
+`;
 
-  p,
-  svg {
-    margin-left: 10px;
-    cursor: pointer;
+export const iconWithText = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+
+  span {
+    position: absolute;
+    bottom: -40px;
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+    background-color: #fff;
+    padding: 5px 7px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 30px; 
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 6px;
+      border-style: solid;
+      border-color: transparent transparent #fff transparent; 
+    }
+  }
+
+  &:hover span {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  p {
+    margin: 0;
+  }
+
+  &:hover svg {
+    color: #dbdbdb;
   }
 `;
 
