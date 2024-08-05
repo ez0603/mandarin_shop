@@ -11,8 +11,8 @@ export const loginLayout = css`
 export const loginContainer = css`
   box-sizing: border-box;
   width: 30%;
-  height: 65%;
-  /* background-color: white; */
+  height: 80%;
+  /* background-color: #dbdbdb; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,7 +23,7 @@ export const loginContainer = css`
 
 export const header = css`
   width: 100%;
-  height: 20%;
+  height: 23%;
   /* background-color: #0099ff; */
   display: flex;
   flex-direction: column;

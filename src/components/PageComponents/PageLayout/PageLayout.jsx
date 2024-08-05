@@ -1,4 +1,5 @@
-import React from "react";
+/** @jsxImportSource @emotion/react */
+import * as s from "./style";
 import { useRecoilValue } from "recoil";
 import { authState } from "../../../atoms/authAtom";
 import Header from "../Header/Header";
@@ -22,9 +23,9 @@ const PageLayout = ({ children }) => {
   };
 
   return (
-    <div>
+    <div css={s.layout}>
       {renderHeader()}
-      <main>{children}</main>
+      {children}
     </div>
   );
 };

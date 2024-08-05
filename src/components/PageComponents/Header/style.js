@@ -15,7 +15,7 @@ export const container = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 `;
 
 export const headerContent = css`
@@ -24,7 +24,7 @@ export const headerContent = css`
   align-items: center;
   justify-content: space-between;
   position: relative;
-  margin-top: 30px;
+  margin-top: 50px;
 `;
 
 export const logoLayout = css`
@@ -34,7 +34,7 @@ export const logoLayout = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  top: -70px;
+  top: -80px;
 
   img {
     width: 170px;
