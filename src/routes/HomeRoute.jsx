@@ -8,16 +8,26 @@ import HomePage from "../pages/HomePage/HomePage";
 import PageLayout from "../components/PageComponents/PageLayout/PageLayout";
 import AuthRoute from "./AuthRoute";
 import { getAdminPrincipalRequest, getUserPrincipalRequest } from "../apis/api/principal";
+import instance from "../apis/utils/instance";
+import { useEffect } from "react";
 
 function HomeRoute(props) {
   const auth = useRecoilValue(authState);
   const { principal } = auth;
+  console.log("프린시퍼 :", principal);
+
+  useEffect(() => {
+    const token = localStorage.getItem("AccessToken");
+    if (token) {
+      instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    }
+  }, []);
 
   const { data: adminData, isLoading: adminLoading } = useQuery(
     "adminPrincipal",
     getAdminPrincipalRequest,
     {
-      enabled: !!principal && principal.role_id === 1,
+      enabled: !!principal && principal.roleId === 1,
       retry: false,
     }
   );
@@ -26,12 +36,13 @@ function HomeRoute(props) {
     "userPrincipal",
     getUserPrincipalRequest,
     {
-      enabled: !!principal && principal.role_id === 2,
+      enabled: !!principal && principal.roleId === 2,
       retry: false,
     }
   );
 
   if (!principal) {
+    console.log("Principal is null, rendering AuthRoute");
     return (
       <PageLayout>
         <Routes>
@@ -46,16 +57,16 @@ function HomeRoute(props) {
     return <div>Loading...</div>;
   }
 
-  if ((principal.role_id === 1 && !adminData) || (principal.role_id === 2 && !userData)) {
+  if ((principal.roleId === 1 && !adminData) || (principal.roleId === 2 && !userData)) {
     return <Navigate to="/" />;
   }
 
   return (
     <PageLayout>
       <Routes>
-        {principal.role_id === 1 ? (
+        {principal.roleId === 1 ? (
           <Route path="/admin/*" element={<AdminRouter />} />
-        ) : principal.role_id === 2 ? (
+        ) : principal.roleId === 2 ? (
           <Route path="/user/*" element={<UserRouter />} />
         ) : (
           <Route path="*" element={<Navigate to="/" />} />

@@ -15,7 +15,8 @@ const AuthProvider = ({ children }) => {
       if (token) {
         try {
           let response;
-          response = await getUserPrincipalRequest(token);
+          response = await getUserPrincipalRequest(token); // 사용자 프린시플 요청
+          console.log("Principal response:", response);
           if (response && response.data) {
             setAuth({
               token,
@@ -43,7 +44,15 @@ const AuthProvider = ({ children }) => {
     setAuth({ token, principal });
     localStorage.setItem("AccessToken", token);
     console.log("Token saved to localStorage:", localStorage.getItem("AccessToken"));
-    navigate("/user/home");
+
+    // 역할에 따른 경로 설정
+    if (principal.roleId === 1) {
+      navigate("/admin/home");
+    } else if (principal.roleId === 2) {
+      navigate("/user/home");
+    } else {
+      navigate("/"); // 기본 경로
+    }
   };
 
   const logout = () => {

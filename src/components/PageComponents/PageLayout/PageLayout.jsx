@@ -1,83 +1,32 @@
-import { useState, useEffect } from "react";
-import { useQuery } from "react-query";
+import React from "react";
+import { useRecoilValue } from "recoil";
+import { authState } from "../../../atoms/authAtom";
 import Header from "../Header/Header";
-import UserHeader from "../UserHeader/UserHeader";
 import AdminHeader from "../AdminHeader/AdminHeader";
-import { getAdminPrincipalRequest, getUserPrincipalRequest } from "../../../apis/api/principal";
-import * as s from "./style";
+import UserHeader from "../UserHeader/UserHeader";
 
-function PageLayout({ children }) {
-  const [roleId, setRoleId] = useState(null);
-  const token = localStorage.getItem('AccessToken');
-  console.log("AccessToken from localStorage:", token);
-
-  useEffect(() => {
-    console.log("UseEffect Token from localStorage:", localStorage.getItem('AccessToken'));
-  }, []);
-
-  const { data: adminData, isLoading: isAdminLoading, isError: isAdminError, refetch: refetchAdmin } = useQuery(
-    'getAdminPrincipal',
-    () => getAdminPrincipalRequest(token),
-    {
-      enabled: roleId === null && !!token,
-      onSuccess: (data) => {
-        if (data && data.role_id === 1) {
-          setRoleId(1);
-        }
-      },
-      onError: () => {
-        console.error("Admin principal fetch error");
-      }
-    }
-  );
-
-  const { data: userData, isLoading: isUserLoading, isError: isUserError, refetch: refetchUser } = useQuery(
-    'getUserPrincipal',
-    () => getUserPrincipalRequest(token),
-    {
-      enabled: roleId === null && !!token,
-      onSuccess: (data) => {
-        if (data && data.role_id === 2) {
-          setRoleId(2);
-        }
-      },
-      onError: () => {
-        console.error("User principal fetch error");
-        refetchAdmin();
-      }
-    }
-  );
-
-  useEffect(() => {
-    if (isAdminError && !roleId) {
-      refetchUser();
-    }
-  }, [isAdminError, refetchUser, roleId]);
+const PageLayout = ({ children }) => {
+  const auth = useRecoilValue(authState);
+  const { principal } = auth;
 
   const renderHeader = () => {
-    if (roleId === 2) {
-      return <UserHeader />;
-    } else if (roleId === 1) {
-      return <AdminHeader />;
-    } else {
+    if (!principal) {
       return <Header />;
     }
+    if (principal.role_id === 1) {
+      return <AdminHeader />;
+    }
+    if (principal.role_id === 2) {
+      return <UserHeader />;
+    }
   };
-  
-  if (isAdminLoading || isUserLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isAdminError && isUserError) {
-    return <div>Error loading data</div>;
-  }
 
   return (
-    <div css={s.layout}>
+    <div>
       {renderHeader()}
-      {children}
+      <main>{children}</main>
     </div>
   );
-}
+};
 
 export default PageLayout;

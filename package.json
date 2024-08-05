@@ -16,7 +16,7 @@
     "@testing-library/user-event": "^13.5.0",
     "animate.css": "^4.1.1",
     "apexcharts": "^3.49.1",
-    "axios": "^1.7.2",
+    "axios": "^1.7.3",
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.11",
     "firebase": "^10.12.2",
