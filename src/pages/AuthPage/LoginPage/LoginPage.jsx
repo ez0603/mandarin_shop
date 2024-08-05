@@ -1,4 +1,4 @@
-import React from "react";
+/** @jsxImportSource @emotion/react */
 import { Link } from "react-router-dom";
 import AuthPageInput from "../../../components/AuthPage/AuthPageInput/AuthPageInput";
 import { userSigninRequest } from "../../../apis/api/signin";

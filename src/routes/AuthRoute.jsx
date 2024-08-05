@@ -6,6 +6,8 @@ import SignupPage from "../pages/SignupPage/SignupPage";
 import SearchUserNamePage from "../pages/AuthPage/SearchUserNamePage/SearchUserNamePage";
 import SearchPasswordPage from "../pages/AuthPage/SearchPasswordPage/SearchPasswordPage";
 import AdminLoginPage from "../pages/AuthPage/AdminLoginPage/AdminLoginPage";
+import SearchAdminNamePage from "../pages/AuthPage/SearchAdminNamePage/SearchAdminNamePage";
+import SearchAdminPasswordPage from "../pages/AuthPage/SearchAdminPasswordPage/SearchAdminPasswordPage";
 
 function AuthRoute() {
   const queryClient = useQueryClient();
@@ -26,6 +28,8 @@ function AuthRoute() {
       <Route path="/signup/*" element={<SignupPage />} />
       <Route path="/search/username" element={<SearchUserNamePage />} />
       <Route path="/search/password" element={<SearchPasswordPage />} />
+      <Route path="/search/adminName" element={<SearchAdminNamePage />} />
+      <Route path="/search/adminPassword" element={<SearchAdminPasswordPage />} />
     </Routes>
   );
 }

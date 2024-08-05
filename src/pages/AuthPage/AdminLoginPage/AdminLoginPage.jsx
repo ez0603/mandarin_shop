@@ -3,7 +3,7 @@ import * as s from "./style";
 import { useLogin } from "../../../components/AuthProvider/AuthProvider";
 import { useInput } from "../../../hooks/useInput";
 import AuthPageInput from "../../../components/AuthPage/AuthPageInput/AuthPageInput";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { adminSigninRequest } from "../../../apis/api/signin";
 import instance from "../../../apis/utils/instance";
 import { getAdminPrincipalRequest } from "../../../apis/api/principal";
@@ -97,6 +97,14 @@ function AdminLoginPage(props) {
           >
             로그인
           </button>
+          <div css={s.search}>
+            <Link to={"/auth/search/adminName"} css={s.link}>
+              아이디 찾기
+            </Link>
+            <Link to={"/auth/search/adminPassword"} css={s.link}>
+              비밀번호 찾기
+            </Link>
+          </div>
         </div>
       </div>
     </div>
