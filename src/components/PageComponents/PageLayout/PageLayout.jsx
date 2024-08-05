@@ -13,10 +13,10 @@ const PageLayout = ({ children }) => {
     if (!principal) {
       return <Header />;
     }
-    if (principal.role_id === 1) {
+    if (principal.roleId === 1) {
       return <AdminHeader />;
     }
-    if (principal.role_id === 2) {
+    if (principal.roleId === 2) {
       return <UserHeader />;
     }
   };
