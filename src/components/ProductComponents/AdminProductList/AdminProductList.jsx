@@ -5,6 +5,7 @@ import * as s from "./style";
 import {
   getProductRequest,
   getProductCategoryRequest,
+  deleteProductRequest
 } from "../../../apis/api/product";
 import useCategories from "../../../hooks/useCategories";
 
@@ -57,11 +58,24 @@ function AdminProductList() {
     navigate(`/admin/product/edit/${productId}`);
   };
 
-  const handleDelete = (productId) => {
+  const handleDelete = async (productId) => {
     if (!selectedProducts.includes(productId)) {
       setSelectedProducts([productId]);
     }
-    navigate(`/product/delete/${productId}`);
+    const confirmDelete = window.confirm("정말로 이 제품을 삭제하시겠습니까?");
+    if (confirmDelete) {
+      try {
+        await deleteProductRequest(productId);
+        alert("제품이 삭제되었습니다.");
+        const response = await getProductRequest();
+        setProductList(response.data);
+        setFilteredProductList(response.data);
+        setSelectedProducts([]);
+      } catch (error) {
+        console.error("제품 삭제 실패:", error);
+        alert("제품 삭제에 실패했습니다.");
+      }
+    }
   };
 
   const handleCategoryClick = async (categoryId) => {

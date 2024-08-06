@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 import { useNavigate, useParams } from "react-router-dom";
-import useGetProducts from "../../../hooks/useGetProductDetail"; // 경로를 실제 위치로 수정
+import useGetProducts from "../../../hooks/useGetProductDetail"; 
 import { useEffect, useState } from "react";
-import { updateProductRequest } from "../../../apis/api/product";
+import { getProductOption, registerOption, registerOptionTitle, updateProductOptionRequest, updateProductRequest } from "../../../apis/api/product";
 import { useMutation, useQueryClient } from "react-query";
 import useCategories from "../../../hooks/useCategories";
 
@@ -12,7 +12,7 @@ const EditProductPage = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { productDetail, error } = useGetProducts(productId);
-  const categories = useCategories(); // 카테고리 목록을 가져오는 훅
+  const categories = useCategories();
   const [selectedImage, setSelectedImage] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [productDetailState, setProductDetailState] = useState({
@@ -26,18 +26,11 @@ const EditProductPage = () => {
     optionList: []
   });
 
-  const [updateOptionData, setUpdateOptionData] = useState({
-    productId: productId,
-    optionNameId: "",
-    optionName: "",
+  const [optionTitles, setOptionTitles] = useState([]);
+  const [newOptionTitle, setNewOptionTitle] = useState("");
+  const [newOption, setNewOption] = useState({
     optionTitleId: "",
-    titleName: "",
-  });
-
-  const [updateOptionTitleName, setUpdateOptionTitleName] = useState({
-    productId: productId,
-    optionTitleId: 0,
-    titleName: "",
+    optionName: ""
   });
 
   useEffect(() => {
@@ -56,8 +49,23 @@ const EditProductPage = () => {
   }, [productDetail, productId]);
 
   useEffect(() => {
-    console.log('Categories:', categories); // 카테고리 데이터가 제대로 로드되었는지 확인
-  }, [categories]);
+    fetchProductOptions();
+  }, [productId]);
+
+  const fetchProductOptions = async () => {
+    try {
+      const response = await getProductOption({ productId });
+      console.log('Fetched options response:', response); // 디버깅용 로그
+      if (response.data) {
+        setOptionTitles(response.data.optionTitles || []);
+        console.log('Fetched options:', response.data.optionTitles); // 디버깅용 로그
+      } else {
+        console.log('No data in response'); // 디버깅용 로그
+      }
+    } catch (error) {
+      console.error("Failed to fetch product options", error);
+    }
+  };
 
   const mutation = useMutation(updateProductRequest, {
     onSuccess: () => {
@@ -70,14 +78,6 @@ const EditProductPage = () => {
       alert("Failed to update product: " + error.message);
     }
   });
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  if (!productDetail || !categories.length) {
-    return <div>Loading...</div>;
-  }
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -121,12 +121,39 @@ const EditProductPage = () => {
     }));
   };
 
-  const handleOptionName = (e) => {
-    const newOptionName = e.target.value;
-    setUpdateOptionData((prevData) => ({
-      ...prevData,
-      optionName: newOptionName,
-    }));
+  const handleAddOptionTitle = async () => {
+    try {
+      await registerOptionTitle({ productId, titleName: newOptionTitle });
+      setNewOptionTitle("");
+      fetchProductOptions();
+      alert("옵션 타이틀 추가 완료");
+    } catch (error) {
+      console.error("Failed to add option title", error);
+      alert("옵션 타이틀 추가 실패");
+    }
+  };
+
+  const handleAddOption = async () => {
+    try {
+      await registerOption({ productId, optionTitleId: newOption.optionTitleId, optionName: newOption.optionName });
+      setNewOption({ optionTitleId: "", optionName: "" });
+      fetchProductOptions();
+      alert("옵션 추가 완료");
+    } catch (error) {
+      console.error("Failed to add option", error);
+      alert("옵션 추가 실패");
+    }
+  };
+
+  const handleUpdateOption = async (option) => {
+    try {
+      await updateProductOptionRequest(option);
+      fetchProductOptions();
+      alert("옵션 수정 완료");
+    } catch (error) {
+      console.error("Failed to update option", error);
+      alert("옵션 수정 실패");
+    }
   };
 
   return (
@@ -181,6 +208,35 @@ const EditProductPage = () => {
                   </option>
                 ))}
               </select>
+              <div>
+                <h3>옵션 타이틀 추가</h3>
+                <input 
+                  type="text" 
+                  value={newOptionTitle} 
+                  onChange={(e) => setNewOptionTitle(e.target.value)} 
+                />
+                <button onClick={handleAddOptionTitle}>옵션 타이틀 추가</button>
+              </div>
+              <div>
+                <h3>옵션 추가</h3>
+                <select 
+                  value={newOption.optionTitleId} 
+                  onChange={(e) => setNewOption((prev) => ({ ...prev, optionTitleId: e.target.value }))}
+                >
+                  <option value="">옵션 타이틀 선택</option>
+                  {optionTitles.map((title) => (
+                    <option key={title.optionTitleId} value={title.optionTitleId}>
+                      {title.titleName}
+                    </option>
+                  ))}
+                </select>
+                <input 
+                  type="text" 
+                  value={newOption.optionName} 
+                  onChange={(e) => setNewOption((prev) => ({ ...prev, optionName: e.target.value }))}
+                />
+                <button onClick={handleAddOption}>옵션 추가</button>
+              </div>
             </>
           ) : (
             <>
@@ -190,6 +246,28 @@ const EditProductPage = () => {
               <p>Category: {productDetail.categoryName}</p>
             </>
           )}
+        </div>
+        <div>
+          <h3>옵션 목록</h3>
+          {optionTitles.map((title) => (
+            <div key={title.optionTitleId}>
+              <h4>{title.titleName}</h4>
+              {title.optionNames.map((name, idx) => (
+                <div key={title.optionNameIds[idx]}>
+                  <input 
+                    type="text" 
+                    value={name} 
+                    onChange={(e) => handleUpdateOption({ 
+                      productId, 
+                      optionTitleId: title.optionTitleId, 
+                      optionNameId: title.optionNameIds[idx], 
+                      optionName: e.target.value 
+                    })}
+                  />
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </div>
