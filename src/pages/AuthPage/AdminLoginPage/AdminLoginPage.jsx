@@ -19,7 +19,6 @@ function AdminLoginPage(props) {
 
   const handleSigninClick = () => {
     const requestData = { adminName, adminPassword };
-    console.log("Sending admin signin request with data:", requestData);
 
     adminSigninRequest(requestData)
       .then((response) => {
@@ -32,8 +31,7 @@ function AdminLoginPage(props) {
         }
 
         localStorage.setItem("AccessToken", accessToken);
-        console.log("AccessToken 저장 완료:", localStorage.getItem("AccessToken"));
-
+      
         instance.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
         window.alert("성공적으로 로그인 되었습니다.");
@@ -56,7 +54,6 @@ function AdminLoginPage(props) {
               throw new Error("Admin data not found");
             }
           } catch (error) {
-            console.error("Failed to fetch principal:", error);
             window.alert("로그인에 실패했습니다. 다시 시도해주세요.");
           }
         };
@@ -64,7 +61,6 @@ function AdminLoginPage(props) {
         fetchPrincipal();
       })
       .catch((error) => {
-        console.log("Signin error:", error);
         const errorMessage = error.response?.data || "로그인에 실패했습니다. 다시 시도해주세요.";
         window.alert(`로그인 실패: ${errorMessage}`);
       });

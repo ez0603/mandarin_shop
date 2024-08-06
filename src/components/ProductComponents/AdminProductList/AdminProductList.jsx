@@ -54,7 +54,7 @@ function AdminProductList() {
     if (!selectedProducts.includes(productId)) {
       setSelectedProducts([productId]);
     }
-    navigate(`/product/edit/${productId}`);
+    navigate(`/admin/product/edit/${productId}`);
   };
 
   const handleDelete = (productId) => {
