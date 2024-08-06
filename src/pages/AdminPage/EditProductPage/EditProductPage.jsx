@@ -18,7 +18,7 @@ const EditProductPage = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { productDetail, error: productError } = useGetProducts(productId);
-  const { productOption, error: optionError } = useGetOption(productId);
+  const { options, error: optionError } = useGetOption(productId);
   const categories = useCategories();
   const [selectedImage, setSelectedImage] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -54,13 +54,13 @@ const EditProductPage = () => {
   }, [productDetail]);
 
   useEffect(() => {
-    if (productOption && productOption.length > 0) {
+    if (options && options.length > 0) {
       setProductDetailState((prevState) => ({
         ...prevState,
-        optionList: productOption,
+        optionList: options,
       }));
     }
-  }, [productOption]);
+  }, [options]);
 
   const mutation = useMutation(updateProductRequest, {
     onSuccess: () => {
@@ -124,16 +124,23 @@ const EditProductPage = () => {
       return;
     }
     try {
-      const response = await registerOptionTitle({ productId, titleName: newOptionTitle });
+      const response = await registerOptionTitle({
+        productId,
+        titleName: newOptionTitle,
+      });
       setNewOptionTitle("");
       alert("옵션 타이틀 추가 완료");
 
-      // optionList에 새 옵션 타이틀 추가
       setProductDetailState((prevState) => ({
         ...prevState,
         optionList: [
           ...prevState.optionList,
-          { optionTitleId: response.data.optionTitleId, titleName: newOptionTitle, optionNames: [], optionNameIds: [] },
+          {
+            optionTitleId: response.data.optionTitleId,
+            titleName: newOptionTitle,
+            optionNames: [],
+            optionNameIds: [],
+          },
         ],
       }));
     } catch (error) {
@@ -177,7 +184,7 @@ const EditProductPage = () => {
     return <div>Error: {productError?.message || optionError?.message}</div>;
   }
 
-  if (!productDetail || !productOption) {
+  if (!productDetail || !options) {
     return <div>Loading...</div>;
   }
 
@@ -287,22 +294,26 @@ const EditProductPage = () => {
           {productDetailState.optionList.map((title) => (
             <div key={`${title.optionTitleId}-${title.titleName}`}>
               <h4>{title.titleName}</h4>
-              {title.optionNames.map((name, idx) => (
-                <div key={`${title.optionNameIds[idx]}-${name}`}>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) =>
-                      handleUpdateOption({
-                        productId,
-                        optionTitleId: title.optionTitleId,
-                        optionNameId: title.optionNameIds[idx],
-                        optionName: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-              ))}
+              {title.optionNames.length === 0 ? (
+                <p>옵션이 없습니다</p>
+              ) : (
+                title.optionNames.map((name, idx) => (
+                  <div key={`${title.optionNameIds[idx]}-${name}`}>
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) =>
+                        handleUpdateOption({
+                          productId,
+                          optionTitleId: title.optionTitleId,
+                          optionNameId: title.optionNameIds[idx],
+                          optionName: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                ))
+              )}
             </div>
           ))}
         </div>
