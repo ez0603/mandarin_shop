@@ -1,8 +1,12 @@
 /**@jsxImportSource @emotion/react */
-import React, { useState, useEffect } from "react";
+import * as s from "./style";
+import { useState, useEffect } from "react";
 import ProductList from "../../components/ProductComponents/ProductList/ProductList";
 import { useLocation } from "react-router-dom";
-import { getProductRequest, getProductCategoryRequest } from "../../apis/api/product";
+import {
+  getProductRequest,
+  getProductCategoryRequest,
+} from "../../apis/api/product";
 
 const HomePage = () => {
   const [productList, setProductList] = useState([]);
@@ -29,9 +33,9 @@ const HomePage = () => {
   }, [categoryId]);
 
   return (
-    <div>
+    <div css={s.layout}>
       <h1>Products</h1>
-      <ProductList productList={productList} />
+      <ProductList css={s.container} productList={productList} />
     </div>
   );
 };

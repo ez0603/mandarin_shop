@@ -20,6 +20,7 @@ const PageLayout = ({ children }) => {
     if (principal.roleId === 2) {
       return <UserHeader />;
     }
+    return <Header />; // 기본 헤더로 fallback 처리
   };
 
   return (

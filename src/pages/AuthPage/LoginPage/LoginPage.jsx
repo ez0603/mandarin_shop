@@ -7,6 +7,7 @@ import { useInput } from "../../../hooks/useInput";
 import instance from "../../../apis/utils/instance";
 import { useLogin } from "../../../components/AuthProvider/AuthProvider";
 import { getUserPrincipalRequest } from "../../../apis/api/principal";
+import { QueryClient } from "react-query";
 
 function LoginPage() {
   const [username, userNameChange] = useInput();
@@ -27,16 +28,13 @@ function LoginPage() {
           window.alert("로그인에 실패했습니다. 다시 시도해주세요.");
           return;
         }
-        // 로컬 스토리지에 토큰 저장
         localStorage.setItem("AccessToken", accessToken);
         console.log("AccessToken 저장 완료:", localStorage.getItem("AccessToken"));
 
-        // Axios 기본 헤더 설정
         instance.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
         window.alert("성공적으로 로그인 되었습니다.");
 
-        // 프린시펄 정보 가져오기
         const fetchPrincipal = async () => {
           try {
             const principalResponse = await getUserPrincipalRequest(accessToken);

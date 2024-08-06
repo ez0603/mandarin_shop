@@ -1,10 +1,12 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import ProductPage from '../pages/AdminPage/ProductPage/ProductPage';
 
 function AdminRouter(props) {
 	return (
-		<div>
-			fd
-		</div>
+		<Routes>
+			  <Route path="/product" element={<ProductPage />} />
+		</Routes>
 	);
 }
 

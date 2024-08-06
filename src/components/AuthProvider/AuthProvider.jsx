@@ -16,33 +16,23 @@ const AuthProvider = ({ children }) => {
           let response;
           
           // 사용자 프린시펄 요청
-          try {
-            response = await getUserPrincipalRequest(token);
-            if (response && response.data) {
-              setAuth({
-                token,
-                principal: response.data,
-              });
-              navigate("/user/home");
-              return;
-            }
-          } catch (userError) {
-            console.error("Failed to fetch user principal:", userError);
+          response = await getUserPrincipalRequest(token);
+          if (response && response.data) {
+            setAuth({
+              token,
+              principal: response.data,
+            });
+            return;
           }
 
           // 관리자 프린시펄 요청
-          try {
-            response = await getAdminPrincipalRequest(token);
-            if (response && response.data) {
-              setAuth({
-                token,
-                principal: response.data,
-              });
-              navigate("/admin/home");
-              return;
-            }
-          } catch (adminError) {
-            console.error("Failed to fetch admin principal:", adminError);
+          response = await getAdminPrincipalRequest(token);
+          if (response && response.data) {
+            setAuth({
+              token,
+              principal: response.data,
+            });
+            return;
           }
 
           // 프린시펄 데이터를 찾지 못했을 경우
@@ -55,13 +45,12 @@ const AuthProvider = ({ children }) => {
             principal: null,
           });
           localStorage.removeItem("AccessToken");
-          navigate("/auth/login");
         }
       }
     };
 
     fetchPrincipal();
-  }, [setAuth, navigate]);
+  }, [setAuth]);
 
   const login = (token, principal) => {
     setAuth({ token, principal });

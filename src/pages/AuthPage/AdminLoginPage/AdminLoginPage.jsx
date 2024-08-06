@@ -7,12 +7,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { adminSigninRequest } from "../../../apis/api/signin";
 import instance from "../../../apis/utils/instance";
 import { getAdminPrincipalRequest } from "../../../apis/api/principal";
+import { useSetRecoilState } from "recoil";
+import { authState } from "../../../atoms/authAtom";
 
 function AdminLoginPage(props) {
   const [adminName, adminNameChange] = useInput();
   const [adminPassword, adminPasswordChange] = useInput();
   const login = useLogin();
   const navigate = useNavigate();
+  const setAuthState = useSetRecoilState(authState);
 
   const handleSigninClick = () => {
     const requestData = { adminName, adminPassword };
@@ -40,8 +43,15 @@ function AdminLoginPage(props) {
             const adminResponse = await getAdminPrincipalRequest(accessToken);
             if (adminResponse && adminResponse.data) {
               console.log("Admin principal response:", adminResponse.data);
+              // authState 설정
+              setAuthState({
+                token: accessToken,
+                principal: adminResponse.data,
+              });
               login(accessToken, adminResponse.data);
-              navigate("/admin/home"); // 성공적으로 로그인되면 /admin/home으로 이동
+
+              // 관리자 페이지로 이동
+              navigate("/admin/home");
             } else {
               throw new Error("Admin data not found");
             }

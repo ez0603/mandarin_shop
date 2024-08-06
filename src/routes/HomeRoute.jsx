@@ -7,7 +7,10 @@ import UserRouter from "./UserRouter";
 import HomePage from "../pages/HomePage/HomePage";
 import PageLayout from "../components/PageComponents/PageLayout/PageLayout";
 import AuthRoute from "./AuthRoute";
-import { getAdminPrincipalRequest, getUserPrincipalRequest } from "../apis/api/principal";
+import {
+  getAdminPrincipalRequest,
+  getUserPrincipalRequest,
+} from "../apis/api/principal";
 import instance from "../apis/utils/instance";
 import { useEffect } from "react";
 
@@ -26,7 +29,7 @@ function HomeRoute(props) {
     "adminPrincipal",
     getAdminPrincipalRequest,
     {
-      enabled: !!principal && principal.roleId === 1,
+      enabled: principal?.roleId === 1,
       retry: false,
     }
   );
@@ -35,7 +38,7 @@ function HomeRoute(props) {
     "userPrincipal",
     getUserPrincipalRequest,
     {
-      enabled: !!principal && principal.roleId === 2,
+      enabled: principal?.roleId === 2,
       retry: false,
     }
   );
@@ -55,9 +58,15 @@ function HomeRoute(props) {
     return <div>Loading...</div>;
   }
 
-  if ((principal.roleId === 1 && !adminData) || (principal.roleId === 2 && !userData)) {
+  if (
+    (principal.roleId === 1 && !adminData) ||
+    (principal.roleId === 2 && !userData)
+  ) {
     return <Navigate to="/" />;
   }
+
+  console.log("authState:", auth);
+  console.log("principal:", principal);
 
   return (
     <PageLayout>
