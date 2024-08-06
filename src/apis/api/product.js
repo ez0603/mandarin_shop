@@ -26,7 +26,7 @@ export const  registerOptionTitle = async (data) => {
 };
 
 export const  getProductOption = async (productId) => {
-    return await instance.get(`/product/option?productId=${productId}`, productId);
+    return await instance.get(`/product/option?productId=${productId}`);
 };
 
 export const  registerOption = async (data) => {
