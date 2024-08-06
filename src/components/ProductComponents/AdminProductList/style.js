@@ -79,7 +79,7 @@ export const headerContainer = css`
 
 export const headerItem = css`
   cursor: default;
-  width: 28%;
+  width: 27.5%;
   display: flex;
   text-align: center;
   position: relative;
@@ -96,9 +96,19 @@ export const selectAllCheckbox = css`
   border-radius: 5px;
   background-color: #fff;
   margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 0px 4px 5px #c0c0c06e;
 
   :hover {
     background-color: #f1f1f1;
+  }
+
+  :active {
+    top: 4px;
+    box-shadow: 0 0 #d4d4d4;
+    background-color: #c5c5c5;
   }
 `;
 
@@ -171,8 +181,14 @@ export const buttonBox = css`
     border-radius: 5px;
     border: 1px solid #dbdbdb;
     background-color: #fff;
+    box-shadow: 0px 4px 5px #c0c0c06e;
+
     :hover {
       background-color: #f1f1f1;
+    }
+
+    :active {
+      background-color: #c5c5c5;
     }
   }
 `;
