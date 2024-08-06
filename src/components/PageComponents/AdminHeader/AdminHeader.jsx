@@ -15,7 +15,6 @@ function AdminHeader(props) {
   const { principal } = auth;
   const navigate = useNavigate();
   const queryClient = new QueryClient(); // QueryClient 인스턴스 생성
-  console.log(principal);
 
   const handleLogoClick = () => {
     if (principal?.roleId === 1) {
@@ -62,8 +61,8 @@ function AdminHeader(props) {
           </div>
           <div css={s.category}>
             <ul css={s.list}>
-              <li onClick={handleProductClick}>매출 현황</li>
-              <li onClick={handleSalesClick}>상품 관리</li>
+              <li onClick={handleSalesClick}>매출 현황</li>
+              <li onClick={handleProductClick}>상품 관리</li>
               <li>재고 관리</li>
             </ul>
           </div>

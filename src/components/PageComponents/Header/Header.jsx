@@ -1,10 +1,8 @@
 /**@jsxImportSource @emotion/react */
 import * as s from "./style";
-import { useQuery } from "react-query";
-import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
-import { searchAllCategoryRequest } from "../../../apis/api/categoty";
+import useCategories from "../../../hooks/useCategories";
 import logo from "../../../assets/img/logo.png";
 import { GoPerson } from "react-icons/go";
 import { MdOutlineShoppingBag } from "react-icons/md";
@@ -12,27 +10,9 @@ import { authState } from "../../../atoms/authAtom";
 import { IoSettingsOutline } from "react-icons/io5";
 
 function Header(props) {
-  const [categories, setCategories] = useState([]);
+  const categories = useCategories();
   const auth = useRecoilValue(authState);
   const navigate = useNavigate();
-
-  useQuery(["categoryQuery"], searchAllCategoryRequest, {
-    onSuccess: (response) => {
-      setCategories(() =>
-        response.data.map((category) => {
-          return {
-            value: category.categoryId,
-            label: category.categoryName,
-          };
-        })
-      );
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-    retry: 0,
-    refetchOnWindowFocus: false,
-  });
 
   const handleIconClick = () => {
     if (auth.principal) {

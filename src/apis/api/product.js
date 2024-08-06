@@ -7,3 +7,4 @@ export const getProductRequest = async () => {
 export const getProductCategoryRequest = async (categoryId) => {
     return await instance.get(`/product/products/category?categoryId=${categoryId}`);
 }
+

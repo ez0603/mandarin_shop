@@ -65,9 +65,6 @@ function HomeRoute(props) {
     return <Navigate to="/" />;
   }
 
-  console.log("authState:", auth);
-  console.log("principal:", principal);
-
   return (
     <PageLayout>
       <Routes>
