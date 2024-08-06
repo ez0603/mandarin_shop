@@ -33,7 +33,7 @@ export const logoLayout = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  top: -80px;
+  top: -65px;
 
   img {
     width: 170px;

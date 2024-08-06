@@ -6,11 +6,10 @@ export const layout = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #F9F5EA;
 `;
 
 export const container = css`
-  width: 75%;
+  width: 82%;
   height: 180px;
   display: flex;
   flex-direction: column;
@@ -34,7 +33,7 @@ export const logoLayout = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  top: -70px;
+  top: -40px;
 
   img {
     width: 170px;
@@ -62,10 +61,53 @@ export const mypageLayout = css`
   }
 `;
 
+export const iconWithText = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+
+  span {
+    position: absolute;
+    bottom: -40px;
+    white-space: nowrap;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+    background-color: #fff;
+    padding: 5px 7px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+    &::before {
+      content: "";
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 6px;
+      border-style: solid;
+      border-color: transparent transparent #fff transparent;
+    }
+  }
+
+  &:hover span {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &:hover svg {
+    color: #dbdbdb;
+  }
+`;
+
 export const category = css`
   display: flex;
   align-items: center;
   padding-top: 20px;
+  position: relative;
+  left: -3%;
 `;
 
 export const list = css`
@@ -75,7 +117,6 @@ export const list = css`
   align-items: center;
   gap: 20px;
   padding: 0;
-  margin: 0;
 
   li {
     cursor: pointer;

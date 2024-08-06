@@ -28,7 +28,7 @@ export const container = css`
 
 
 export const category = css`
-width: 88%;
+width: 87%;
   display: flex;
   align-items: center;
 `;

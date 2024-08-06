@@ -61,14 +61,14 @@ function AdminHeader(props) {
           </div>
           <div css={s.category}>
             <ul css={s.list}>
-              <li onClick={handleSalesClick}>매출 현황</li>
-              <li onClick={handleProductClick}>상품 관리</li>
-              <li>재고 관리</li>
+              <li css={s.listItem} onClick={handleSalesClick}>매출 현황</li>
+              <li css={s.listItem} onClick={handleProductClick}>상품 관리</li>
+              <li css={s.listItem}>재고 관리</li>
             </ul>
           </div>
           <div css={s.mypageAndCategory}>
             <div css={s.mypageLayout}>
-              <div onClick={handleLogoutClick}>
+              <div css={s.iconWithText} onClick={handleLogoutClick}>
                 <GoPerson size={30} />
                 <span>로그아웃</span>
               </div>
