@@ -10,7 +10,6 @@ const OptionManager = ({ productId, optionTitles, optionNames, setOptionList }) 
     optionTitleId: "",
     optionName: "",
   });
-  const [showColorPicker, setShowColorPicker] = useState(false); // 색상 선택기 표시 상태
   const [selectedColor, setSelectedColor] = useState("#000000"); // 선택된 색상 상태 추가
 
   const { insertOption, error: insertOptionError } = useInsertOption();
@@ -46,30 +45,25 @@ const OptionManager = ({ productId, optionTitles, optionNames, setOptionList }) 
   };
 
   const handleAddOption = async () => {
-    if (!newOption.optionTitleId || (!newOption.optionName && !showColorPicker)) {
-      alert("옵션 타이틀과 옵션 이름 또는 색상을 모두 입력해 주세요.");
+    if (!newOption.optionTitleId || !newOption.optionName) {
+      alert("옵션 타이틀과 옵션 이름을 모두 입력해 주세요.");
       return;
     }
-
-    const optionName = showColorPicker ? selectedColor : newOption.optionName;
 
     if (window.confirm("옵션을 추가하시겠습니까?")) {
       try {
         const newOptionEntry = {
           optionNameId: Date.now(),
-          optionName: optionName,
+          optionName: newOption.optionName,
           optionTitleId: newOption.optionTitleId,
-          color: showColorPicker ? selectedColor : null, // 색상 선택기가 표시된 경우 색상 추가
+          color: selectedColor,
         };
-        console.log('New Option Entry:', newOptionEntry); // 디버깅용 콘솔 로그
         setOptionList((prevTitles, prevNames) => {
-          console.log('Updated Option Names:', [...prevNames, newOptionEntry]); // 상태 업데이트 확인용 로그
           return [prevTitles, [...prevNames, newOptionEntry]];
         });
         setNewOption({ optionTitleId: "", optionName: "" });
-        setShowColorPicker(false); // 색상 선택기 숨기기
         setSelectedColor("#000000"); // 색상 초기화
-        await insertOption(productId, newOption.optionTitleId, optionName);
+        await insertOption(productId, newOption.optionTitleId, newOption.optionName, selectedColor);
         await refetchOptions();
       } catch (error) {
         console.error("Failed to add option", error);
@@ -83,9 +77,12 @@ const OptionManager = ({ productId, optionTitles, optionNames, setOptionList }) 
       const updatedOptionNames = prevNames.map((option) =>
         option.optionNameId === updatedOption.optionNameId ? updatedOption : option
       );
-      console.log('Updated Option Names:', updatedOptionNames); // 상태 업데이트 확인용 로그
       return [prevTitles, updatedOptionNames];
     });
+  };
+
+  const handleColorChange = (e) => {
+    setSelectedColor(e.target.value);
   };
 
   return (
@@ -124,33 +121,24 @@ const OptionManager = ({ productId, optionTitles, optionNames, setOptionList }) 
             <option disabled>옵션 타이틀을 불러올 수 없습니다</option>
           )}
         </select>
-        {!showColorPicker && (
-          <input
-            type="text"
-            value={newOption.optionName}
-            onChange={(e) =>
-              setNewOption((prev) => ({
-                ...prev,
-                optionName: e.target.value,
-              }))
-            }
-          />
-        )}
-        <label>
-          <input
-            type="checkbox"
-            checked={showColorPicker}
-            onChange={() => setShowColorPicker(!showColorPicker)}
-          />
-          색상 선택
-        </label>
-        {showColorPicker && (
+        <input
+          type="text"
+          value={newOption.optionName}
+          onChange={(e) =>
+            setNewOption((prev) => ({
+              ...prev,
+              optionName: e.target.value,
+            }))
+          }
+        />
+        <div>
+          <h4>색상 선택</h4>
           <input
             type="color"
             value={selectedColor}
-            onChange={(e) => setSelectedColor(e.target.value)}
+            onChange={handleColorChange}
           />
-        )}
+        </div>
         <button onClick={handleAddOption}>옵션 추가</button>
       </div>
       <div>
@@ -163,7 +151,7 @@ const OptionManager = ({ productId, optionTitles, optionNames, setOptionList }) 
                 optionNames
                   .filter((name) => name.optionTitleId === title.optionTitleId)
                   .map((name) => (
-                    <div key={`${name.optionNameId}-${name.optionName}`} style={{ backgroundColor: name.color || 'transparent', padding: '5px', margin: '5px 0' }}>
+                    <div key={`${name.optionNameId}-${name.optionName}`} style={{ display: "flex", alignItems: "center", padding: '5px', margin: '5px 0' }}>
                       <input
                         type="text"
                         value={name.optionName}
@@ -175,9 +163,15 @@ const OptionManager = ({ productId, optionTitles, optionNames, setOptionList }) 
                         }
                       />
                       {name.color && (
-                        <span style={{ color: name.color, marginLeft: '10px' }}>
-                          {name.color}
-                        </span>
+                        <div
+                          style={{
+                            backgroundColor: name.color,
+                            width: "20px",
+                            height: "20px",
+                            marginLeft: "10px",
+                            border: "1px solid black",
+                          }}
+                        />
                       )}
                     </div>
                   ))
