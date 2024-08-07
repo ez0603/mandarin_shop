@@ -9,7 +9,7 @@ export const layout = css`
 `;
 
 export const container = css`
-  width: 75%;
+  width: 100%;
   height: 180px;
   display: flex;
   flex-direction: column;
@@ -18,7 +18,7 @@ export const container = css`
 `;
 
 export const headerContent = css`
-  width: 100%;
+  width: 80%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -77,12 +77,12 @@ export const iconWithText = css`
     &::before {
       content: "";
       position: absolute;
-      bottom: 30px; 
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
       border-width: 6px;
       border-style: solid;
-      border-color: transparent transparent #fff transparent; 
+      border-color: transparent transparent #fff transparent;
     }
   }
 
@@ -90,7 +90,7 @@ export const iconWithText = css`
     visibility: visible;
     opacity: 1;
   }
-  
+
   p {
     margin: 0;
   }
@@ -101,6 +101,8 @@ export const iconWithText = css`
 `;
 
 export const category = css`
+  width: 40%;
+  /* background-color: aqua; */
   display: flex;
   align-items: center;
   padding-top: 20px;
