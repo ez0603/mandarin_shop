@@ -20,7 +20,7 @@ export const container = css`
 
 export const imageContainer = css`
   width: 40%;
-  height: 80%;
+  height: auto;
   position: relative;
   display: flex;
   align-items: center;
