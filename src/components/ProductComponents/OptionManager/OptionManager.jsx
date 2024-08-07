@@ -12,31 +12,33 @@ const OptionManager = ({ productId, optionTitles, optionNames, setOptionList }) 
   });
   const { insertOption, error: insertOptionError } = useInsertOption();
   const { insertOptionTitle, error: insertOptionTitleError, refresh } = useInsertOptionTitle();
-  const { titleOptions, error: titleOptionsError } = useGetTitleOption(productId);
+  const { titleOptions, error: titleOptionsError, refetch: refetchOptions } = useGetTitleOption(productId);
 
   useEffect(() => {
     if (refresh) {
-      // 옵션 타이틀을 추가한 후 새로 고침할 때 필요한 로직 추가
+      refetchOptions();
     }
-  }, [refresh]);
+  }, [refresh, refetchOptions]);
 
   const handleAddOptionTitle = async () => {
     if (!newOptionTitle) {
       alert("옵션 타이틀을 입력해 주세요.");
       return;
     }
-    try {
-      await insertOptionTitle(productId, newOptionTitle);
-      const newTitle = {
-        optionTitleId: Date.now(), // 유일한 키로 대체
-        titleName: newOptionTitle,
-      };
-      const updatedOptionTitles = [...optionTitles, newTitle];
-      setNewOptionTitle("");
-      setOptionList(updatedOptionTitles, optionNames);
-    } catch (error) {
-      console.error("Failed to add option title", error);
-      alert("옵션 타이틀 추가 실패");
+    if (window.confirm("옵션 타이틀을 추가하시겠습니까?")) {
+      try {
+        const newTitle = {
+          optionTitleId: Date.now(),
+          titleName: newOptionTitle,
+        };
+        setOptionList((prevTitles, prevNames) => ([...prevTitles, newTitle], prevNames));
+        setNewOptionTitle("");
+        await insertOptionTitle(productId, newOptionTitle);
+        await refetchOptions();
+      } catch (error) {
+        console.error("Failed to add option title", error);
+        alert("옵션 타이틀 추가 실패");
+      }
     }
   };
 
@@ -45,27 +47,31 @@ const OptionManager = ({ productId, optionTitles, optionNames, setOptionList }) 
       alert("옵션 타이틀과 옵션 이름을 모두 입력해 주세요.");
       return;
     }
-    try {
-      await insertOption(productId, newOption.optionTitleId, newOption.optionName);
-      const newOptionEntry = {
-        optionNameId: Date.now(),
-        optionName: newOption.optionName,
-        optionTitleId: newOption.optionTitleId,
-      };
-      const updatedOptionNames = [...optionNames, newOptionEntry];
-      setNewOption({ optionTitleId: "", optionName: "" });
-      setOptionList(optionTitles, updatedOptionNames);
-    } catch (error) {
-      console.error("Failed to add option", error);
-      alert("옵션 추가 실패");
+    if (window.confirm("옵션을 추가하시겠습니까?")) {
+      try {
+        const newOptionEntry = {
+          optionNameId: Date.now(),
+          optionName: newOption.optionName,
+          optionTitleId: newOption.optionTitleId,
+        };
+        setOptionList((prevTitles, prevNames) => (prevTitles, [...prevNames, newOptionEntry]));
+        setNewOption({ optionTitleId: "", optionName: "" });
+        await insertOption(productId, newOption.optionTitleId, newOption.optionName);
+        await refetchOptions();
+      } catch (error) {
+        console.error("Failed to add option", error);
+        alert("옵션 추가 실패");
+      }
     }
   };
 
   const handleUpdateOption = (updatedOption) => {
-    const updatedOptionNames = optionNames.map((option) =>
-      option.optionNameId === updatedOption.optionNameId ? updatedOption : option
-    );
-    setOptionList(optionTitles, updatedOptionNames);
+    setOptionList((prevTitles, prevNames) => {
+      const updatedOptionNames = prevNames.map((option) =>
+        option.optionNameId === updatedOption.optionNameId ? updatedOption : option
+      );
+      return [prevTitles, updatedOptionNames];
+    });
   };
 
   return (
