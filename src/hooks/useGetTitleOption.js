@@ -1,35 +1,21 @@
-import { useState, useEffect } from "react";
-import { getProductTitleOption } from "../apis/api/product";
+import { useQuery } from "react-query";
+import { getProductTitleOption } from "../apis/api/product"; // 경로가 정확한지 확인하세요.
 
 const useGetTitleOption = (productId) => {
-  const [titleOptions, setTitleOptions] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchTitleOptions = async () => {
-      try {
-        const response = await getProductTitleOption(productId);
-        console.log("Product title options response:", response.data);
-
-        if (response.data) {
-          const optionTitles = response.data.optionTitlesId.map((id, index) => ({
-            optionTitleId: id,
-            titleName: response.data.optionTitleNames[index],
-          }));
-          setTitleOptions(optionTitles);
-        }
-      } catch (error) {
-        console.error("Error fetching product title options", error);
-        setError(error);
-      }
-    };
-
-    if (productId) {
-      fetchTitleOptions();
+  const { data, error, refetch } = useQuery(
+    ["productTitleOptions", productId],
+    () => getProductTitleOption(productId),
+    {
+      enabled: !!productId,
     }
-  }, [productId]);
+  );
 
-  return { titleOptions, error };
+  const titleOptions = data?.data.optionTitlesId.map((id, index) => ({
+    optionTitleId: id,
+    titleName: data.data.optionTitleNames[index],
+  })) || [];
+
+  return { titleOptions, error, refetch };
 };
 
 export default useGetTitleOption;

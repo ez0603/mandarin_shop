@@ -1,27 +1,19 @@
-import { useState, useEffect } from 'react';
-import { getProductDetailRequest } from '../apis/api/product';
+import { useQuery } from "react-query";
+import { getProductDetailRequest } from "../apis/api/product";
 
-const useGetProducts = (productId) => {
-    const [productDetail, setProductDetail] = useState([]);
-    const [error, setError] = useState(null);
+const useGetProductsDetail = (productId) => {
+  const queryResult = useQuery(
+    ["productDetail", productId],
+    () => getProductDetailRequest(productId),
+    {
+      enabled: !!productId,
+    }
+  );
 
-    useEffect(() => {
-        const getProductDetail = async () => {
-            try {
-                const response = await getProductDetailRequest(productId);
-                setProductDetail(response.data);
-            } catch (error) {
-                console.log("에러", error);
-                setError(error);
-            }
-        };
-
-        if (productId) {
-            getProductDetail();
-        }
-    }, [productId]);
-
-    return { productDetail, error };
+  return {
+    ...queryResult,
+    productDetail: queryResult.data?.data,
+  };
 };
 
-export default useGetProducts;
+export default useGetProductsDetail;

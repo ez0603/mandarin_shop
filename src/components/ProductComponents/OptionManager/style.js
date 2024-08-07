@@ -9,22 +9,19 @@ export const layout = css`
 `;
 
 export const container = css`
-  width: 80%;
+  width: 85%;
   height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
   background-color: orange;
+
 `;
 
 export const imageContainer = css`
-  width: 40%;
-  height: 80%;
+width: 40%;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   display: inline-block;
   background-color: aqua;
 `;
