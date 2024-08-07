@@ -1,10 +1,8 @@
-/** @jsxImportSource @emotion/react */
-// import * as s from "./style";
 import { useState, useEffect } from "react";
 import useInsertOption from "../../../hooks/useInsertOption";
 import useInsertOptionTitle from "../../../hooks/useInsertOptionTitle";
-import { updateProductOptionRequest } from "../../../apis/api/product";
-
+import useGetTitleOption from "../../../hooks/useGetTitleOption";
+import * as s from "./style";
 
 const OptionManager = ({ productId, optionTitles, optionNames, setOptionList }) => {
   const [newOptionTitle, setNewOptionTitle] = useState("");
@@ -14,6 +12,7 @@ const OptionManager = ({ productId, optionTitles, optionNames, setOptionList }) 
   });
   const { insertOption, error: insertOptionError } = useInsertOption();
   const { insertOptionTitle, error: insertOptionTitleError, refresh } = useInsertOptionTitle();
+  const { titleOptions, error: titleOptionsError } = useGetTitleOption(productId);
 
   useEffect(() => {
     if (refresh) {
@@ -28,8 +27,13 @@ const OptionManager = ({ productId, optionTitles, optionNames, setOptionList }) 
     }
     try {
       await insertOptionTitle(productId, newOptionTitle);
+      const newTitle = {
+        optionTitleId: Date.now(), // 유일한 키로 대체
+        titleName: newOptionTitle,
+      };
+      const updatedOptionTitles = [...optionTitles, newTitle];
       setNewOptionTitle("");
-      // 옵션 타이틀을 추가한 후 최신 데이터를 가져오기 위해 refetch 호출 (필요시)
+      setOptionList(updatedOptionTitles, optionNames);
     } catch (error) {
       console.error("Failed to add option title", error);
       alert("옵션 타이틀 추가 실패");
@@ -43,23 +47,25 @@ const OptionManager = ({ productId, optionTitles, optionNames, setOptionList }) 
     }
     try {
       await insertOption(productId, newOption.optionTitleId, newOption.optionName);
-      // 옵션을 추가한 후 최신 데이터를 가져오기 위해 refetch 호출 (필요시)
+      const newOptionEntry = {
+        optionNameId: Date.now(),
+        optionName: newOption.optionName,
+        optionTitleId: newOption.optionTitleId,
+      };
+      const updatedOptionNames = [...optionNames, newOptionEntry];
       setNewOption({ optionTitleId: "", optionName: "" });
+      setOptionList(optionTitles, updatedOptionNames);
     } catch (error) {
       console.error("Failed to add option", error);
       alert("옵션 추가 실패");
     }
   };
 
-  const handleUpdateOption = async (option) => {
-    try {
-      await updateProductOptionRequest(option);
-      alert("옵션 수정 완료");
-      // 수정된 옵션을 가져오기 위해 refetch 호출 (필요시)
-    } catch (error) {
-      console.error("Failed to update option", error);
-      alert("옵션 수정 실패");
-    }
+  const handleUpdateOption = (updatedOption) => {
+    const updatedOptionNames = optionNames.map((option) =>
+      option.optionNameId === updatedOption.optionNameId ? updatedOption : option
+    );
+    setOptionList(optionTitles, updatedOptionNames);
   };
 
   return (
@@ -85,10 +91,10 @@ const OptionManager = ({ productId, optionTitles, optionNames, setOptionList }) 
           }
         >
           <option value="">옵션 타이틀 선택</option>
-          {Array.isArray(optionTitles) && optionTitles.length > 0 ? (
-            optionTitles.map((title) => (
+          {Array.isArray(titleOptions) && titleOptions.length > 0 ? (
+            titleOptions.map((title, index) => (
               <option
-                key={title.optionTitleId}
+                key={`${title.optionTitleId}-${index}-${title.titleName}`}
                 value={title.optionTitleId}
               >
                 {title.titleName}
@@ -114,21 +120,19 @@ const OptionManager = ({ productId, optionTitles, optionNames, setOptionList }) 
         <h3>옵션 목록</h3>
         {Array.isArray(optionTitles) && optionTitles.length > 0 ? (
           optionTitles.map((title) => (
-            <div key={title.optionTitleId}>
+            <div key={`${title.optionTitleId}-${title.titleName}`}>
               <h4>{title.titleName}</h4>
               {Array.isArray(optionNames) && optionNames.length > 0 ? (
                 optionNames
-                  .filter(name => name.optionTitleId === title.optionTitleId)
+                  .filter((name) => name.optionTitleId === title.optionTitleId)
                   .map((name) => (
-                    <div key={name.optionNameId}>
+                    <div key={`${name.optionNameId}-${name.optionName}`}>
                       <input
                         type="text"
                         value={name.optionName}
                         onChange={(e) =>
                           handleUpdateOption({
-                            productId,
-                            optionTitleId: title.optionTitleId,
-                            optionNameId: name.optionNameId,
+                            ...name,
                             optionName: e.target.value,
                           })
                         }

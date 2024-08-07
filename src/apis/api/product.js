@@ -18,7 +18,7 @@ export const deleteProductRequest = async (productId) => {
   return await instance.delete(`/product/products?productId=${productId}`);
 };
 
-export const updateProductRequest = async (data) => {
+export const updateProduct = async (data) => {
   return await instance.put("/product/products", data);
 };
 

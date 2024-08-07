@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useGetProductsDetail from "../../../hooks/useGetProductDetail";
 import { useMutation, useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
-import { updateProductRequest } from "../../../apis/api/product";
+import { updateProduct } from "../../../apis/api/product";
 import ImageUpload from "../../../components/ProductComponents/ImageUpload/ImageUpload";
 import OptionManager from "../../../components/ProductComponents/OptionManager/OptionManager";
 import useCategories from "../../../hooks/useCategories";
@@ -33,6 +33,7 @@ const EditProductPage = () => {
   useEffect(() => {
     if (productDetail) {
       const initialData = {
+        productId: productId,
         productName: productDetail.productName,
         categoryId: productDetail.categoryId,
         categoryName: productDetail.categoryName,
@@ -46,9 +47,9 @@ const EditProductPage = () => {
       setProductDetailState(initialData);
       setSelectedImage(productDetail.productImg); // 이미지 상태 초기화
     }
-  }, [productDetail]);
+  }, [productDetail, productId]);
 
-  const mutation = useMutation(updateProductRequest, {
+  const mutation = useMutation(updateProduct, {
     onSuccess: async (data) => {
       console.log('Update successful', data);
       await queryClient.invalidateQueries(["productDetail", productId]);
@@ -86,7 +87,7 @@ const EditProductPage = () => {
       console.log('Updating product with data:', productDetailState);
       await mutation.mutateAsync(productDetailState);
     } catch (error) {
-      console.error(error);
+      console.error("Error during mutation:", error);
     }
   };
 
@@ -107,6 +108,14 @@ const EditProductPage = () => {
       ...prevState,
       categoryId: selectedCategory.value,
       categoryName: selectedCategory.label,
+    }));
+  };
+
+  const handleOptionUpdate = (updatedOptionTitles, updatedOptionNames) => {
+    setProductDetailState((prevState) => ({
+      ...prevState,
+      optionTitles: updatedOptionTitles,
+      optionNames: updatedOptionNames,
     }));
   };
 
@@ -172,13 +181,7 @@ const EditProductPage = () => {
                 productId={productId}
                 optionTitles={productDetailState.optionTitles}
                 optionNames={productDetailState.optionNames}
-                setOptionList={(optionTitles, optionNames) =>
-                  setProductDetailState((prevState) => ({
-                    ...prevState,
-                    optionTitles,
-                    optionNames,
-                  }))
-                }
+                setOptionList={handleOptionUpdate}
               />
             </>
           ) : (
