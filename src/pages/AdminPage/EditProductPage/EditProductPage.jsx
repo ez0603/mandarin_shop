@@ -59,7 +59,7 @@ const EditProductPage = () => {
       await queryClient.invalidateQueries(["productDetail", productId]);
       setIsEditing(false);
       alert("제품 수정 완료");
-      await refetchProductDetail(); // 최신 데이터로 다시 가져오기
+      window.location.reload(); // 페이지 새로고침
     },
     onError: (error) => {
       console.error("Failed to update product", error);
@@ -68,11 +68,12 @@ const EditProductPage = () => {
   });
 
   const handleImageUpload = (url) => {
+    console.log("Image uploaded to:", url); // 디버그 로그 추가
     setProductDetailState((prevState) => ({
       ...prevState,
       productImg: url,
     }));
-    setSelectedImage(url); // 이미지 상태 업데이트
+    setIsEditing(true); // 이미지 업로드 후 isEditing 상태를 유지하여 저장 버튼을 표시하도록 설정
   };
 
   const handleEditClick = () => {
@@ -88,8 +89,17 @@ const EditProductPage = () => {
 
   const handleUpdateProductDetail = async () => {
     try {
-      console.log("Updating product with data:", productDetailState);
-      await mutation.mutateAsync(productDetailState);
+      const updateData = {
+        productId: productDetailState.productId,
+        productName: productDetailState.productName,
+        productPrice: productDetailState.productPrice,
+        productImg: productDetailState.productImg,
+        productDescription: productDetailState.productDescription,
+        categoryId: productDetailState.categoryId,
+      };
+
+      console.log("Updating product with data:", updateData);
+      await mutation.mutateAsync(updateData);
     } catch (error) {
       console.error("Error during mutation:", error);
     }
@@ -101,6 +111,7 @@ const EditProductPage = () => {
       ...prevState,
       [name]: value,
     }));
+    setIsEditing(true); // 다른 값이 변경될 때도 isEditing 상태를 유지하여 저장 버튼을 표시하도록 설정
   };
 
   const handleCategoryChange = (e) => {
@@ -113,6 +124,7 @@ const EditProductPage = () => {
       categoryId: selectedCategory.value,
       categoryName: selectedCategory.label,
     }));
+    setIsEditing(true); // 카테고리가 변경될 때도 isEditing 상태를 유지하여 저장 버튼을 표시하도록 설정
   };
 
   const handleOptionUpdate = (updatedOptionTitles, updatedOptionNames) => {
@@ -121,6 +133,7 @@ const EditProductPage = () => {
       optionTitles: updatedOptionTitles,
       optionNames: updatedOptionNames,
     }));
+    setIsEditing(true); // 옵션이 변경될 때도 isEditing 상태를 유지하여 저장 버튼을 표시하도록 설정
   };
 
   if (productError) {
@@ -203,7 +216,9 @@ const EditProductPage = () => {
                       <strong>{title.titleName}</strong>
                       <ul>
                         {productDetail.optionNames
-                          .filter((name) => name.optionTitleId === title.optionTitleId)
+                          .filter(
+                            (name) => name.optionTitleId === title.optionTitleId
+                          )
                           .map((name) => (
                             <li key={name.optionNameId}>{name.optionName}</li>
                           ))}
