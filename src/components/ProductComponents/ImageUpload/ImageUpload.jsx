@@ -4,7 +4,7 @@ import { storage } from "../../../apis/firebase/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import * as s from "./style";
 
-const ImageUpload = ({ initialImage, onImageUpload }) => {
+const ImageUpload = ({ initialImage, onImageUpload, isEditing }) => {
   const [selectedImage, setSelectedImage] = useState(initialImage);
   const fileInputRef = useRef(null);
 
@@ -28,23 +28,36 @@ const ImageUpload = ({ initialImage, onImageUpload }) => {
         console.error("Failed to upload image", error);
         alert("Failed to upload image");
       }
+
+      // 파일 입력 요소 리셋
+      e.target.value = null;
     }
   };
 
   const handleImageClick = () => {
-    fileInputRef.current.click();
+    if (isEditing) {
+      fileInputRef.current.value = ""; // 파일 입력 요소 리셋
+      fileInputRef.current.click();
+    }
   };
 
   return (
     <div css={s.imageContainer} onClick={handleImageClick}>
       <img src={selectedImage} alt="Product" css={s.productImage} />
-      <input
-        type="file"
-        ref={fileInputRef}
-        css={s.fileInput}
-        onChange={handleImageChange}
-        style={{ display: "none" }}
-      />
+      {isEditing && (
+        <>
+          <input
+            type="file"
+            ref={fileInputRef}
+            css={s.fileInput}
+            onChange={handleImageChange}
+            onClick={(e) => e.stopPropagation()} // 클릭 이벤트가 버블링되지 않도록 설정
+          />
+          <div css={s.overlay}>
+            <span>클릭해 이미지를 변경하세요</span>
+          </div>
+        </>
+      )}
     </div>
   );
 };

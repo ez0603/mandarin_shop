@@ -26,7 +26,7 @@ export const imageContainer = css`
   align-items: center;
   justify-content: center;
   display: inline-block;
-  background-color: aqua;
+  background-color: #fff;
 `;
 
 export const productImage = css`

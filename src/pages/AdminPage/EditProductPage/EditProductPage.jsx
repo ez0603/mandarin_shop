@@ -138,6 +138,7 @@ const EditProductPage = () => {
           <ImageUpload
             initialImage={selectedImage || productDetailState.productImg}
             onImageUpload={handleImageUpload}
+            isEditing={isEditing} // isEditing 상태 전달
           />
         </div>
         <div css={s.productLayout}>
