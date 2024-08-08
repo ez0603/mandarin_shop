@@ -108,6 +108,7 @@ export const table = css`
     background-color: #fff;
   }
 `;
+
 export const optionTitle = css`
   font-size: 24px;
   font-weight: 400;
@@ -115,17 +116,30 @@ export const optionTitle = css`
 `;
 
 export const optionLayout = css`
-width: 100%;
+  width: 100%;
   display: flex;
-  flex-wrap: wrap; /* 여러 줄에 걸쳐 컨텐츠를 배치하도록 설정 */
-  gap: 30px 45px; /* 각 컨테이너 사이의 간격을 추가 */
-  overflow-y: auto; /* 세로 스크롤만 필요할 경우 */
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  flex-wrap: wrap;
+  gap: 30px 45px;
+  overflow-y: auto;
+
+  ::-webkit-scrollbar {
+    width: 8px; /* 스크롤바의 너비 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 30%; 
+    background: #217af4; 
+
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, 0.1); 
+  }
 `;
 
 export const optionContainer = css`
-  width: 40%; 
+  width: 40%;
   border-radius: 10px;
   text-align: center;
   padding: 10px;
@@ -133,29 +147,21 @@ export const optionContainer = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  
-p {
-  margin: 0;
-  padding: 5px 0 10px 0;
-  font-size: 15px;
-  font-weight: 500;
-}
 
-  ul {
-    width: 90%;
-    height: 80px;
-    padding: 5px;
-    border-radius: 10px;
+  p {
     margin: 0;
-    list-style: none;
-    background-color: #fff;
-    overflow-y: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    padding: 5px 0 10px 0;
+    font-size: 15px;
+    font-weight: 600;
+  }
 
-    li {
-      padding: 3px;
-      font-size: 13px;
-    }
+  select {
+    width: 90%;
+    padding: 7px;
+    border-radius: 7px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    font-size: 13px;
+    cursor: pointer;
   }
 `;

@@ -8,6 +8,7 @@ import { updateProduct } from "../../../apis/api/product";
 import ImageUpload from "../../../components/ProductComponents/ImageUpload/ImageUpload";
 import OptionManager from "../../../components/ProductComponents/OptionComponents/OptionManager/OptionManager";
 import useCategories from "../../../hooks/useCategories";
+import CustomSelect from "../../../components/CustomSelect/CustomSelect";
 
 const EditProductPage = () => {
   const { productId } = useParams();
@@ -144,6 +145,11 @@ const EditProductPage = () => {
     return <div>Loading...</div>;
   }
 
+  const handleOptionSelect = (selectedOption) => {
+    // Handle the selection of an option
+    console.log("Selected option:", selectedOption);
+  };
+
   return (
     <div css={s.layout}>
       <div css={s.container}>
@@ -151,7 +157,7 @@ const EditProductPage = () => {
           <ImageUpload
             initialImage={selectedImage || productDetailState.productImg}
             onImageUpload={handleImageUpload}
-            isEditing={isEditing} // isEditing 상태 전달
+            isEditing={isEditing}
           />
         </div>
         <div css={s.productLayout}>
@@ -229,22 +235,19 @@ const EditProductPage = () => {
                 </table>
               </div>
               <div>
-                <h4 css={s.optionTitle}>Options</h4> {/* 타이틀 스타일 추가 */}
+                <h4 css={s.optionTitle}>Options</h4>
                 <div css={s.optionLayout}>
                   {productDetail.optionTitles &&
                     productDetail.optionTitles.map((title) => (
                       <div key={title.optionTitleId} css={s.optionContainer}>
                         <p>{title.titleName}</p>
-                        <ul>
-                          {productDetail.optionNames
-                            .filter(
-                              (name) =>
-                                name.optionTitleId === title.optionTitleId
-                            )
-                            .map((name) => (
-                              <li key={name.optionNameId}>{name.optionName}</li>
-                            ))}
-                        </ul>
+                        <CustomSelect
+                          options={productDetail.optionNames.filter(
+                            (name) => name.optionTitleId === title.optionTitleId
+                          )}
+                          onSelect={handleOptionSelect}
+                          selectedOption={null} // 선택된 옵션이 있다면 여기에 전달
+                        />
                       </div>
                     ))}
                 </div>
