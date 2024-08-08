@@ -14,7 +14,7 @@ export const customSelectButton = css`
   border: 1px solid #ccc;
   font-size: 13px;
   cursor: pointer;
-  text-align: left;
+  text-align: center;
   position: relative;
   appearance: none;
 
@@ -22,6 +22,8 @@ export const customSelectButton = css`
     border-color: #999;
     outline: none;
   }
+
+
 `;
 
 export const customSelectOptions = css`
@@ -32,7 +34,6 @@ export const customSelectOptions = css`
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 7px;
-  /* max-height: 150px; */
   overflow-y: auto;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   z-index: 10;

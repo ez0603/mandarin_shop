@@ -140,6 +140,7 @@ export const optionLayout = css`
 
 export const optionContainer = css`
   width: 40%;
+  height: 85px;
   border-radius: 10px;
   text-align: center;
   padding: 10px;
@@ -155,13 +156,5 @@ export const optionContainer = css`
     font-weight: 600;
   }
 
-  select {
-    width: 90%;
-    padding: 7px;
-    border-radius: 7px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    font-size: 13px;
-    cursor: pointer;
-  }
+
 `;
