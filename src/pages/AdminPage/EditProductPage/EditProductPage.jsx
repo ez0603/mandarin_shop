@@ -161,7 +161,9 @@ const EditProductPage = () => {
               <button onClick={handleUpdateProductDetail}>수정 완료</button>
             </>
           ) : (
-            <button onClick={handleEditClick}>수정 하기</button>
+            <button onClick={handleEditClick} css={s.editButton}>
+              수정 하기
+            </button>
           )}
           {isEditing ? (
             <>
@@ -203,30 +205,51 @@ const EditProductPage = () => {
               />
             </>
           ) : (
-            <>
-              <p>Product Name: {productDetail.productName}</p>
-              <p>Product Price: {productDetail.productPrice} 원</p>
-              <p>Product Description: {productDetail.productDescription}</p>
-              <p>Category: {productDetail.categoryName}</p>
-              <div>
-                <h4>Options:</h4>
-                {productDetail.optionTitles &&
-                  productDetail.optionTitles.map((title) => (
-                    <div key={title.optionTitleId}>
-                      <strong>{title.titleName}</strong>
-                      <ul>
-                        {productDetail.optionNames
-                          .filter(
-                            (name) => name.optionTitleId === title.optionTitleId
-                          )
-                          .map((name) => (
-                            <li key={name.optionNameId}>{name.optionName}</li>
-                          ))}
-                      </ul>
-                    </div>
-                  ))}
+            <div css={s.productBox}>
+              <div css={s.product}>
+                <table css={s.table}>
+                  <tbody>
+                    <tr>
+                      <th>상품명</th>
+                      <td>{productDetail.productName}</td>
+                    </tr>
+                    <tr>
+                      <th>가격</th>
+                      <td>{productDetail.productPrice} 원</td>
+                    </tr>
+                    <tr>
+                      <th>상세 설명</th>
+                      <td>{productDetail.productDescription}</td>
+                    </tr>
+                    <tr>
+                      <th>카테고리</th>
+                      <td>{productDetail.categoryName}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            </>
+              <div>
+                <h4 css={s.optionTitle}>Options</h4> {/* 타이틀 스타일 추가 */}
+                <div css={s.optionLayout}>
+                  {productDetail.optionTitles &&
+                    productDetail.optionTitles.map((title) => (
+                      <div key={title.optionTitleId} css={s.optionContainer}>
+                        <p>{title.titleName}</p>
+                        <ul>
+                          {productDetail.optionNames
+                            .filter(
+                              (name) =>
+                                name.optionTitleId === title.optionTitleId
+                            )
+                            .map((name) => (
+                              <li key={name.optionNameId}>{name.optionName}</li>
+                            ))}
+                        </ul>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </div>

@@ -3,9 +3,9 @@ import { css } from "@emotion/react";
 
 export const imageContainer = css`
   width: 100%;
-  max-width: 500px;
+  max-width: 550px;
   height: 500px;
-  position: relative; 
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,7 +16,7 @@ export const imageContainer = css`
 export const productImage = css`
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  object-fit: cover;
   object-position: center;
 `;
 
@@ -35,7 +35,7 @@ export const overlay = css`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4); /* 불투명도 40% */
   color: white;
   display: flex;
   align-items: center;
@@ -55,9 +55,9 @@ export const loader = css`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.404); /* 불투명 배경 추가 */
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10; /* 로딩 스피너가 다른 요소 위에 나타나도록 설정 */
+  z-index: 10; 
 `;

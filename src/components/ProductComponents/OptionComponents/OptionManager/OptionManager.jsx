@@ -52,17 +52,25 @@ const OptionManager = ({
       const updatedTitles = [...prevState.optionTitles];
       const updatedNames = [...prevState.optionNames];
 
-      if (!updatedTitles.some(title => title.optionTitleId === newOptionTitle.optionTitleId)) {
+      if (
+        !updatedTitles.some(
+          (title) => title.optionTitleId === newOptionTitle.optionTitleId
+        )
+      ) {
         updatedTitles.push(newOptionTitle);
       }
 
-      if (!updatedNames.some(name => name.optionNameId === newOptionName.optionNameId)) {
+      if (
+        !updatedNames.some(
+          (name) => name.optionNameId === newOptionName.optionNameId
+        )
+      ) {
         updatedNames.push(newOptionName);
       }
 
       return {
         optionTitles: updatedTitles,
-        optionNames: updatedNames
+        optionNames: updatedNames,
       };
     });
   };
@@ -84,24 +92,28 @@ const OptionManager = ({
   };
 
   const handleUpdateOption = async () => {
-    try {
-      await updateProductOption(updateOptionData);
-      alert("옵션 수정 완료");
-      setUpdateState(0);
-      refetch();
-    } catch (error) {
-      console.error(error);
+    if (window.confirm("정말로 옵션을 수정하시겠습니까?")) {
+      try {
+        await updateProductOption(updateOptionData);
+        alert("옵션 수정 완료");
+        setUpdateState(0);
+        refetch();
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
   const updateOptionTitle = async () => {
-    try {
-      await updateProductTitleOption(updateOptionTitleName);
-      alert("옵션 타이틀 수정 완료");
-      setUpdateState(0);
-      refetch();
-    } catch (error) {
-      console.error(error);
+    if (window.confirm("정말로 옵션 타이틀을 수정하시겠습니까?")) {
+      try {
+        await updateProductTitleOption(updateOptionTitleName);
+        alert("옵션 타이틀 수정 완료");
+        setUpdateState(0);
+        refetch();
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
