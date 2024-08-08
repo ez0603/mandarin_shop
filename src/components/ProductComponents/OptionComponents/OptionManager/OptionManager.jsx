@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import useGetTitleOption from "../../../../hooks/useGetOptionTitle";
+import useGetOptionTitle from "../../../../hooks/useGetOptionTitle";
 import OptionRegisterModal from "../OptionRegisterModal/OptionRegisterModal"; // 모달 컴포넌트 가져오기
 import * as s from "./style";
 
-const OptionManager = ({ productId, optionTitles, optionNames }) => {
+const OptionManager = ({ productId, optionTitles, optionNames, setOptionList }) => {
   const [selectedOptions, setSelectedOptions] = useState({}); // 각 옵션 타이틀에 대해 선택된 옵션 상태
   const [optionModal, setOptionModal] = useState(false); // 모달 표시 상태
 
@@ -11,7 +11,7 @@ const OptionManager = ({ productId, optionTitles, optionNames }) => {
     titleOptions,
     error: titleOptionsError,
     refetch: refetchOptions,
-  } = useGetTitleOption(productId);
+  } = useGetOptionTitle(productId);
 
   useEffect(() => {
     refetchOptions();
@@ -33,9 +33,34 @@ const OptionManager = ({ productId, optionTitles, optionNames }) => {
     setOptionModal(false);
   };
 
+  const handleOptionAdded = (newOptionTitle, newOptionName) => {
+    setOptionList((prevTitles, prevNames) => {
+      const updatedTitles = [...prevTitles];
+      const updatedNames = [...prevNames, newOptionName];
+      
+      if (!prevTitles.some(title => title.optionTitleId === newOptionTitle.optionTitleId)) {
+        updatedTitles.push(newOptionTitle);
+      }
+
+      return [updatedTitles, updatedNames];
+    });
+    refetchOptions(); // 옵션 목록을 다시 불러와서 최신 상태로 유지
+  };
+
   return (
     <div>
       <h3>옵션 목록</h3>
+      <button onClick={openModal}>옵션 추가</button>
+      {optionModal && (
+        <OptionRegisterModal
+          optionModal={optionModal}
+          closeModal={closeModal}
+          options={optionNames}
+          productId={productId}
+          productName="Product Name" // 필요에 따라 수정
+          onOptionAdded={handleOptionAdded}
+        />
+      )}
       {Array.isArray(optionTitles) && optionTitles.length > 0 ? (
         optionTitles.map((title) => (
           <div key={`${title.optionTitleId}-${title.titleName}`}>
@@ -62,16 +87,7 @@ const OptionManager = ({ productId, optionTitles, optionNames }) => {
       ) : (
         <p>옵션이 없습니다</p>
       )}
-      <button onClick={openModal}>옵션 추가</button>
-      {optionModal && (
-        <OptionRegisterModal
-          optionModal={optionModal}
-          closeModal={closeModal}
-          options={optionNames}
-          productId={productId}
-          productName="Product Name" // 필요에 따라 수정
-        />
-      )}
+   
     </div>
   );
 };

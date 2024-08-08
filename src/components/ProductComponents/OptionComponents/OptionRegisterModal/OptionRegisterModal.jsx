@@ -11,7 +11,8 @@ function OptionRegisterModal({
     closeModal,
     options,
     productId,
-    productName
+    productName,
+    onOptionAdded
 }) {
     const [optionName, setOptionName] = useState("");
     const [optionTitle, setOptionTitle] = useState("");
@@ -41,7 +42,14 @@ function OptionRegisterModal({
             console.log(params);
             await registerOption(params);
             alert("옵션 이름 추가가 완료되었습니다.");
-            window.location.reload();
+            const newOptionTitle = titleOptions.find(title => title.optionTitleId === optionSelectTitleId);
+            const newOptionName = {
+                optionNameId: Date.now(), // 임시 ID
+                optionName: optionName,
+                optionTitleId: optionSelectTitleId,
+            };
+            onOptionAdded(newOptionTitle, newOptionName);
+            closeModal();
         } catch (error) {
             console.error(error);
         }
