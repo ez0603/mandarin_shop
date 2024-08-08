@@ -194,6 +194,22 @@ const EditProductPage = () => {
               <p>Product Price: {productDetail.productPrice} 원</p>
               <p>Product Description: {productDetail.productDescription}</p>
               <p>Category: {productDetail.categoryName}</p>
+              <div>
+                <h4>Options:</h4>
+                {productDetail.optionTitles &&
+                  productDetail.optionTitles.map((title) => (
+                    <div key={title.optionTitleId}>
+                      <strong>{title.titleName}</strong>
+                      <ul>
+                        {productDetail.optionNames
+                          .filter((name) => name.optionTitleId === title.optionTitleId)
+                          .map((name) => (
+                            <li key={name.optionNameId}>{name.optionName}</li>
+                          ))}
+                      </ul>
+                    </div>
+                  ))}
+              </div>
             </>
           )}
         </div>

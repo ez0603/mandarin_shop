@@ -20,7 +20,7 @@ export const updateProductOption = async (data) => {
   return await instance.put("product/option", data);
 };
 
-export const updateProductOptionRequest = async (data) => {
+export const updateProductTitleOption = async (data) => {
   return await instance.put("/product/option/title", data);
 };
 

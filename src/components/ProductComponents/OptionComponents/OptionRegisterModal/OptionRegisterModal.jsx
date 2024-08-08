@@ -64,9 +64,6 @@ function OptionRegisterModal({
                 </div>
                 <div css={s.modalContent}>
                     <div>
-                        <h2>{productName}</h2>
-                    </div>
-                    <div>
                         <label>옵션 타이틀 추가</label>
                         <input onChange={handleOptionTitleName} type="text" />
                         <button onClick={() => insertOptionTitle(productId, optionTitle)}>추가</button>
