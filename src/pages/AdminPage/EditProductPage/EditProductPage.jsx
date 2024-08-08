@@ -6,14 +6,18 @@ import { useMutation, useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
 import { updateProduct } from "../../../apis/api/product";
 import ImageUpload from "../../../components/ProductComponents/ImageUpload/ImageUpload";
-import OptionManager from "../../../components/ProductComponents/OptionManager/OptionManager";
+import OptionManager from "../../../components/ProductComponents/OptionComponents/OptionManager/OptionManager";
 import useCategories from "../../../hooks/useCategories";
 
 const EditProductPage = () => {
   const { productId } = useParams();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { productDetail, error: productError, refetch: refetchProductDetail } = useGetProductsDetail(productId);
+  const {
+    productDetail,
+    error: productError,
+    refetch: refetchProductDetail,
+  } = useGetProductsDetail(productId);
   const categories = useCategories();
   const [isEditing, setIsEditing] = useState(false);
   const [initialState, setInitialState] = useState(null);
@@ -51,7 +55,7 @@ const EditProductPage = () => {
 
   const mutation = useMutation(updateProduct, {
     onSuccess: async (data) => {
-      console.log('Update successful', data);
+      console.log("Update successful", data);
       await queryClient.invalidateQueries(["productDetail", productId]);
       setIsEditing(false);
       alert("제품 수정 완료");
@@ -84,7 +88,7 @@ const EditProductPage = () => {
 
   const handleUpdateProductDetail = async () => {
     try {
-      console.log('Updating product with data:', productDetailState);
+      console.log("Updating product with data:", productDetailState);
       await mutation.mutateAsync(productDetailState);
     } catch (error) {
       console.error("Error during mutation:", error);

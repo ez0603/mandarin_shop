@@ -21,23 +21,3 @@ export const deleteProductRequest = async (productId) => {
 export const updateProduct = async (data) => {
   return await instance.put("/product/products", data);
 };
-
-export const registerOptionTitle = async (data) => {
-  return await instance.post("/product/option/title", data);
-};
-
-export const getProductOption = async (productId) => {
-  return await instance.get(`/product/option?productId=${productId}`);
-};
-
-export const registerOption = async (data) => {
-  return await instance.post("/product/option/name", data);
-};
-
-export const updateProductOptionRequest = async (data) => {
-  return await instance.put("/product/option/title", data);
-};
-
-export const getProductTitleOption = async (productId) => {
-  return await instance.get(`/product/option/title?productId=${productId}`);
-};

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { registerOptionTitle } from '../apis/api/product'; // 경로가 정확한지 확인하세요.
+import { registerOptionTitle } from '../apis/api/option'; // 경로가 정확한지 확인하세요.
 
 const useInsertOptionTitle = () => {
   const [error, setError] = useState(null);

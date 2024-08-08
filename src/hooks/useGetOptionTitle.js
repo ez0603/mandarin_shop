@@ -1,16 +1,16 @@
 import { useQuery } from "react-query";
-import { getProductTitleOption } from "../apis/api/product"; // 경로가 정확한지 확인하세요.
+import { getProductOptionTitle } from "../apis/api/option";
 
-const useGetTitleOption = (productId) => {
+const useGetOptionTitle = (productId) => {
   const { data, error, refetch } = useQuery(
     ["productTitleOptions", productId],
-    () => getProductTitleOption(productId),
+    () => getProductOptionTitle(productId),
     {
       enabled: !!productId,
     }
   );
 
-  const titleOptions = data?.data.optionTitlesId.map((id, index) => ({
+  const titleOptions = data?.data?.optionTitlesId?.map((id, index) => ({
     optionTitleId: id,
     titleName: data.data.optionTitleNames[index],
   })) || [];
@@ -18,4 +18,4 @@ const useGetTitleOption = (productId) => {
   return { titleOptions, error, refetch };
 };
 
-export default useGetTitleOption;
+export default useGetOptionTitle;
