@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { registerOption } from "../../../../apis/api/option";
 import useInsertOptionTitle from "../../../../hooks/useInsertOptionTitle";
 import useGetOptionTitle from "../../../../hooks/useGetOptionTitle";
@@ -11,43 +11,34 @@ function OptionRegisterModal({
     closeModal,
     options,
     productId,
-    productName,
-    onOptionAdded
+    onOptionAdded // New prop for handling option addition
 }) {
     const [optionName, setOptionName] = useState("");
     const [optionTitle, setOptionTitle] = useState("");
-    const [optionSelectTitleId, setOptionSelectTitleId] = useState(0); 
+    const [optionSelectTitleId, setOptionSlectTitleId] = useState(null);
     const { insertOptionTitle, Optionerror, refresh } = useInsertOptionTitle();
-    const { titleOptions, error, refetch } = useGetOptionTitle(productId);
-
-    useEffect(() => {
-        refetch();
-    }, [refetch, refresh]);
+    const { optionTitles = [], error } = useGetOptionTitle(productId, refresh); // Set default value to []
 
     const handleOptionTitleName = (e) => {
         setOptionTitle(e.target.value);
     };
 
     const handleOptionName = (e) => {
-        setOptionName(e.target.value)
-    }; 
-    
+        setOptionName(e.target.value);
+    };
+
     const insertOption = async () => {
         try {
             const params = {
                 productId: productId,
                 optionTitleId: optionSelectTitleId,
-                optionName: optionName,
+                optionName: optionName
             };
             console.log(params);
             await registerOption(params);
             alert("옵션 이름 추가가 완료되었습니다.");
-            const newOptionTitle = titleOptions.find(title => title.optionTitleId === optionSelectTitleId);
-            const newOptionName = {
-                optionNameId: Date.now(), // 임시 ID
-                optionName: optionName,
-                optionTitleId: optionSelectTitleId,
-            };
+            const newOptionTitle = optionTitles.find(option => option.optionTitleId === optionSelectTitleId);
+            const newOptionName = { optionTitleId: optionSelectTitleId, optionNameId: Date.now(), optionName: optionName };
             onOptionAdded(newOptionTitle, newOptionName);
             closeModal();
         } catch (error) {
@@ -70,17 +61,17 @@ function OptionRegisterModal({
                     </div>
                     <div css={s.selectWrapper}>
                         <label>옵션 내용 추가</label>
-                        <select value={optionSelectTitleId} onChange={(e) => setOptionSelectTitleId(Number(e.target.value))}> 
+                        <select value={optionSelectTitleId} onChange={(e) => setOptionSlectTitleId(Number(e.target.value))}>
                             <option value="0">타이틀 선택</option>
-                            {titleOptions.map(optionItem => (
-                                <option key={optionItem.optionTitleId} value={optionItem.optionTitleId} data-name={optionItem.titleName}>{optionItem.titleName}</option>
+                            {optionTitles.map(optionItem => (
+                                <option key={optionItem.optionTitleId} value={optionItem.optionTitleId}>{optionItem.titleName}</option>
                             ))}
                         </select>
                         <IoIosArrowDown className="select-arrow" />
                     </div>
                     <div>
                         <label>옵션 이름</label>
-                        <input onChange={handleOptionName} type="text"/> 
+                        <input onChange={handleOptionName} type="text"/>
                     </div>
                 </div>
                 <div css={s.modalFooter}>

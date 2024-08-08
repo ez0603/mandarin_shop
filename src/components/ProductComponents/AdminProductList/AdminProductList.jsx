@@ -22,8 +22,9 @@ function AdminProductList() {
     const fetchProducts = async () => {
       try {
         const response = await getProductRequest();
-        setProductList(response.data);
-        setFilteredProductList(response.data);
+        const uniqueProducts = removeDuplicates(response.data);
+        setProductList(uniqueProducts);
+        setFilteredProductList(uniqueProducts);
       } catch (error) {
         console.log(error);
       }
@@ -31,6 +32,21 @@ function AdminProductList() {
 
     fetchProducts();
   }, []);
+
+  // 중복 제거 함수
+  const removeDuplicates = (products) => {
+    const uniqueProducts = [];
+    const productIds = new Set();
+
+    products.forEach((product) => {
+      if (!productIds.has(product.productId)) {
+        uniqueProducts.push(product);
+        productIds.add(product.productId);
+      }
+    });
+
+    return uniqueProducts;
+  };
 
   const handleCheckboxChange = (productId) => {
     setSelectedProducts((prevSelectedProducts) => {
@@ -68,8 +84,9 @@ function AdminProductList() {
         await deleteProductRequest(productId);
         alert("제품이 삭제되었습니다.");
         const response = await getProductRequest();
-        setProductList(response.data);
-        setFilteredProductList(response.data);
+        const uniqueProducts = removeDuplicates(response.data);
+        setProductList(uniqueProducts);
+        setFilteredProductList(uniqueProducts);
         setSelectedProducts([]);
       } catch (error) {
         console.error("제품 삭제 실패:", error);
@@ -86,7 +103,8 @@ function AdminProductList() {
       } else {
         response = await getProductRequest();
       }
-      setFilteredProductList(response.data);
+      const uniqueProducts = removeDuplicates(response.data);
+      setFilteredProductList(uniqueProducts);
     } catch (error) {
       console.log(error);
     }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import useGetOptionTitle from "../../../../hooks/useGetOptionTitle";
 import OptionRegisterModal from "../OptionRegisterModal/OptionRegisterModal"; // 모달 컴포넌트 가져오기
 import { IoArrowBack } from "react-icons/io5"; // 뒤로가기 아이콘 가져오기
@@ -29,7 +29,7 @@ const OptionManager = ({
   });
 
   const {
-    titleOptions,
+    optionTitles: fetchedOptionTitles,
     error: titleOptionsError,
     refetch: refetchOptions,
   } = useGetOptionTitle(productId);
@@ -47,19 +47,22 @@ const OptionManager = ({
   };
 
   const handleOptionAdded = (newOptionTitle, newOptionName) => {
-    setOptionList((prevTitles, prevNames) => {
-      const updatedTitles = [...prevTitles];
-      const updatedNames = [...prevNames, newOptionName];
+    setOptionList((prevState) => {
+      const updatedTitles = [...prevState.optionTitles];
+      const updatedNames = [...prevState.optionNames];
 
-      if (
-        !prevTitles.some(
-          (title) => title.optionTitleId === newOptionTitle.optionTitleId
-        )
-      ) {
+      if (!updatedTitles.some(title => title.optionTitleId === newOptionTitle.optionTitleId)) {
         updatedTitles.push(newOptionTitle);
       }
 
-      return [updatedTitles, updatedNames];
+      if (!updatedNames.some(name => name.optionNameId === newOptionName.optionNameId)) {
+        updatedNames.push(newOptionName);
+      }
+
+      return {
+        optionTitles: updatedTitles,
+        optionNames: updatedNames
+      };
     });
   };
 
@@ -109,9 +112,9 @@ const OptionManager = ({
         <OptionRegisterModal
           optionModal={optionModal}
           closeModal={closeModal}
-          options={optionNames}
+          options={optionNames || []}
           productId={productId}
-          onOptionAdded={handleOptionAdded}
+          onOptionAdded={handleOptionAdded} // Pass the handler to the modal
         />
       )}
       {Array.isArray(optionTitles) && optionTitles.length > 0 ? (
