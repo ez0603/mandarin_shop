@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { registerOption } from "../../../../apis/api/option";
 import useInsertOptionTitle from "../../../../hooks/useInsertOptionTitle";
 import useGetOptionTitle from "../../../../hooks/useGetOptionTitle";
@@ -15,9 +15,9 @@ function OptionRegisterModal({
 }) {
     const [optionName, setOptionName] = useState("");
     const [optionTitle, setOptionTitle] = useState("");
-    const [optionSelectTitleId, setOptionSlectTitleId] = useState(null);
+    const [optionSelectTitleId, setOptionSlectTitleId] = useState("");
     const { insertOptionTitle, Optionerror, refresh } = useInsertOptionTitle();
-    const { optionTitles = [], error } = useGetOptionTitle(productId, refresh); // Set default value to []
+    const { optionTitleId = [], optionTitleName = [], error } = useGetOptionTitle(productId, refresh); // Set default value to []
 
     const handleOptionTitleName = (e) => {
         setOptionTitle(e.target.value);
@@ -37,7 +37,11 @@ function OptionRegisterModal({
             console.log(params);
             await registerOption(params);
             alert("옵션 이름 추가가 완료되었습니다.");
-            const newOptionTitle = optionTitles.find(option => option.optionTitleId === optionSelectTitleId);
+            const newOptionTitleIndex = optionTitleId.indexOf(optionSelectTitleId);
+            const newOptionTitle = {
+                optionTitleId: optionSelectTitleId,
+                titleName: optionTitleName[newOptionTitleIndex]
+            };
             const newOptionName = { optionTitleId: optionSelectTitleId, optionNameId: Date.now(), optionName: optionName };
             onOptionAdded(newOptionTitle, newOptionName);
             closeModal();
@@ -62,10 +66,14 @@ function OptionRegisterModal({
                     <div css={s.selectWrapper}>
                         <label>옵션 내용 추가</label>
                         <select value={optionSelectTitleId} onChange={(e) => setOptionSlectTitleId(Number(e.target.value))}>
-                            <option value="0">타이틀 선택</option>
-                            {optionTitles.map(optionItem => (
-                                <option key={optionItem.optionTitleId} value={optionItem.optionTitleId}>{optionItem.titleName}</option>
-                            ))}
+                            <option value="">타이틀 선택</option>
+                            {optionTitleId.length > 0 ? (
+                                optionTitleId.map((id, index) => (
+                                    <option key={id} value={id}>{optionTitleName[index]}</option>
+                                ))
+                            ) : (
+                                <option value="" disabled>타이틀이 없습니다</option>
+                            )}
                         </select>
                         <IoIosArrowDown className="select-arrow" />
                     </div>

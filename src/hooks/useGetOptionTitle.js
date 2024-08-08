@@ -1,30 +1,28 @@
-import { getProductOptionTitle } from "../apis/api/option";
 import { useEffect, useState } from "react";
+import { getProductOptionTitle } from "../apis/api/option";
 
 const useGetOptionTitle = (productId, refresh) => {
-  const [optionTitles, setOptionTitles] = useState([]);
+  const [optionTitleId, setOptionTitleId] = useState([]);
+  const [optionTitleName, setOptionTitleName] = useState([]);
   const [error, setError] = useState(null);
 
   const fetchOptionTitle = async () => {
     try {
       const response = await getProductOptionTitle(productId);
-      setOptionTitles(response.optionTitles); // 응답 데이터 구조에 맞게 수정
+      setOptionTitleId(response.data.optionTitlesId);
+      setOptionTitleName(response.data.optionTitleNames);
     } catch (error) {
       setError(error);
     }
   };
 
   useEffect(() => {
-    if (productId !== 0) {
+    if (productId) {
       fetchOptionTitle();
     }
   }, [productId, refresh]);
 
-  return {
-    optionTitles,
-    error,
-    refetch: fetchOptionTitle,
-  };
+  return { optionTitleId, optionTitleName, error, refetch: fetchOptionTitle };
 };
 
 export default useGetOptionTitle;

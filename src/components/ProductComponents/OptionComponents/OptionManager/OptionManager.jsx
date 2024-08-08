@@ -29,14 +29,15 @@ const OptionManager = ({
   });
 
   const {
-    optionTitles: fetchedOptionTitles,
+    optionTitleId: fetchedOptionTitleIds,
+    optionTitleName: fetchedOptionTitleNames,
     error: titleOptionsError,
-    refetch: refetchOptions,
+    refetch, // 올바른 함수 이름으로 수정
   } = useGetOptionTitle(productId);
 
   useEffect(() => {
-    refetchOptions();
-  }, [refetchOptions]);
+    refetch();
+  }, [refetch]);
 
   const openModal = () => {
     setOptionModal(true);
@@ -87,7 +88,7 @@ const OptionManager = ({
       await updateProductOption(updateOptionData);
       alert("옵션 수정 완료");
       setUpdateState(0);
-      refetchOptions();
+      refetch();
     } catch (error) {
       console.error(error);
     }
@@ -98,7 +99,7 @@ const OptionManager = ({
       await updateProductTitleOption(updateOptionTitleName);
       alert("옵션 타이틀 수정 완료");
       setUpdateState(0);
-      refetchOptions();
+      refetch();
     } catch (error) {
       console.error(error);
     }
@@ -191,14 +192,14 @@ const OptionManager = ({
               <div>옵션 타이틀</div>
               <input
                 type="text"
-                value={updateOptionData.optionTitleName}
+                value={updateOptionData.optionTitleName || ""}
                 disabled
               />
               <div>옵션 이름</div>
               <input
                 type="text"
                 onChange={handleOptionName}
-                value={updateOptionData.optionName}
+                value={updateOptionData.optionName || ""}
               />
             </div>
           ) : (
@@ -207,7 +208,7 @@ const OptionManager = ({
               <input
                 type="text"
                 onChange={handleOptionTitleName}
-                value={updateOptionTitleName.titleName}
+                value={updateOptionTitleName.titleName || ""}
               />
             </div>
           )}
