@@ -6,16 +6,21 @@ const useInsertOptionTitle = () => {
   const [refresh, setRefresh] = useState(false);
 
   const insertOptionTitle = async (productId, optionTitle) => {
+    if (!optionTitle) {
+      alert("옵션 타이틀을 입력해 주세요.");
+      return;
+    }
+
     const param = { productId, titleName: optionTitle };
     try {
         await registerOptionTitle(param);
         alert("추가가 완료되었습니다.");
-        setRefresh((prev) => !prev); // 상태를 토글하여 새로 고침 트리거
+        setRefresh((prev) => !prev); 
     } catch (error) {
         setError(error);
         console.error(error);
     }
-};
+  };
 
   return { insertOptionTitle, error, refresh };
 };

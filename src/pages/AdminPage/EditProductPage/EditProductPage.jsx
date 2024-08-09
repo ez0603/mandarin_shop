@@ -167,7 +167,9 @@ const EditProductPage = () => {
                   뒤로가기
                 </span>
               </button>
-              <button onClick={handleUpdateProductDetail} css={s.editOkButton}>수정 완료</button>
+              <button onClick={handleUpdateProductDetail} css={s.editOkButton}>
+                수정 완료
+              </button>
             </div>
           ) : (
             <button onClick={handleEditClick} css={s.editButton}>
@@ -179,7 +181,9 @@ const EditProductPage = () => {
               <div css={s.input}>
                 <div className="row">
                   <div className="cell">
-                    <label htmlFor="productName">상품명</label>
+                    <label className="product-name-label" htmlFor="productName">
+                      상품명
+                    </label>
                   </div>
                   <div className="cell">
                     <input
@@ -209,7 +213,9 @@ const EditProductPage = () => {
                       value={productDetailState.categoryId}
                       onChange={handleCategoryChange}
                     >
-                      <option value="" disabled>카테고리 선택</option>
+                      <option value="" disabled>
+                        카테고리 선택
+                      </option>
                       {categories &&
                         categories.map((category) => (
                           <option key={category.value} value={category.value}>

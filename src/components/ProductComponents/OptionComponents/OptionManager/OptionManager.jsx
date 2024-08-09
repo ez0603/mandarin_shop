@@ -144,7 +144,12 @@ const OptionManager = ({
     <div css={s.layout}>
       <div css={s.header}>
         <h3>Option List</h3>
-        <button onClick={openModal}>옵션 추가</button>
+        <button
+          onClick={openModal}
+          css={s.optionAddButton(optionModal)} // 애니메이션 효과 추가
+        >
+          옵션 추가
+        </button>
       </div>
       <div css={s.optionsAndEditor}>
         <div css={s.optionsContainer}>

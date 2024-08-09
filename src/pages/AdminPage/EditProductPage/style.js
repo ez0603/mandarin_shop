@@ -9,12 +9,12 @@ export const layout = css`
 `;
 
 export const container = css`
-  width: 85%;
+  width: 95%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 `;
 
 export const buttonBox = css`
@@ -78,7 +78,7 @@ export const tooltipStyle = css`
 `;
 
 export const imageContainer = css`
-  width: 40%;
+  width: 30%;
   height: auto;
   position: relative;
   display: flex;
@@ -99,16 +99,19 @@ export const input = css`
   display: flex;
   flex-direction: column;
   width: 100%;
-
+  border: 1px solid #dbdbdb;
+  border-radius: 10px;
+  
   .row {
     box-sizing: border-box;
     display: flex;
     align-items: center;
     width: 100%;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
   }
-
+  
   .cell {
+    border-radius: 10px;
     flex: 1;
     display: flex;
     align-items: center;
@@ -132,6 +135,7 @@ export const input = css`
     padding: 10px;
     border: 1px solid #dddddd00;
     box-sizing: border-box;
+    border-radius: 10px;
   }
 
   input:focus,
@@ -150,6 +154,8 @@ export const input = css`
     resize: none;
     box-sizing: border-box;
     border: 1px solid #dddddd00;
+    border-top: 1px solid #ddd;
+    border-bottom-right-radius: 10px;
   }
 
   .product-description-label {
@@ -158,10 +164,15 @@ export const input = css`
     height: 55px;
     border-top: #dddddd00;
     background-color: #f7f7f7;
+    border-bottom-left-radius: 10px;
   }
 
   .full-width {
     flex: 1;
+  }
+
+  .product-name-label{
+    border-top-left-radius: 10px;
   }
 `;
 
@@ -254,7 +265,7 @@ export const table = css`
     border: 1px solid #ddd;
     padding: 15px 0;
     text-align: center;
-    color: #585d6a;
+    color: #333;
     border-radius: 8px;
   }
 
@@ -292,14 +303,15 @@ export const table = css`
 `;
 
 export const optionTitle = css`
-  font-size: 24px;
+  font-size: 27px;
   font-weight: 400;
-  margin: 20px;
+  margin: 0 15px 20px 15px;
+  color: #333;
 `;
 
 export const optionLayout = css`
   width: 100%;
-  height: 250px;
+  height: 280px;
   display: flex;
   flex-wrap: wrap;
   gap: 30px 45px;
@@ -322,8 +334,8 @@ export const optionLayout = css`
 `;
 
 export const optionContainer = css`
-  width: 40%;
-  height: 85px;
+  width: 43%;
+  height: 90px;
   border-radius: 10px;
   text-align: center;
   padding: 10px;
@@ -334,8 +346,9 @@ export const optionContainer = css`
 
   p {
     margin: 0;
-    padding: 5px 0 10px 0;
+    padding: 5px 0 20px 0;
     font-size: 15px;
     font-weight: 600;
+    color: #333;
   }
 `;
