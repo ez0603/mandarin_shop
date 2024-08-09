@@ -1,10 +1,10 @@
 import { css } from "@emotion/react";
 
 export const optionModal = css`
-  position: absolute;
-  bottom: 7%;
-  right: -9%;
-  transform: translate(-100%, 0%);
+  position: relative;
+  top: 20px;
+  left: 22%;
+  transform: translate(100%, 50%);
   z-index: 999;
   width: 250px;
   max-width: 90%;
@@ -13,7 +13,7 @@ export const optionModal = css`
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.6s ease-in-out forwards;
+  animation: fadeIn 0.5s ease-in-out ;
 
   @keyframes fadeIn {
     from {
@@ -25,7 +25,7 @@ export const optionModal = css`
   }
 
   &.modal-exit {
-    animation: fadeOut 0.5s ease-in-out forwards;
+    animation: fadeOut 0.5s ease-in-out ;
   }
 
   @keyframes fadeOut {
@@ -69,7 +69,7 @@ export const plusButton = css`
   &:hover::after {
     content: "옵션 타이틀 추가하기";
     position: absolute;
-    bottom: 120%; /* 버튼 위에 툴팁이 나타나도록 */
+    bottom: 120%; 
     left: 50%;
     transform: translateX(-50%);
     background-color: #333;

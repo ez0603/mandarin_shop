@@ -7,6 +7,7 @@ export const layout = css`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  
 `;
 
 export const header = css`
@@ -89,18 +90,18 @@ export const optionsContainer = css`
   overflow-y: auto; /* 세로 스크롤 활성화 */
   overflow-x: hidden; /* 가로 스크롤 숨김 */
   ::-webkit-scrollbar {
-    width: 8px; /* 스크롤바의 너비 */
+    width: 6px; /* 스크롤바의 너비 */
   }
 
   ::-webkit-scrollbar-thumb {
-    height: 30%;
-    background: #217af4;
+    height: 20%;
+    background: #d6d6da;
 
     border-radius: 10px;
   }
 
   ::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, 0.1);
+    background: rgba(179, 179, 179, 0.1);
   }
 `;
 

@@ -8,7 +8,8 @@ import { updateProduct } from "../../../apis/api/product";
 import ImageUpload from "../../../components/ProductComponents/ImageUpload/ImageUpload";
 import OptionManager from "../../../components/ProductComponents/OptionComponents/OptionManager/OptionManager";
 import useCategories from "../../../hooks/useCategories";
-import CustomSelect from "../../../components/CustomSelect/CustomSelect";
+import CategorySelect from "../../../components/CategorySelect/CategorySelect";
+import OptionSelect from "../../../components/OptionSelect/OptionSelect";
 import { IoIosArrowBack } from "react-icons/io";
 
 const EditProductPage = () => {
@@ -114,15 +115,11 @@ const EditProductPage = () => {
     setIsEditing(true); // 다른 값이 변경될 때도 isEditing 상태를 유지하여 저장 버튼을 표시하도록 설정
   };
 
-  const handleCategoryChange = (e) => {
-    const { value } = e.target;
-    const selectedCategory = categories.find(
-      (category) => category.value === parseInt(value)
-    );
+  const handleCategorySelect = (category) => {
     setProductDetailState((prevState) => ({
       ...prevState,
-      categoryId: selectedCategory.value,
-      categoryName: selectedCategory.label,
+      categoryId: category.value,
+      categoryName: category.label,
     }));
     setIsEditing(true); // 카테고리가 변경될 때도 isEditing 상태를 유지하여 저장 버튼을 표시하도록 설정
   };
@@ -208,21 +205,14 @@ const EditProductPage = () => {
                     <label htmlFor="categoryId">카테고리</label>
                   </div>
                   <div className="cell">
-                    <select
-                      name="categoryId"
-                      value={productDetailState.categoryId}
-                      onChange={handleCategoryChange}
-                    >
-                      <option value="" disabled>
-                        카테고리 선택
-                      </option>
-                      {categories &&
-                        categories.map((category) => (
-                          <option key={category.value} value={category.value}>
-                            {category.label}
-                          </option>
-                        ))}
-                    </select>
+                    <CategorySelect
+                      categories={categories}
+                      onSelect={handleCategorySelect}
+                      selectedCategory={categories.find(
+                        (category) =>
+                          category.value === productDetailState.categoryId
+                      )}
+                    />
                   </div>
                 </div>
 
@@ -280,7 +270,7 @@ const EditProductPage = () => {
                     productDetail.optionTitles.map((title) => (
                       <div key={title.optionTitleId} css={s.optionContainer}>
                         <p>{title.titleName}</p>
-                        <CustomSelect
+                        <OptionSelect
                           options={productDetail.optionNames.filter(
                             (name) => name.optionTitleId === title.optionTitleId
                           )}

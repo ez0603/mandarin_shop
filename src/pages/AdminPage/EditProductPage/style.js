@@ -6,6 +6,22 @@ export const layout = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow-y: auto; /* 세로 스크롤 활성화 */
+  overflow-x: hidden; /* 가로 스크롤 숨김 */
+  ::-webkit-scrollbar {
+    width: 10px; /* 스크롤바의 너비 */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 20%;
+    background: #ababaf;
+
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(179, 179, 179, 0.1);
+  }
 `;
 
 export const container = css`
@@ -30,7 +46,7 @@ export const buttonBox = css`
     &:hover .tooltip {
       visibility: visible;
       opacity: 1;
-    } 
+    }
   }
 
   button:nth-of-type(2) {
@@ -99,7 +115,7 @@ export const input = css`
   width: 96%;
   border: 1px solid #dbdbdb;
   border-radius: 10px;
-  
+
   .row {
     box-sizing: border-box;
     display: flex;
@@ -107,7 +123,7 @@ export const input = css`
     width: 100%;
     /* border: 1px solid #ddd; */
   }
-  
+
   .cell {
     border-radius: 10px;
     flex: 1;
@@ -122,7 +138,7 @@ export const input = css`
   label {
     width: 160px;
     text-align: center;
-    background-color: #f7f7f7;
+    background-color: #f7f7fb;
     padding: 12px 0;
   }
 
@@ -161,7 +177,7 @@ export const input = css`
     padding-top: 35px;
     height: 55px;
     border-top: 1px solid #ddd;
-    background-color: #f7f7f7;
+    background-color: #f7f7fb;
     border-bottom-left-radius: 10px;
   }
 
@@ -169,7 +185,7 @@ export const input = css`
     flex: 1;
   }
 
-  .product-name-label{
+  .product-name-label {
     border-top-left-radius: 10px;
   }
 `;
@@ -278,11 +294,11 @@ export const table = css`
   tr:nth-of-type(3) td {
     padding: 10px 0;
     line-height: 1.5;
-    overflow-y: auto; 
+    overflow-y: auto;
     overflow-x: hidden;
 
     ::-webkit-scrollbar {
-      width: 8px; 
+      width: 8px;
     }
 
     ::-webkit-scrollbar-thumb {
@@ -313,18 +329,18 @@ export const optionLayout = css`
   overflow-y: auto;
 
   ::-webkit-scrollbar {
-    width: 8px; /* 스크롤바의 너비 */
+    width: 6px; /* 스크롤바의 너비 */
   }
 
   ::-webkit-scrollbar-thumb {
-    height: 30%;
-    background: #217af4;
+    height: 20%;
+    background: #d6d6da;
 
     border-radius: 10px;
   }
 
   ::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, 0.1);
+    background: rgba(179, 179, 179, 0.1);
   }
 `;
 

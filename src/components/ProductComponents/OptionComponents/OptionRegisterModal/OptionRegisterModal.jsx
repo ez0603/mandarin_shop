@@ -1,17 +1,18 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { registerOption } from "../../../../apis/api/option";
 import useInsertOptionTitle from "../../../../hooks/useInsertOptionTitle";
 import useGetOptionTitle from "../../../../hooks/useGetOptionTitle";
+import CustomSelect from "../../../OptionSelect/OptionSelect"; // CustomSelect 임포트
 import * as s from "./style";
-import { IoIosArrowDown } from "react-icons/io";
 import { CiSquarePlus } from "react-icons/ci";
+
 function OptionRegisterModal({
   optionModal,
   closeModal,
   options,
   productId,
-  onOptionAdded, // New prop for handling option addition
+  onOptionAdded,
 }) {
   const [optionName, setOptionName] = useState("");
   const [optionTitle, setOptionTitle] = useState("");
@@ -21,7 +22,7 @@ function OptionRegisterModal({
     optionTitleId = [],
     optionTitleName = [],
     error,
-  } = useGetOptionTitle(productId, refresh); // Set default value to []
+  } = useGetOptionTitle(productId, refresh);
 
   const handleOptionTitleName = (e) => {
     setOptionTitle(e.target.value);
@@ -31,8 +32,11 @@ function OptionRegisterModal({
     setOptionName(e.target.value);
   };
 
+  const handleOptionSelect = (selectedOption) => {
+    setOptionSlectTitleId(selectedOption.optionTitleId);
+  };
+
   const insertOption = async () => {
-    // 입력값이 유효한지 확인
     if (
       !optionSelectTitleId ||
       !optionName ||
@@ -95,24 +99,16 @@ function OptionRegisterModal({
           </div>
           <div css={s.selectWrapper}>
             <label>옵션 내용 추가</label>
-            <select
-              value={optionSelectTitleId}
-              onChange={(e) => setOptionSlectTitleId(Number(e.target.value))}
-            >
-              <option value="">타이틀 선택</option>
-              {optionTitleId.length > 0 ? (
-                optionTitleId.map((id, index) => (
-                  <option key={id} value={id}>
-                    {optionTitleName[index]}
-                  </option>
-                ))
-              ) : (
-                <option value="" disabled>
-                  타이틀이 없습니다
-                </option>
+            <CustomSelect
+              options={optionTitleId.map((id, index) => ({
+                optionTitleId: id,
+                optionName: optionTitleName[index],
+              }))}
+              selectedOption={optionTitleId.find(
+                (id) => id === optionSelectTitleId
               )}
-            </select>
-            <IoIosArrowDown className="select-arrow" />
+              onSelect={handleOptionSelect}
+            />
           </div>
           <div>
             <label>옵션 이름</label>

@@ -6,7 +6,8 @@ export const layout = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #F9F5EA;
+  background-color: #fff;
+  z-index: 999;
 `;
 
 export const container = css`
