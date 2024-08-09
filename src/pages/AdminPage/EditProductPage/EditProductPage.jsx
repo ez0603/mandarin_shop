@@ -98,8 +98,6 @@ const EditProductPage = () => {
         productDescription: productDetailState.productDescription,
         categoryId: productDetailState.categoryId,
       };
-
-      console.log("Updating product with data:", updateData);
       await mutation.mutateAsync(updateData);
     } catch (error) {
       console.error("Error during mutation:", error);
@@ -146,7 +144,6 @@ const EditProductPage = () => {
   }
 
   const handleOptionSelect = (selectedOption) => {
-    // Handle the selection of an option
     console.log("Selected option:", selectedOption);
   };
 
