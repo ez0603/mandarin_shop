@@ -9,6 +9,7 @@ import ImageUpload from "../../../components/ProductComponents/ImageUpload/Image
 import OptionManager from "../../../components/ProductComponents/OptionComponents/OptionManager/OptionManager";
 import useCategories from "../../../hooks/useCategories";
 import CustomSelect from "../../../components/CustomSelect/CustomSelect";
+import { IoIosArrowBack } from "react-icons/io";
 
 const EditProductPage = () => {
   const { productId } = useParams();
@@ -159,54 +160,89 @@ const EditProductPage = () => {
         </div>
         <div css={s.productLayout}>
           {isEditing ? (
-            <>
-              <button onClick={handleExitClick}>취소</button>
-              <button onClick={handleUpdateProductDetail}>수정 완료</button>
-            </>
+            <div css={s.buttonBox}>
+              <button onClick={handleExitClick}>
+                <IoIosArrowBack size={35} />
+                <span css={s.tooltipStyle} className="tooltip">
+                  뒤로가기
+                </span>
+              </button>
+              <button onClick={handleUpdateProductDetail} css={s.editOkButton}>수정 완료</button>
+            </div>
           ) : (
             <button onClick={handleEditClick} css={s.editButton}>
               수정 하기
             </button>
           )}
           {isEditing ? (
-            <>
-              <input
-                type="text"
-                name="productName"
-                value={productDetailState.productName}
-                onChange={handleChange}
-              />
-              <input
-                type="text"
-                name="productPrice"
-                value={productDetailState.productPrice}
-                onChange={handleChange}
-              />
-              <textarea
-                name="productDescription"
-                value={productDetailState.productDescription}
-                onChange={handleChange}
-              />
-              <select
-                name="categoryId"
-                value={productDetailState.categoryId}
-                onChange={handleCategoryChange}
-              >
-                <option value="">카테고리 선택</option>
-                {categories &&
-                  categories.map((category) => (
-                    <option key={category.value} value={category.value}>
-                      {category.label}
-                    </option>
-                  ))}
-              </select>
+            <div css={s.inputBox}>
+              <div css={s.input}>
+                <div className="row">
+                  <div className="cell">
+                    <label htmlFor="productName">상품명</label>
+                  </div>
+                  <div className="cell">
+                    <input
+                      type="text"
+                      name="productName"
+                      value={productDetailState.productName}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="cell">
+                    <label htmlFor="productPrice">가격</label>
+                  </div>
+                  <div className="cell">
+                    <input
+                      type="text"
+                      name="productPrice"
+                      value={productDetailState.productPrice}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="cell">
+                    <label htmlFor="categoryId">카테고리</label>
+                  </div>
+                  <div className="cell">
+                    <select
+                      name="categoryId"
+                      value={productDetailState.categoryId}
+                      onChange={handleCategoryChange}
+                    >
+                      <option value="" disabled>카테고리 선택</option>
+                      {categories &&
+                        categories.map((category) => (
+                          <option key={category.value} value={category.value}>
+                            {category.label}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <label
+                    className="product-description-label"
+                    htmlFor="productDescription"
+                  >
+                    상세 설명
+                  </label>
+                  <textarea
+                    name="productDescription"
+                    value={productDetailState.productDescription}
+                    onChange={handleChange}
+                    className="full-width"
+                  />
+                </div>
+              </div>
+
               <OptionManager
                 productId={productId}
                 optionTitles={productDetailState.optionTitles}
                 optionNames={productDetailState.optionNames}
                 setOptionList={handleOptionUpdate}
               />
-            </>
+            </div>
           ) : (
             <div css={s.productBox}>
               <div css={s.product}>

@@ -109,6 +109,7 @@ const OptionManager = ({
   };
 
   const updateOptionTitle = async () => {
+    console.log("Updating option title with data:", updateOptionTitleName); // 로그 추가
     if (window.confirm("정말로 옵션 타이틀을 수정하시겠습니까?")) {
       try {
         await updateProductTitleOption(updateOptionTitleName);
@@ -117,13 +118,20 @@ const OptionManager = ({
         setIsVisible(false); // 숨기기
         refetch();
       } catch (error) {
-        console.error(error);
+        console.error("Failed to update option title:", error); // 오류 로그 추가
       }
     }
   };
 
-  const handleOpenEditor = (state) => {
+  const handleOpenEditor = (state, title = {}) => {
     setUpdateState(state);
+    if (state === 2) {
+      setUpdateOptionTitleName((prevData) => ({
+        ...prevData,
+        optionTitleId: title.optionTitleId,
+        titleName: title.titleName,
+      }));
+    }
     setIsVisible(true); // 보이기
   };
 
@@ -135,7 +143,7 @@ const OptionManager = ({
   return (
     <div css={s.layout}>
       <div css={s.header}>
-        <h3>옵션 목록</h3>
+        <h3>Option List</h3>
         <button onClick={openModal}>옵션 추가</button>
       </div>
       <div css={s.optionsAndEditor}>
@@ -144,7 +152,7 @@ const OptionManager = ({
             <OptionRegisterModal
               optionModal={optionModal}
               closeModal={closeModal}
-              options={optionNames || []}
+              options={optionNames}
               productId={productId}
               onOptionAdded={handleOptionAdded}
             />
@@ -155,7 +163,7 @@ const OptionManager = ({
                 <h4>
                   {title.titleName}
                   <button
-                    onClick={() => handleOpenEditor(2)} // 수정 열기
+                    onClick={() => handleOpenEditor(2, title)} // 수정 열기, 현재 타이틀 전달
                   >
                     수정
                   </button>
@@ -212,9 +220,7 @@ const OptionManager = ({
                 </button>
                 <button
                   onClick={
-                    updateState === 1
-                      ? handleUpdateOption
-                      : updateOptionTitle
+                    updateState === 1 ? handleUpdateOption : updateOptionTitle
                   }
                 >
                   저장
@@ -225,14 +231,14 @@ const OptionManager = ({
                   <div>옵션 타이틀</div>
                   <input
                     type="text"
-                    value={updateOptionData.optionTitleName || ""}
+                    value={updateOptionData.optionTitleName}
                     disabled
                   />
                   <div>옵션 이름</div>
                   <input
                     type="text"
                     onChange={handleOptionName}
-                    value={updateOptionData.optionName || ""}
+                    value={updateOptionData.optionName}
                   />
                 </div>
               ) : (
@@ -241,7 +247,7 @@ const OptionManager = ({
                   <input
                     type="text"
                     onChange={handleOptionTitleName}
-                    value={updateOptionTitleName.titleName || ""}
+                    value={updateOptionTitleName.titleName}
                   />
                 </div>
               )}
