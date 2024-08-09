@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useGetProductsDetail from "../../../hooks/useGetProductDetail";
 import { useMutation, useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
@@ -15,18 +15,15 @@ import { IoIosArrowBack } from "react-icons/io";
 const EditProductPage = () => {
   const { productId } = useParams();
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
-  const {
-    productDetail,
-    error: productError,
-    refetch: refetchProductDetail,
-  } = useGetProductsDetail(productId);
+
+  const { productDetail, error: productError, refetch: refetchProductDetail } =
+    useGetProductsDetail(productId);
   const categories = useCategories();
   const [isEditing, setIsEditing] = useState(false);
   const [initialState, setInitialState] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [productDetailState, setProductDetailState] = useState({
-    productId: productId,
+    productId,
     productName: "",
     categoryId: "",
     categoryName: "",
@@ -40,7 +37,7 @@ const EditProductPage = () => {
   useEffect(() => {
     if (productDetail) {
       const initialData = {
-        productId: productId,
+        productId,
         productName: productDetail.productName,
         categoryId: productDetail.categoryId,
         categoryName: productDetail.categoryName,
@@ -52,41 +49,38 @@ const EditProductPage = () => {
       };
       setInitialState(initialData);
       setProductDetailState(initialData);
-      setSelectedImage(productDetail.productImg); // 이미지 상태 초기화
+      setSelectedImage(productDetail.productImg);
     }
   }, [productDetail, productId]);
 
   const mutation = useMutation(updateProduct, {
-    onSuccess: async (data) => {
-      console.log("Update successful", data);
+    onSuccess: async () => {
       await queryClient.invalidateQueries(["productDetail", productId]);
       setIsEditing(false);
       alert("제품 수정 완료");
-      window.location.reload(); // 페이지 새로고침
+      window.location.reload();
     },
     onError: (error) => {
-      console.error("Failed to update product", error);
-      alert("Failed to update product: " + error.message);
+      alert(`Failed to update product: ${error.message}`);
     },
   });
 
   const handleImageUpload = (url) => {
-    console.log("Image uploaded to:", url); // 디버그 로그 추가
     setProductDetailState((prevState) => ({
       ...prevState,
       productImg: url,
     }));
-    setIsEditing(true); // 이미지 업로드 후 isEditing 상태를 유지하여 저장 버튼을 표시하도록 설정
+    setIsEditing(true);
   };
 
   const handleEditClick = () => {
-    setInitialState(productDetailState); // 현재 상태를 초기 상태로 저장
+    setInitialState(productDetailState);
     setIsEditing(true);
   };
 
   const handleExitClick = () => {
-    setProductDetailState(initialState); // 초기 상태로 되돌림
-    setSelectedImage(initialState.productImg); // 이미지 상태도 초기 상태로 되돌림
+    setProductDetailState(initialState);
+    setSelectedImage(initialState.productImg);
     setIsEditing(false);
   };
 
@@ -112,7 +106,7 @@ const EditProductPage = () => {
       ...prevState,
       [name]: value,
     }));
-    setIsEditing(true); // 다른 값이 변경될 때도 isEditing 상태를 유지하여 저장 버튼을 표시하도록 설정
+    setIsEditing(true);
   };
 
   const handleCategorySelect = (category) => {
@@ -121,7 +115,7 @@ const EditProductPage = () => {
       categoryId: category.value,
       categoryName: category.label,
     }));
-    setIsEditing(true); // 카테고리가 변경될 때도 isEditing 상태를 유지하여 저장 버튼을 표시하도록 설정
+    setIsEditing(true);
   };
 
   const handleOptionUpdate = (updatedOptionTitles, updatedOptionNames) => {
@@ -130,7 +124,7 @@ const EditProductPage = () => {
       optionTitles: updatedOptionTitles,
       optionNames: updatedOptionNames,
     }));
-    setIsEditing(true); // 옵션이 변경될 때도 isEditing 상태를 유지하여 저장 버튼을 표시하도록 설정
+    setIsEditing(true);
   };
 
   if (productError) {
@@ -267,18 +261,33 @@ const EditProductPage = () => {
                 <h4 css={s.optionTitle}>Options</h4>
                 <div css={s.optionLayout}>
                   {productDetail.optionTitles &&
-                    productDetail.optionTitles.map((title) => (
-                      <div key={title.optionTitleId} css={s.optionContainer}>
-                        <p>{title.titleName}</p>
-                        <OptionSelect
-                          options={productDetail.optionNames.filter(
-                            (name) => name.optionTitleId === title.optionTitleId
-                          )}
-                          onSelect={handleOptionSelect}
-                          selectedOption={null} // 선택된 옵션이 있다면 여기에 전달
-                        />
-                      </div>
-                    ))}
+                  productDetail.optionTitles.length > 0 &&
+                  productDetail.optionTitles.some(
+                    (title) => title.titleName
+                  ) ? (
+                    productDetail.optionTitles.map(
+                      (title) =>
+                        title.titleName && (
+                          <div
+                            key={title.optionTitleId}
+                            css={s.optionContainer}
+                          >
+                            <p>{title.titleName}</p>
+                            <OptionSelect
+                              options={productDetail.optionNames.filter(
+                                (name) =>
+                                  name.optionTitleId === title.optionTitleId &&
+                                  name.optionName
+                              )}
+                              onSelect={handleOptionSelect}
+                              selectedOption={null}
+                            />
+                          </div>
+                        )
+                    )
+                  ) : (
+                    <p>옵션이 존재하지 않습니다</p>
+                  )}
                 </div>
               </div>
             </div>

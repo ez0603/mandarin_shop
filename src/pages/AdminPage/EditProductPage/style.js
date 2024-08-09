@@ -47,6 +47,7 @@ export const buttonBox = css`
       visibility: visible;
       opacity: 1;
     }
+    cursor: pointer;
   }
 
   button:nth-of-type(2) {
@@ -77,12 +78,12 @@ export const tooltipStyle = css`
   transform: translateX(-50%);
   opacity: 0;
   transition: opacity 0.3s;
-
+  
   /* 화살표 */
   &::after {
     content: "";
     position: absolute;
-    top: -35%; /* 툴팁의 아래쪽에 화살표 위치 */
+    top: -35%;
     left: 50%;
     margin-left: -5px;
     border-width: 5px;

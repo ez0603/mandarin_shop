@@ -2,11 +2,15 @@
 import * as s from "./style";
 import { useState, useEffect } from "react";
 import useGetOptionTitle from "../../../../hooks/useGetOptionTitle";
-import OptionRegisterModal from "../OptionRegisterModal/OptionRegisterModal"; // 모달 컴포넌트 가져오기
-import { IoArrowBack } from "react-icons/io5"; // 뒤로가기 아이콘 가져오기
+import OptionRegisterModal from "../OptionRegisterModal/OptionRegisterModal";
+import { IoArrowBack } from "react-icons/io5";
+import { FaRegEdit } from "react-icons/fa";
+import { MdDeleteOutline } from "react-icons/md";
 import {
   updateProductOption,
   updateProductTitleOption,
+  deleteOptionTitle,
+  deleteOption,
 } from "../../../../apis/api/option";
 
 const OptionManager = ({
@@ -15,9 +19,9 @@ const OptionManager = ({
   optionNames,
   setOptionList,
 }) => {
-  const [optionModal, setOptionModal] = useState(false); // 모달 표시 상태
+  const [optionModal, setOptionModal] = useState(false);
   const [updateState, setUpdateState] = useState(0);
-  const [isVisible, setIsVisible] = useState(false); // 애니메이션 상태 관리
+  const [isVisible, setIsVisible] = useState(false);
   const [updateOptionData, setUpdateOptionData] = useState({
     productId: productId,
     optionNameId: "",
@@ -35,7 +39,7 @@ const OptionManager = ({
     optionTitleId: fetchedOptionTitleIds,
     optionTitleName: fetchedOptionTitleNames,
     error: titleOptionsError,
-    refetch, // 올바른 함수 이름으로 수정
+    refetch,
   } = useGetOptionTitle(productId);
 
   useEffect(() => {
@@ -56,6 +60,7 @@ const OptionManager = ({
       const updatedNames = [...prevState.optionNames];
 
       if (
+        newOptionTitle.titleName &&
         !updatedTitles.some(
           (title) => title.optionTitleId === newOptionTitle.optionTitleId
         )
@@ -64,6 +69,7 @@ const OptionManager = ({
       }
 
       if (
+        newOptionName.optionNameId !== 0 &&
         !updatedNames.some(
           (name) => name.optionNameId === newOptionName.optionNameId
         )
@@ -100,7 +106,7 @@ const OptionManager = ({
         await updateProductOption(updateOptionData);
         alert("옵션 수정 완료");
         setUpdateState(0);
-        setIsVisible(false); // 숨기기
+        setIsVisible(false);
         refetch();
       } catch (error) {
         console.error(error);
@@ -109,16 +115,47 @@ const OptionManager = ({
   };
 
   const updateOptionTitle = async () => {
-    console.log("Updating option title with data:", updateOptionTitleName); // 로그 추가
     if (window.confirm("정말로 옵션 타이틀을 수정하시겠습니까?")) {
       try {
         await updateProductTitleOption(updateOptionTitleName);
         alert("옵션 타이틀 수정 완료");
         setUpdateState(0);
-        setIsVisible(false); // 숨기기
+        setIsVisible(false);
         refetch();
       } catch (error) {
-        console.error("Failed to update option title:", error); // 오류 로그 추가
+        console.error("Failed to update option title:", error);
+      }
+    }
+  };
+
+  const handleDeleteOption = async (optionNameId) => {
+    console.log("Attempting to delete option with ID:", optionNameId);
+    if (window.confirm("정말로 이 옵션을 삭제하시겠습니까?")) {
+      try {
+        const response = await deleteOption({ optionNameId });
+        console.log("Delete response:", response);
+        alert("옵션이 삭제되었습니다.");
+        refetch();
+      } catch (error) {
+        console.error("Failed to delete option:", error);
+      }
+    }
+  };
+
+  const handleDeleteOptionTitle = async (optionTitleId) => {
+    console.log("Attempting to delete option title with ID:", optionTitleId);
+    if (
+      window.confirm(
+        "이 옵션 타이틀에 속한 모든 옵션이 삭제됩니다. 정말로 삭제하시겠습니까?"
+      )
+    ) {
+      try {
+        const response = await deleteOptionTitle({ optionTitleId });
+        console.log("Delete response:", response);
+        alert("옵션 타이틀이 삭제되었습니다.");
+        refetch();
+      } catch (error) {
+        console.error("Failed to delete option title:", error);
       }
     }
   };
@@ -132,22 +169,19 @@ const OptionManager = ({
         titleName: title.titleName,
       }));
     }
-    setIsVisible(true); // 보이기
+    setIsVisible(true);
   };
 
   const handleCloseEditor = () => {
     setUpdateState(0);
-    setIsVisible(false); // 숨기기
+    setIsVisible(false);
   };
 
   return (
     <div css={s.layout}>
       <div css={s.header}>
         <h3>Option List</h3>
-        <button
-          onClick={openModal}
-          css={s.optionAddButton(optionModal)} // 애니메이션 효과 추가
-        >
+        <button onClick={openModal} css={s.optionAddButton(optionModal)}>
           옵션 추가
         </button>
       </div>
@@ -162,56 +196,78 @@ const OptionManager = ({
               onOptionAdded={handleOptionAdded}
             />
           )}
-          {Array.isArray(optionTitles) && optionTitles.length > 0 ? (
-            optionTitles.map((title) => (
-              <div key={title.optionTitleId} css={s.optionLayout}>
-                <h4>
-                  {title.titleName}
-                  <button
-                    onClick={() => handleOpenEditor(2, title)} // 수정 열기, 현재 타이틀 전달
-                  >
-                    수정
-                  </button>
-                </h4>
-                {Array.isArray(optionNames) && optionNames.length > 0 ? (
-                  <div css={s.optionContainer}>
-                    {optionNames
-                      .filter(
-                        (name) => name.optionTitleId === title.optionTitleId
-                      )
-                      .map((name) => (
-                        <div
-                          key={name.optionNameId}
-                          style={{
-                            display: "inline-block",
-                            marginRight: "10px",
-                          }}
+          {Array.isArray(optionTitles) &&
+          optionTitles.length > 0 &&
+          optionTitles.some((title) => title.titleName) ? (
+            optionTitles.map(
+              (title) =>
+                title.titleName && (
+                  <div key={title.optionTitleId} css={s.optionLayout}>
+                    <div css={s.optionTitle}>
+                      <h4>{title.titleName}</h4>
+                      <div>
+                        <button onClick={() => handleOpenEditor(2, title)}>
+                          <FaRegEdit size={17} />
+                        </button>
+                        <button
+                          onClick={() =>
+                            handleDeleteOptionTitle(title.optionTitleId)
+                          }
                         >
-                          {name.optionName}
-                          <button
-                            onClick={() => {
-                              setUpdateOptionData((prevData) => ({
-                                ...prevData,
-                                optionNameId: name.optionNameId,
-                                optionName: name.optionName,
-                                optionTitleId: title.optionTitleId,
-                                optionTitleName: title.titleName,
-                              }));
-                              handleOpenEditor(1); // 수정 열기
-                            }}
-                          >
-                            수정
-                          </button>
-                        </div>
-                      ))}
+                          <MdDeleteOutline size={17} />
+                        </button>
+                      </div>
+                    </div>
+                    {Array.isArray(optionNames) &&
+                    optionNames.filter(
+                      (name) =>
+                        name.optionTitleId === title.optionTitleId &&
+                        name.optionNameId !== 0
+                    ).length > 0 ? (
+                      <div css={s.optionContainer}>
+                        {optionNames
+                          .filter(
+                            (name) =>
+                              name.optionTitleId === title.optionTitleId &&
+                              name.optionNameId !== 0
+                          )
+                          .map((name) => (
+                            <div key={name.optionNameId} css={s.optionName}>
+                              {name.optionName}
+                              <div>
+                                <button
+                                  onClick={() => {
+                                    setUpdateOptionData((prevData) => ({
+                                      ...prevData,
+                                      optionNameId: name.optionNameId,
+                                      optionName: name.optionName,
+                                      optionTitleId: title.optionTitleId,
+                                      optionTitleName: title.titleName,
+                                    }));
+                                    handleOpenEditor(1);
+                                  }}
+                                >
+                                  <FaRegEdit size={15} />
+                                </button>
+                                <button
+                                  onClick={() =>
+                                    handleDeleteOption(name.optionNameId)
+                                  }
+                                >
+                                  <MdDeleteOutline size={15} />
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                      </div>
+                    ) : (
+                      <p>옵션이 없습니다</p>
+                    )}
                   </div>
-                ) : (
-                  <p>옵션이 없습니다</p>
-                )}
-              </div>
-            ))
+                )
+            )
           ) : (
-            <p>Loading</p>
+            <p>옵션 타이틀이 없습니다</p>
           )}
         </div>
 

@@ -3,10 +3,9 @@ import { registerOptionTitle } from "../apis/api/option"; // 경로가 정확한
 
 const useInsertOptionTitle = () => {
   const [error, setError] = useState(null);
-  const [refresh, setRefresh] = useState(false);
 
-  const insertOptionTitle = async (productId, optionTitle) => {
-    if (!optionTitle) {
+  const insertOptionTitle = async (productId, optionTitle, onSuccess) => {
+    if (!optionTitle.trim()) {
       alert("옵션 타이틀을 입력해 주세요.");
       return;
     }
@@ -15,14 +14,14 @@ const useInsertOptionTitle = () => {
     try {
         await registerOptionTitle(param);
         alert("추가가 완료되었습니다.");
-        setRefresh((prev) => !prev); 
+        if (onSuccess) onSuccess();  // 성공 시 콜백 실행
     } catch (error) {
         setError(error);
         console.error(error);
     }
   };
 
-  return { insertOptionTitle, error, refresh };
+  return { insertOptionTitle, error };
 };
 
 export default useInsertOptionTitle;

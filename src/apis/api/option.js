@@ -25,9 +25,9 @@ export const updateProductTitleOption = async (data) => {
 };
 
 export const deleteOptionTitle = async (data) => {
-    return await instance.delete("menu/option/title", { data: data });
+    return await instance.delete("product/option/title", { data: data });
 };
 
 export const deleteOption = async (data) => {
-  return await instance.delete("menu/option/name", { data: data });
+  return await instance.delete("product/option/name", { data: data });
 };

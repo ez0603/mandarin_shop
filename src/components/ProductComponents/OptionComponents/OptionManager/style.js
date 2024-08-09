@@ -7,7 +7,6 @@ export const layout = css`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
 `;
 
 export const header = css`
@@ -81,16 +80,17 @@ export const optionsAndEditor = css`
 `;
 
 export const optionsContainer = css`
-  width: 90%; /* 옵션 목록의 너비를 설정 */
+  width: 90%;
   background-color: #fff;
-  height: 400px;
+  height: 390px;
   display: flex;
-  flex-wrap: wrap; /* 옵션이 두 개씩 가로로 배치되도록 설정 */
-  gap: 20px; /* 각 옵션 사이의 간격 */
-  overflow-y: auto; /* 세로 스크롤 활성화 */
-  overflow-x: hidden; /* 가로 스크롤 숨김 */
+  flex-wrap: wrap;
+  gap: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
   ::-webkit-scrollbar {
-    width: 6px; /* 스크롤바의 너비 */
+    width: 6px;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -109,33 +109,71 @@ export const optionLayout = css`
   box-sizing: border-box;
   border: 1px solid #ddd;
   border-radius: 10px;
-  width: 45%; /* 두 개의 옵션이 한 줄에 나오도록 너비를 설정 */
+  width: 46%;
+  height: 180px;
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
+  
+  h4 {
+    font-size: 18px;
+    margin: 15px;
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+`;
+
+export const optionTitle = css`
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 10px;
+
+  div {
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 
 export const optionContainer = css`
   padding: 20px;
   height: 120px;
-  /* flex-basis: 45%;  */
   box-sizing: border-box;
-  overflow-y: auto; /* 세로 스크롤 활성화 */
-  overflow-x: hidden; /* 가로 스크롤 숨김 */
+  overflow-y: auto;
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 30px;
+  word-break: break-word;
+
   ::-webkit-scrollbar {
-    width: 8px; /* 스크롤바의 너비 */
+    width: 5px;
   }
 
   ::-webkit-scrollbar-thumb {
-    height: 30%;
-    background: #217af4;
-
+    background: #ababaf;
     border-radius: 10px;
   }
 
   ::-webkit-scrollbar-track {
     background: rgba(33, 122, 244, 0.1);
   }
+`;
+
+export const optionName = css`
+display: flex;
+flex-direction: row;
+width: auto;
+gap: 15px;
+
+div {
+  display: flex;
+  gap: 10px;
+}
 `;
 
 export const updateContainer = (isVisible) => css`

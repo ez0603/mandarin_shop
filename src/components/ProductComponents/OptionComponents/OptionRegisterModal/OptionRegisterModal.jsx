@@ -3,25 +3,22 @@ import React, { useState } from "react";
 import { registerOption } from "../../../../apis/api/option";
 import useInsertOptionTitle from "../../../../hooks/useInsertOptionTitle";
 import useGetOptionTitle from "../../../../hooks/useGetOptionTitle";
-import CustomSelect from "../../../OptionSelect/OptionSelect"; // CustomSelect 임포트
+import CustomSelect from "../../../OptionSelect/OptionSelect";
 import * as s from "./style";
 import { CiSquarePlus } from "react-icons/ci";
 
 function OptionRegisterModal({
-  optionModal,
   closeModal,
-  options,
   productId,
   onOptionAdded,
 }) {
   const [optionName, setOptionName] = useState("");
   const [optionTitle, setOptionTitle] = useState("");
   const [optionSelectTitleId, setOptionSlectTitleId] = useState("");
-  const { insertOptionTitle, Optionerror, refresh } = useInsertOptionTitle();
+  const { insertOptionTitle, refresh } = useInsertOptionTitle();
   const {
     optionTitleId = [],
     optionTitleName = [],
-    error,
   } = useGetOptionTitle(productId, refresh);
 
   const handleOptionTitleName = (e) => {
@@ -53,7 +50,6 @@ function OptionRegisterModal({
         optionTitleId: optionSelectTitleId,
         optionName: optionName,
       };
-      console.log(params);
       await registerOption(params);
       alert("옵션 이름 추가가 완료되었습니다.");
       const newOptionTitleIndex = optionTitleId.indexOf(optionSelectTitleId);
@@ -69,7 +65,22 @@ function OptionRegisterModal({
       onOptionAdded(newOptionTitle, newOptionName);
       closeModal();
     } catch (error) {
-      console.error(error);
+      console.error("옵션 추가 실패:", error);
+    }
+  };
+
+  const insertOptionTitleOnly = async () => {
+    if (!optionTitle.trim()) {
+      alert("옵션 타이틀을 입력해 주세요.");
+      return;
+    }
+
+    try {
+      await insertOptionTitle(productId, optionTitle);
+      setOptionTitle(""); // 입력 필드를 초기화합니다.
+      refresh(); // 옵션 타이틀 목록을 새로고침
+    } catch (error) {
+      console.error("옵션 타이틀 추가 실패:", error);
     }
   };
 
@@ -88,9 +99,13 @@ function OptionRegisterModal({
         <div css={s.modalContent}>
           <div>
             <label>옵션 타이틀 추가</label>
-            <input onChange={handleOptionTitleName} type="text" />
+            <input
+              value={optionTitle}
+              onChange={handleOptionTitleName}
+              type="text"
+            />
             <button
-              onClick={() => insertOptionTitle(productId, optionTitle)}
+              onClick={insertOptionTitleOnly}
               css={s.plusButton}
               title="옵션 타이틀 추가하기"
             >
@@ -98,7 +113,7 @@ function OptionRegisterModal({
             </button>
           </div>
           <div css={s.selectWrapper}>
-            <label>옵션 내용 추가</label>
+            <label>옵션 타이틀 선택</label>
             <CustomSelect
               options={optionTitleId.map((id, index) => ({
                 optionTitleId: id,
@@ -111,12 +126,16 @@ function OptionRegisterModal({
             />
           </div>
           <div>
-            <label>옵션 이름</label>
-            <input onChange={handleOptionName} type="text" />
+            <label>옵션 이름 추가</label>
+            <input
+              value={optionName}
+              onChange={handleOptionName}
+              type="text"
+            />
           </div>
         </div>
         <div css={s.modalFooter}>
-          <button onClick={insertOption}>추가</button>
+          <button onClick={insertOption}>옵션 추가</button>
           <button onClick={closeModal}>취소</button>
         </div>
       </div>
