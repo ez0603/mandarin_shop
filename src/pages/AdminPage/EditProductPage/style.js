@@ -20,9 +20,9 @@ export const container = css`
 export const buttonBox = css`
   width: 100%;
   position: relative;
-  gap: 20px;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 
   button:nth-of-type(1) {
     border: none;
@@ -30,9 +30,7 @@ export const buttonBox = css`
     &:hover .tooltip {
       visibility: visible;
       opacity: 1;
-    }
-
-    
+    } 
   }
 
   button:nth-of-type(2) {
@@ -98,7 +96,7 @@ export const inputBox = css`
 export const input = css`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 96%;
   border: 1px solid #dbdbdb;
   border-radius: 10px;
   
@@ -122,7 +120,7 @@ export const input = css`
   }
 
   label {
-    width: 150px;
+    width: 160px;
     text-align: center;
     background-color: #f7f7f7;
     padding: 12px 0;
@@ -130,7 +128,7 @@ export const input = css`
 
   input,
   select {
-    width: 100%;
+    width: 97%;
     height: 46px;
     padding: 10px;
     border: 1px solid #dddddd00;
@@ -162,7 +160,7 @@ export const input = css`
     text-align: center;
     padding-top: 35px;
     height: 55px;
-    border-top: #dddddd00;
+    border-top: 1px solid #ddd;
     background-color: #f7f7f7;
     border-bottom-left-radius: 10px;
   }
@@ -207,6 +205,7 @@ export const editOkButton = css`
   position: relative;
   color: #090909;
   padding: 10px;
+  right: 4%;
   border-radius: 8px;
   background: #fff;
   cursor: pointer;
@@ -253,10 +252,6 @@ export const product = css`
 
 export const table = css`
   width: 100%;
-  /* border-collapse: collapse; */
-  /* border: 1px solid #ddd; */
-  /* border-collapse: separate;  */
-  /* border-collapse: collapse; */
   border-spacing: 10px 15px;
 
   th,
