@@ -25,12 +25,13 @@ export const layout = css`
 `;
 
 export const container = css`
-  width: 95%;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
 `;
 
 export const buttonBox = css`
@@ -73,22 +74,22 @@ export const tooltipStyle = css`
   border-radius: 4px;
   position: relative;
   z-index: 1;
-  bottom: -70%; /* 버튼의 위에 툴팁이 나타나도록 설정 */
+  bottom: 130%; /* 버튼의 위에 툴팁이 나타나도록 설정 */
   left: -50%;
   transform: translateX(-50%);
   opacity: 0;
   transition: opacity 0.3s;
-  
+
   /* 화살표 */
   &::after {
     content: "";
     position: absolute;
-    top: -35%;
+    top: 100%;
     left: 50%;
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent transparent #333 transparent;
+    border-color: #333 transparent transparent transparent;
   }
 `;
 
@@ -116,6 +117,14 @@ export const input = css`
   width: 96%;
   border: 1px solid #dbdbdb;
   border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  box-shadow: 0 5px 5px rgba(136, 136, 136, 0.199);
+
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 0 5px 20px rgba(136, 136, 136, 0.233);
+  }
 
   .row {
     box-sizing: border-box;
@@ -139,8 +148,9 @@ export const input = css`
   label {
     width: 160px;
     text-align: center;
-    background-color: #f7f7fb;
-    padding: 12px 0;
+    background-color: #68B2F1;
+    padding: 13px 0;
+    color: white;
   }
 
   input,
@@ -150,7 +160,6 @@ export const input = css`
     padding: 10px;
     border: 1px solid #dddddd00;
     box-sizing: border-box;
-    border-radius: 10px;
   }
 
   input:focus,
@@ -177,9 +186,8 @@ export const input = css`
     text-align: center;
     padding-top: 35px;
     height: 55px;
-    border-top: 1px solid #ddd;
-    background-color: #f7f7fb;
     border-bottom-left-radius: 10px;
+    background-color: #68B2F1;
   }
 
   .full-width {
@@ -188,12 +196,13 @@ export const input = css`
 
   .product-name-label {
     border-top-left-radius: 10px;
+    
   }
 `;
 
 export const editButton = css`
   position: relative;
-  top: -15px;
+  top: 10px;
   left: 40%;
   color: #090909;
   padding: 10px 15px;
@@ -252,6 +261,69 @@ export const productLayout = css`
   align-items: center;
   justify-content: center;
   /* background-color: aqua; */
+
+  h1 {
+    position: relative;
+    top: 5%;
+    right: 62%;
+    transform: translate(-100%, -50%);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    cursor: default;
+    font-weight: 500;
+    font-size: 30px;
+  }
+
+  svg {
+    cursor: pointer;
+
+    :hover {
+      color: #0071e3;
+    }
+  }
+
+  h1 svg {
+    /* 아이콘에 대한 스타일 */
+    position: relative;
+    margin-right: 8px;
+  }
+
+  h1 svg:hover + span.tooltip2 {
+    /* 아이콘에 호버될 때 툴팁 표시 */
+    visibility: visible;
+    opacity: 1;
+  }
+
+  span.tooltip2 {
+    width: 70px;
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 8px 15px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 1;
+    bottom: 110%; /* 툴팁의 위치 설정 */
+    left: 7%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 13px;
+  }
+
+  /* 화살표 스타일 */
+  span.tooltip2::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #333 transparent transparent transparent;
+  }
 `;
 
 export const productBox = css`
@@ -268,24 +340,34 @@ export const product = css`
 `;
 
 export const table = css`
+  overflow: hidden;
+  border-radius: 10px;
   width: 100%;
-  border-spacing: 10px 15px;
+  background-color: #fff;
+  padding: 20px;
+  /* border-spacing: 10px 15px; */
+  border-collapse: collapse;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5px 5px rgba(136, 136, 136, 0.199);
+
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 0 5px 20px rgba(136, 136, 136, 0.233);
+  }
 
   th,
   td {
     /* border: 1px solid #ddd; */
-    border: 1px solid #ddd;
     padding: 15px 0;
     text-align: center;
     color: #333;
-    border-radius: 8px;
   }
 
   th {
-    background-color: #f7f7fb;
+    background-color: #68B2F1;
     width: 35%;
-    font-weight: 400;
-    border-right: none;
+    font-weight: 600;
+    color: white;
   }
 
   td {
@@ -317,7 +399,7 @@ export const table = css`
 export const optionTitle = css`
   font-size: 27px;
   font-weight: 400;
-  margin: 0 15px 20px 15px;
+  margin: 20px 15px 20px 15px;
   color: #333;
 `;
 
@@ -351,10 +433,17 @@ export const optionContainer = css`
   border-radius: 10px;
   text-align: center;
   padding: 10px;
-  background-color: #f7f7fb;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 5px 5px rgba(136, 136, 136, 0.199);
+
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 0 5px 20px rgba(136, 136, 136, 0.233);
+  }
 
   p {
     margin: 0;

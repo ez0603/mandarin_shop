@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 
 export const layout = css`
   width: 100%;
-  height: 180px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,8 +11,8 @@ export const layout = css`
 `;
 
 export const container = css`
-  width: 82%;
-  height: 180px;
+  width: 90%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,21 +25,20 @@ export const headerContent = css`
   align-items: center;
   justify-content: space-between;
   position: relative;
-  margin-top: 30px;
 `;
 
 export const logoLayout = css`
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  left: -45px;
+  /* transform: translateX(-50%); */
   display: flex;
   align-items: center;
   justify-content: center;
-  top: -40px;
+  top: -20px;
 
   img {
-    width: 170px;
-    height: 140px;
+    width: 160px;
+    height: 120px;
     cursor: pointer;
   }
 `;

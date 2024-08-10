@@ -11,13 +11,18 @@ import useCategories from "../../../hooks/useCategories";
 import CategorySelect from "../../../components/CategorySelect/CategorySelect";
 import OptionSelect from "../../../components/OptionSelect/OptionSelect";
 import { IoIosArrowBack } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 const EditProductPage = () => {
   const { productId } = useParams();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
-  const { productDetail, error: productError, refetch: refetchProductDetail } =
-    useGetProductsDetail(productId);
+  const {
+    productDetail,
+    error: productError,
+    refetch: refetchProductDetail,
+  } = useGetProductsDetail(productId);
   const categories = useCategories();
   const [isEditing, setIsEditing] = useState(false);
   const [initialState, setInitialState] = useState(null);
@@ -76,6 +81,11 @@ const EditProductPage = () => {
   const handleEditClick = () => {
     setInitialState(productDetailState);
     setIsEditing(true);
+  };
+
+  const handleBackClick = () => {
+    navigate("/admin/product");
+    console.log("Back button clicked");
   };
 
   const handleExitClick = () => {
@@ -163,9 +173,16 @@ const EditProductPage = () => {
               </button>
             </div>
           ) : (
-            <button onClick={handleEditClick} css={s.editButton}>
-              수정 하기
-            </button>
+            <>
+              <h1>
+                <IoIosArrowBack size={35} onClick={handleBackClick} />
+                <span className="tooltip2">뒤로가기</span>
+                Product Information
+              </h1>
+              <button onClick={handleEditClick} css={s.editButton}>
+                수정 하기
+              </button>
+            </>
           )}
           {isEditing ? (
             <div css={s.inputBox}>
@@ -225,7 +242,6 @@ const EditProductPage = () => {
                   />
                 </div>
               </div>
-
               <OptionManager
                 productId={productId}
                 optionTitles={productDetailState.optionTitles}

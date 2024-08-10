@@ -9,6 +9,7 @@ import { authState } from "../../../atoms/authAtom";
 import { IoSettingsOutline } from "react-icons/io5";
 import { GoPerson } from "react-icons/go";
 import instance from "../../../apis/utils/instance";
+import Sidebar from "../Sidebar/Sidebar";
 
 function AdminHeader(props) {
   const auth = useRecoilValue(authState);
@@ -60,11 +61,11 @@ function AdminHeader(props) {
             <img src={logo} alt="Logo" />
           </div>
           <div css={s.category}>
-            <ul css={s.list}>
+            {/* <ul css={s.list}>
               <li css={s.listItem} onClick={handleSalesClick}>매출 현황</li>
               <li css={s.listItem} onClick={handleProductClick}>상품 관리</li>
               <li css={s.listItem}>재고 관리</li>
-            </ul>
+            </ul> */}
           </div>
           <div css={s.mypageAndCategory}>
             <div css={s.mypageLayout}>
