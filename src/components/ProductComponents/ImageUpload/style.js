@@ -4,7 +4,7 @@ import { css } from "@emotion/react";
 export const imageContainer = css`
   width: 100%;
   max-width: 550px;
-  height: 500px;
+  height: 550px;
   position: relative;
   display: flex;
   align-items: center;

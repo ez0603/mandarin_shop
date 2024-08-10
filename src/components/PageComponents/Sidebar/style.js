@@ -1,14 +1,13 @@
 import { css } from "@emotion/react";
 
 export const layout = css`
-  position: fixed;
-  left: 0;
-  top: 5%;
   width: 250px;
   height: 100%;
+  position: fixed;
+  left: 0;
+  top: 9%;
   background-color: #fff;
-  padding: 20px;
-  box-sizing: border-box;
+  z-index: 99;
 `;
 
 export const menuList = css`
@@ -44,5 +43,5 @@ export const link = css`
 
 // 활성화된 링크에 대한 스타일
 export const activeLink = css`
-  color: #333; 
+  color: #333;
 `;

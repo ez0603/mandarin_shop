@@ -4,18 +4,18 @@ export const layout = css`
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow-y: auto; /* 세로 스크롤 활성화 */
-  overflow-x: hidden; /* 가로 스크롤 숨김 */
+  overflow-y: auto;
+  overflow-x: hidden;
   ::-webkit-scrollbar {
-    width: 10px; /* 스크롤바의 너비 */
+    width: 10px;
   }
 
   ::-webkit-scrollbar-thumb {
     height: 20%;
     background: #ababaf;
-
     border-radius: 10px;
   }
 
@@ -24,14 +24,100 @@ export const layout = css`
   }
 `;
 
+export const header = css`
+  width: 95%;
+  height: 15%;
+  padding: 30px 0 0 15px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+
+  h1 {
+    margin: 0;
+    display: flex; /* Flexbox로 가로 배치 */
+    align-items: center;
+    cursor: default;
+    font-weight: 500;
+    font-size: 25px;
+  }
+
+  h1 svg {
+    cursor: pointer;
+    position: relative;
+    margin-right: 8px;
+
+    :hover {
+      color: #0071e3;
+    }
+
+    /* svg 호버 시 툴팁 표시 */
+    :hover + span.tooltip2 {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  span.tooltip2 {
+    width: 70px;
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 8px 15px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 1;
+    bottom: 79%;
+    left: 17%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 13px;
+  }
+
+  span.tooltip2::after {
+    content: "";
+    position: absolute;
+    top: -30%; /* 화살표를 툴팁 아래에 배치 */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #333 transparent;
+  }
+`;
+
+
 export const container = css`
-  width: 100%;
+  width: 97%;
   height: 100%;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-around;
-  /* margin-bottom: 40px; */
+  padding-top: 20px;
+`;
+
+export const imageContainer = css`
+  width: 30%;
+  height: auto;
+  position: relative;
+  top: 7%;
+  left: 3%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const productLayout = css`
+  box-sizing: border-box;
+  width: 60%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const buttonBox = css`
@@ -74,13 +160,13 @@ export const tooltipStyle = css`
   border-radius: 4px;
   position: relative;
   z-index: 1;
-  bottom: 130%; /* 버튼의 위에 툴팁이 나타나도록 설정 */
+  bottom: 130%;
   left: -50%;
   transform: translateX(-50%);
   opacity: 0;
   transition: opacity 0.3s;
+  cursor: pointer;
 
-  /* 화살표 */
   &::after {
     content: "";
     position: absolute;
@@ -93,116 +179,9 @@ export const tooltipStyle = css`
   }
 `;
 
-export const imageContainer = css`
-  width: 30%;
-  height: auto;
-  position: relative;
-  display: flex;
-  left: 3%;
-  align-items: center;
-  justify-content: center;
-  display: inline-block;
-`;
-
-export const inputBox = css`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-top: 20px;
-`;
-
-export const input = css`
-  display: flex;
-  flex-direction: column;
-  width: 96%;
-  border: 1px solid #dbdbdb;
-  border-radius: 10px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  box-shadow: 0 5px 5px rgba(136, 136, 136, 0.199);
-
-  &:hover {
-    transform: scale(1.01);
-    box-shadow: 0 5px 20px rgba(136, 136, 136, 0.233);
-  }
-
-  .row {
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    /* border: 1px solid #ddd; */
-  }
-
-  .cell {
-    border-radius: 10px;
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    box-sizing: border-box;
-    border: none;
-  }
-
-  label {
-    width: 160px;
-    text-align: center;
-    background-color: #68B2F1;
-    padding: 13px 0;
-    color: white;
-  }
-
-  input,
-  select {
-    width: 97%;
-    height: 46px;
-    padding: 10px;
-    border: 1px solid #dddddd00;
-    box-sizing: border-box;
-  }
-
-  input:focus,
-  select:focus,
-  textarea:focus {
-    border: 1px solid #ddd;
-    transition: border-color 0.3s ease;
-    outline: none;
-    /* background-color: #f1f1f134; */
-  }
-
-  textarea {
-    width: 100%;
-    height: 103px;
-    padding: 12px;
-    resize: none;
-    box-sizing: border-box;
-    border: 1px solid #dddddd00;
-    border-top: 1px solid #ddd;
-    border-bottom-right-radius: 10px;
-  }
-
-  .product-description-label {
-    text-align: center;
-    padding-top: 35px;
-    height: 55px;
-    border-bottom-left-radius: 10px;
-    background-color: #68B2F1;
-  }
-
-  .full-width {
-    flex: 1;
-  }
-
-  .product-name-label {
-    border-top-left-radius: 10px;
-    
-  }
-`;
-
 export const editButton = css`
   position: relative;
-  top: 10px;
+  top: -15px;
   left: 40%;
   color: #090909;
   padding: 10px 15px;
@@ -252,77 +231,96 @@ export const editOkButton = css`
   }
 `;
 
-export const productLayout = css`
-  box-sizing: border-box;
-  width: 55%;
-  height: 90%;
+export const inputBox = css`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  /* background-color: aqua; */
+  width: 100%;
+  margin-top: 20px;
+`;
 
-  h1 {
-    position: relative;
-    top: 5%;
-    right: 62%;
-    transform: translate(-100%, -50%);
-    margin: 0;
+export const input = css`
+  display: flex;
+  flex-direction: column;
+  width: 96%;
+  border: 1px solid #dbdbdb;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  box-shadow: 0 5px 5px rgba(136, 136, 136, 0.199);
+
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 0 5px 20px rgba(136, 136, 136, 0.233);
+  }
+
+  .row {
+    box-sizing: border-box;
     display: flex;
     align-items: center;
-    cursor: default;
-    font-weight: 500;
-    font-size: 30px;
+    width: 100%;
   }
 
-  svg {
-    cursor: pointer;
-
-    :hover {
-      color: #0071e3;
-    }
-  }
-
-  h1 svg {
-    /* 아이콘에 대한 스타일 */
-    position: relative;
-    margin-right: 8px;
-  }
-
-  h1 svg:hover + span.tooltip2 {
-    /* 아이콘에 호버될 때 툴팁 표시 */
-    visibility: visible;
-    opacity: 1;
-  }
-
-  span.tooltip2 {
-    width: 70px;
-    visibility: hidden;
-    background-color: #333;
-    color: #fff;
+  .cell {
+    border-radius: 10px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    padding: 8px 15px;
-    border-radius: 4px;
-    position: absolute;
-    z-index: 1;
-    bottom: 110%; /* 툴팁의 위치 설정 */
-    left: 7%;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: opacity 0.3s;
-    font-size: 13px;
+    box-sizing: border-box;
+    border: none;
   }
 
-  /* 화살표 스타일 */
-  span.tooltip2::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #333 transparent transparent transparent;
+  label {
+    width: 160px;
+    text-align: center;
+    background-color: #68b2f1;
+    padding: 13px 0;
+    color: white;
+  }
+
+  input,
+  select {
+    width: 97%;
+    height: 46px;
+    padding: 10px;
+    border: 1px solid #dddddd00;
+    box-sizing: border-box;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    border: 1px solid #ddd;
+    transition: border-color 0.3s ease;
+    outline: none;
+  }
+
+  textarea {
+    width: 100%;
+    height: 103px;
+    padding: 12px;
+    resize: none;
+    box-sizing: border-box;
+    border: 1px solid #dddddd00;
+    border-top: 1px solid #ddd;
+    border-bottom-right-radius: 10px;
+  }
+
+  .product-description-label {
+    text-align: center;
+    padding-top: 35px;
+    height: 55px;
+    border-bottom-left-radius: 10px;
+    background-color: #68b2f1;
+  }
+
+  .full-width {
+    flex: 1;
+  }
+
+  .product-name-label {
+    border-top-left-radius: 10px;
   }
 `;
 
@@ -331,10 +329,10 @@ export const productBox = css`
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   justify-content: center;
   cursor: default;
 `;
+
 export const product = css`
   width: 100%;
 `;
@@ -345,7 +343,6 @@ export const table = css`
   width: 100%;
   background-color: #fff;
   padding: 20px;
-  /* border-spacing: 10px 15px; */
   border-collapse: collapse;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 5px 5px rgba(136, 136, 136, 0.199);
@@ -357,14 +354,13 @@ export const table = css`
 
   th,
   td {
-    /* border: 1px solid #ddd; */
     padding: 15px 0;
     text-align: center;
     color: #333;
   }
 
   th {
-    background-color: #68B2F1;
+    background-color: #68b2f1;
     width: 35%;
     font-weight: 600;
     color: white;
@@ -412,13 +408,12 @@ export const optionLayout = css`
   overflow-y: auto;
 
   ::-webkit-scrollbar {
-    width: 6px; /* 스크롤바의 너비 */
+    width: 6px;
   }
 
   ::-webkit-scrollbar-thumb {
     height: 20%;
     background: #d6d6da;
-
     border-radius: 10px;
   }
 

@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 
 export const layout = css`
   width: 100%;
-  height: 90px; /* 헤더의 높이와 동일하게 설정 */
+  height: 80px; /* 헤더의 높이와 동일하게 설정 */
   display: flex;
   align-items: center;
   justify-content: center;

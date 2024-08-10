@@ -151,6 +151,14 @@ const EditProductPage = () => {
 
   return (
     <div css={s.layout}>
+      <div css={s.header}>
+        <h1>
+          <IoIosArrowBack size={35} onClick={handleBackClick} />
+          <span className="tooltip2">뒤로가기</span>
+          Product Information
+        </h1>
+      </div>
+
       <div css={s.container}>
         <div css={s.imageContainer}>
           <ImageUpload
@@ -173,16 +181,9 @@ const EditProductPage = () => {
               </button>
             </div>
           ) : (
-            <>
-              <h1>
-                <IoIosArrowBack size={35} onClick={handleBackClick} />
-                <span className="tooltip2">뒤로가기</span>
-                Product Information
-              </h1>
-              <button onClick={handleEditClick} css={s.editButton}>
-                수정 하기
-              </button>
-            </>
+            <button onClick={handleEditClick} css={s.editButton}>
+              수정 하기
+            </button>
           )}
           {isEditing ? (
             <div css={s.inputBox}>
