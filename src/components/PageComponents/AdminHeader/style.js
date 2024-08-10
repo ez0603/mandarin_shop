@@ -2,16 +2,17 @@ import { css } from "@emotion/react";
 
 export const layout = css`
   width: 100%;
-  height: 80px;
+  height: 90px; /* 헤더의 높이와 동일하게 설정 */
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #fff;
   z-index: 999;
+  /* padding-top: 80px; */
 `;
 
 export const container = css`
-  width: 90%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -21,24 +22,28 @@ export const container = css`
 
 export const headerContent = css`
   width: 100%;
+  height: 90px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
+  background-color: #fff;
+  padding: 10px 50px 0 20px; /* 좌우 패딩 설정 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  box-sizing: border-box;
 `;
 
 export const logoLayout = css`
-  position: absolute;
-  left: -45px;
-  /* transform: translateX(-50%); */
   display: flex;
   align-items: center;
-  justify-content: center;
-  top: -20px;
+  justify-content: flex-start;
 
   img {
-    width: 160px;
-    height: 120px;
+    width: 140px; /* 로고 크기를 유튜브와 유사하게 조정 */
+    height: 110px;
     cursor: pointer;
   }
 `;
@@ -46,14 +51,13 @@ export const logoLayout = css`
 export const mypageAndCategory = css`
   display: flex;
   align-items: center;
-  padding-top: 20px;
+  /* padding-top: 20px; */
 `;
 
 export const mypageLayout = css`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  gap: 25px;
 
   p,
   svg {

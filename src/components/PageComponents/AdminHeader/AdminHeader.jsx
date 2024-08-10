@@ -60,13 +60,6 @@ function AdminHeader(props) {
           <div css={s.logoLayout} onClick={handleLogoClick}>
             <img src={logo} alt="Logo" />
           </div>
-          <div css={s.category}>
-            {/* <ul css={s.list}>
-              <li css={s.listItem} onClick={handleSalesClick}>매출 현황</li>
-              <li css={s.listItem} onClick={handleProductClick}>상품 관리</li>
-              <li css={s.listItem}>재고 관리</li>
-            </ul> */}
-          </div>
           <div css={s.mypageAndCategory}>
             <div css={s.mypageLayout}>
               <div css={s.iconWithText} onClick={handleLogoutClick}>
