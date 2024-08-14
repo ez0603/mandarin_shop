@@ -12,7 +12,7 @@ export const layout = css`
   }
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 export const container = css`
@@ -23,13 +23,14 @@ export const container = css`
   align-items: center;
   flex-direction: column;
   gap: 20px;
-  padding: 20px;
+  padding: 20px 0;
 `;
 
 export const category = css`
-  width: 87%;
+  width: 95%;
   display: flex;
   align-items: center;
+  padding: 10px 0;
 `;
 
 export const list = css`
@@ -69,7 +70,7 @@ export const listItem = css`
 `;
 
 export const headerContainer = css`
-  width: 85%;
+  width: 90%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -113,13 +114,14 @@ export const selectAllCheckbox = css`
 `;
 
 export const productContainer = css`
-  width: 85%;
+  width: 90%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0 3px 10px -8px #424242ff;
+  background-color: #fff;
 `;
 
 export const selectedProductContainer = css`

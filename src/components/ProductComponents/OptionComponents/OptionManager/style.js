@@ -129,6 +129,7 @@ export const optionLayout = css`
 
   p {
     text-align: center; 
+    padding-top: 20px;
   }
 `;
 
