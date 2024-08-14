@@ -186,7 +186,7 @@ const OptionManager = ({
         </button>
       </div>
       <div css={s.optionsAndEditor}>
-        <div css={s.optionsContainer}>
+        <div css={s.optionsContainer(isVisible, optionModal)}>
           {optionModal && (
             <OptionRegisterModal
               optionModal={optionModal}
@@ -234,7 +234,7 @@ const OptionManager = ({
                           .map((name) => (
                             <div key={name.optionNameId} css={s.optionName}>
                               {name.optionName}
-                              <div>
+                              <div css={s.optionBox}>
                                 <button
                                   onClick={() => {
                                     setUpdateOptionData((prevData) => ({

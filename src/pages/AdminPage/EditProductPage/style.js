@@ -104,7 +104,7 @@ export const imageContainer = css`
   height: auto;
   position: relative;
   top: 7%;
-  left: 3%;
+  left: 2%;
   display: flex;
   flex-direction: column;
   align-items: center;

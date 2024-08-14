@@ -10,7 +10,7 @@ export const layout = css`
 `;
 
 export const header = css`
-  width: 101%;
+  width: 100%;
   margin: 15px 0;
   display: flex;
   flex-direction: row;
@@ -74,20 +74,23 @@ export const optionAddButton = (optionModal) => css`
 `;
 
 export const optionsAndEditor = css`
-  width: 98%;
+  width: 100%; /* 컨테이너 전체 너비를 100%로 설정 */
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between; /* 요소들을 양 끝으로 배치 */
+  align-items: flex-start; /* 수직 정렬을 상단으로 설정 */
+  gap: 20px; /* 요소들 사이에 간격 추가 */
 `;
 
-export const optionsContainer = css`
-  width: 90%;
-  background-color: #fff;
+export const optionsContainer = (isVisible, optionModal) => css`
+  width: ${isVisible || optionModal ? "70%" : "100%"}; 
+  /* 수정 컨테이너 또는 옵션 추가 모달이 보이면 너비를 70%로 설정, 둘 다 안 보이면 100% */
   height: 390px;
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   overflow-y: auto;
   overflow-x: hidden;
+  transition: width 0.5s ease-in-out;
 
   ::-webkit-scrollbar {
     width: 6px;
@@ -96,7 +99,6 @@ export const optionsContainer = css`
   ::-webkit-scrollbar-thumb {
     height: 20%;
     background: #d6d6da;
-
     border-radius: 10px;
   }
 
@@ -108,12 +110,13 @@ export const optionsContainer = css`
 export const optionLayout = css`
   box-sizing: border-box;
   border: 1px solid #ddd;
+  background-color: #fff;
   border-radius: 10px;
   width: 46%;
   height: 180px;
   display: flex;
   flex-direction: column;
-  
+
   h4 {
     font-size: 18px;
     margin: 15px;
@@ -123,6 +126,11 @@ export const optionLayout = css`
     background-color: transparent;
     border: none;
     cursor: pointer;
+  }
+
+  p {
+    position: relative;
+    transform: translate(30%, 50%);
   }
 `;
 
@@ -140,16 +148,17 @@ export const optionTitle = css`
 `;
 
 export const optionContainer = css`
-  padding: 20px;
+  padding: 15px;
   height: 120px;
   box-sizing: border-box;
-  overflow-y: auto;
+  overflow-y: auto; /* 세로 스크롤을 유지 */
+  overflow-x: hidden; /* 가로 스크롤을 숨김 */
   display: flex;
   justify-content: start;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* 옵션들이 줄을 넘어가도록 설정 */
   gap: 30px;
   word-break: break-word;
-
+  
   ::-webkit-scrollbar {
     width: 5px;
   }
@@ -165,34 +174,33 @@ export const optionContainer = css`
 `;
 
 export const optionName = css`
-display: flex;
-flex-direction: row;
-width: auto;
-gap: 15px;
-
-div {
   display: flex;
-  gap: 10px;
-}
+  flex-direction: row;
+  width: auto;
+  gap: 15px;
+  white-space: nowrap; 
 `;
 
+
+export const optionBox = css``;
+
 export const updateContainer = (isVisible) => css`
-  width: 30%; /* 수정 컨테이너의 너비를 30%로 설정 */
+  width: ${isVisible ? "30%" : "0%"}; /* 수정 컨테이너의 너비를 30%로 설정 */
   border-radius: 10px;
-  display: flex;
+  display: ${isVisible
+    ? "flex"
+    : "none"}; /* 수정 컨테이너가 보이면 flex, 안보이면 none */
   flex-direction: column;
   background-color: ${isVisible ? "#fff" : "transparent"};
   padding: 15px;
   box-shadow: ${isVisible ? "0px 0px 10px rgba(0, 0, 0, 0.1)" : "none"};
-  position: relative; /* fixed로 위치를 제어하여 화면에 고정되게 설정 */
-  left: -25%;
-  transform: ${isVisible ? "translateX(100%)" : "translateX(0)"};
-  opacity: ${isVisible ? "1" : "0"}; /* 투명도 설정 */
+  position: relative;
+  left: 0;
+  transform: ${isVisible ? "translateX(0)" : "translateX(-100%)"};
+  opacity: ${isVisible ? "1" : "0"};
   transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out,
-    opacity 0.7s ease-in-out; /* 위치 이동과 그림자, 투명도에 대한 트랜지션 설정 */
-  z-index: ${isVisible
-    ? "1"
-    : "-1"}; /* z-index를 사용하여 요소가 겹치지 않도록 제어 */
+    opacity 0.7s ease-in-out, width 0.5s ease-in-out;
+  z-index: ${isVisible ? "1" : "-1"};
   pointer-events: ${isVisible ? "auto" : "none"};
 `;
 
