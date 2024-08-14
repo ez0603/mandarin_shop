@@ -234,7 +234,7 @@ const OptionManager = ({
                           .map((name) => (
                             <div key={name.optionNameId} css={s.optionName}>
                               {name.optionName}
-                              <div css={s.optionBox}>
+                              <div>
                                 <button
                                   onClick={() => {
                                     setUpdateOptionData((prevData) => ({
@@ -261,7 +261,7 @@ const OptionManager = ({
                           ))}
                       </div>
                     ) : (
-                      <p>옵션이 없습니다</p>
+                      <p>옵션을 추가해주세요</p>
                     )}
                   </div>
                 )
@@ -276,8 +276,7 @@ const OptionManager = ({
             <>
               <div css={s.updateButtons}>
                 <button onClick={handleCloseEditor}>
-                  <IoArrowBack />
-                  뒤로
+                  <IoArrowBack size={19}/>
                 </button>
                 <button
                   onClick={
@@ -288,14 +287,14 @@ const OptionManager = ({
                 </button>
               </div>
               {updateState === 1 ? (
-                <div>
-                  <div>옵션 타이틀</div>
+                <div css={s.optionBox}>
+                  <p>옵션 타이틀</p>
                   <input
                     type="text"
                     value={updateOptionData.optionTitleName}
                     disabled
                   />
-                  <div>옵션 이름</div>
+                  <p>옵션 이름</p>
                   <input
                     type="text"
                     onChange={handleOptionName}
@@ -303,8 +302,8 @@ const OptionManager = ({
                   />
                 </div>
               ) : (
-                <div>
-                  <div>옵션 타이틀 이름</div>
+                <div css={s.optionBox}>
+                  <p>옵션 타이틀 이름</p>
                   <input
                     type="text"
                     onChange={handleOptionTitleName}

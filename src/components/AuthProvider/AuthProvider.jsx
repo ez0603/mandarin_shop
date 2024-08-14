@@ -14,7 +14,7 @@ const AuthProvider = ({ children }) => {
       if (token) {
         try {
           let response;
-          
+
           // 사용자 프린시펄 요청
           response = await getUserPrincipalRequest(token);
           if (response && response.data) {
@@ -40,17 +40,25 @@ const AuthProvider = ({ children }) => {
 
         } catch (error) {
           console.error("Failed to fetch principal:", error);
-          setAuth({
-            token: null,
-            principal: null,
-          });
-          localStorage.removeItem("AccessToken");
+          
+          // 토큰이 유효하지 않거나 오류 발생 시
+          handleInvalidToken();
         }
       }
     };
 
+    const handleInvalidToken = () => {
+      // 토큰이 유효하지 않을 때 처리
+      setAuth({
+        token: null,
+        principal: null,
+      });
+      localStorage.removeItem("AccessToken");
+      navigate("/auth/login"); // 로그인 페이지로 리디렉션
+    };
+
     fetchPrincipal();
-  }, [setAuth]);
+  }, [setAuth, navigate]);
 
   const login = (token, principal) => {
     setAuth({ token, principal });

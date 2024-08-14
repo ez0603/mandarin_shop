@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { registerOption } from "../../../../apis/api/option";
 import useInsertOptionTitle from "../../../../hooks/useInsertOptionTitle";
 import useGetOptionTitle from "../../../../hooks/useGetOptionTitle";
@@ -15,11 +15,18 @@ function OptionRegisterModal({
   const [optionName, setOptionName] = useState("");
   const [optionTitle, setOptionTitle] = useState("");
   const [optionSelectTitleId, setOptionSlectTitleId] = useState("");
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
   const { insertOptionTitle, refresh } = useInsertOptionTitle();
   const {
     optionTitleId = [],
     optionTitleName = [],
   } = useGetOptionTitle(productId, refresh);
+
+  useEffect(() => {
+    if (optionTitleId.length > 0) {
+      setIsLoading(false); // 옵션 데이터가 로드되면 로딩 상태를 false로 설정
+    }
+  }, [optionTitleId]);
 
   const handleOptionTitleName = (e) => {
     setOptionTitle(e.target.value);
@@ -114,16 +121,20 @@ function OptionRegisterModal({
           </div>
           <div css={s.selectWrapper}>
             <label>옵션 타이틀 선택</label>
-            <CustomSelect
-              options={optionTitleId.map((id, index) => ({
-                optionTitleId: id,
-                optionName: optionTitleName[index],
-              }))}
-              selectedOption={optionTitleId.find(
-                (id) => id === optionSelectTitleId
-              )}
-              onSelect={handleOptionSelect}
-            />
+            {isLoading ? (
+              <p>잠시만 기다려주세요...</p>
+            ) : (
+              <CustomSelect
+                options={optionTitleId.map((id, index) => ({
+                  optionTitleId: id,
+                  optionName: optionTitleName[index],
+                }))}
+                selectedOption={optionTitleId.find(
+                  (id) => id === optionSelectTitleId
+                )}
+                onSelect={handleOptionSelect}
+              />
+            )}
           </div>
           <div>
             <label>옵션 이름 추가</label>
@@ -135,7 +146,9 @@ function OptionRegisterModal({
           </div>
         </div>
         <div css={s.modalFooter}>
-          <button onClick={insertOption}>옵션 추가</button>
+          <button onClick={insertOption} disabled={isLoading}>
+            옵션 추가
+          </button>
           <button onClick={closeModal}>취소</button>
         </div>
       </div>

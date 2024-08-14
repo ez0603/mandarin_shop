@@ -74,16 +74,15 @@ export const optionAddButton = (optionModal) => css`
 `;
 
 export const optionsAndEditor = css`
-  width: 100%; /* 컨테이너 전체 너비를 100%로 설정 */
+  width: 100%;
   display: flex;
-  justify-content: space-between; /* 요소들을 양 끝으로 배치 */
-  align-items: flex-start; /* 수직 정렬을 상단으로 설정 */
-  gap: 20px; /* 요소들 사이에 간격 추가 */
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
 `;
 
 export const optionsContainer = (isVisible, optionModal) => css`
-  width: ${isVisible || optionModal ? "70%" : "100%"}; 
-  /* 수정 컨테이너 또는 옵션 추가 모달이 보이면 너비를 70%로 설정, 둘 다 안 보이면 100% */
+  width: ${isVisible || optionModal ? "70%" : "100%"};
   height: 390px;
   display: flex;
   flex-wrap: wrap;
@@ -129,8 +128,7 @@ export const optionLayout = css`
   }
 
   p {
-    position: relative;
-    transform: translate(30%, 50%);
+    text-align: center; 
   }
 `;
 
@@ -141,9 +139,9 @@ export const optionTitle = css`
   gap: 10px;
 
   div {
-    width: 20%;
     display: flex;
     justify-content: space-between;
+    gap: 10px;
   }
 `;
 
@@ -151,11 +149,11 @@ export const optionContainer = css`
   padding: 15px;
   height: 120px;
   box-sizing: border-box;
-  overflow-y: auto; /* 세로 스크롤을 유지 */
-  overflow-x: hidden; /* 가로 스크롤을 숨김 */
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   justify-content: start;
-  flex-wrap: wrap; /* 옵션들이 줄을 넘어가도록 설정 */
+  flex-wrap: wrap;
   gap: 30px;
   word-break: break-word;
   
@@ -181,15 +179,10 @@ export const optionName = css`
   white-space: nowrap; 
 `;
 
-
-export const optionBox = css``;
-
 export const updateContainer = (isVisible) => css`
-  width: ${isVisible ? "30%" : "0%"}; /* 수정 컨테이너의 너비를 30%로 설정 */
+  width: ${isVisible ? "30%" : "0%"};
   border-radius: 10px;
-  display: ${isVisible
-    ? "flex"
-    : "none"}; /* 수정 컨테이너가 보이면 flex, 안보이면 none */
+  display: ${isVisible ? "flex" : "none"};
   flex-direction: column;
   background-color: ${isVisible ? "#fff" : "transparent"};
   padding: 15px;
@@ -206,10 +199,27 @@ export const updateContainer = (isVisible) => css`
 
 export const updateButtons = css`
   display: flex;
-  justify-content: flex-end;
   gap: 10px;
+  align-items: center;
+  justify-content: space-between;
 
   button {
-    margin-left: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
   }
+`;
+
+export const optionBox = css`
+padding: 5px 10px;
+p {
+  font-size: 14px;
+}
+
+input {
+  width: 90%;
+  padding: 7px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 `;
