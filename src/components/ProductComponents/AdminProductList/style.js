@@ -23,11 +23,11 @@ export const container = css`
   align-items: center;
   flex-direction: column;
   gap: 20px;
-  padding: 20px 0;
+  padding: 25px 0;
 `;
 
 export const category = css`
-  width: 95%;
+  width: 93%;
   display: flex;
   align-items: center;
   padding: 20px 0 0 0;
@@ -70,7 +70,7 @@ export const listItem = css`
 `;
 
 export const headerContainer = css`
-  width: 90%;
+  width: 93%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -91,16 +91,18 @@ export const headerItem = css`
 
 export const selectAllCheckbox = css`
   cursor: pointer;
-  padding: 7px 10px;
+  padding: 10px 15px;
   box-sizing: border-box;
   border: 1px solid #dbdbdb;
   border-radius: 5px;
   background-color: #fff;
-  margin-bottom: 15px;
   position: relative;
   display: inline-block;
   text-align: center;
   box-shadow: 0px 4px 5px #c0c0c06e;
+  position: relative;
+  right: 30px;
+  bottom: 15px;
 
   :hover {
     background-color: #f1f1f1;
@@ -114,7 +116,7 @@ export const selectAllCheckbox = css`
 `;
 
 export const productContainer = css`
-  width: 90%;
+  width: 92%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -187,7 +189,7 @@ export const buttonBox = css`
   button {
     box-sizing: border-box;
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 8px 15px;
     border-radius: 5px;
     border: 1px solid #dbdbdb;
     background-color: #fff;
