@@ -6,6 +6,7 @@ import { authState } from "../../../atoms/authAtom";
 import * as s from "./style";
 import { MdPayment } from "react-icons/md";
 import { FaShoppingCart } from "react-icons/fa";
+import { MdAddShoppingCart } from "react-icons/md";
 
 function Sidebar() {
   const [isShow, setShow] = useState(false);
@@ -43,6 +44,14 @@ function Sidebar() {
     }
   };
 
+  const handleProductAddClick = () => {
+    if (principal?.roleId === 1) {
+      navigate("/admin/product/add");
+    } else {
+      window.alert("접근 권한이 없습니다.");
+    }
+  };
+
   return (
     <div css={s.layout}>
       <div>
@@ -57,6 +66,20 @@ function Sidebar() {
               onClick={handleSalesClick}
             >
               <MdPayment size={27} /> 매출 현황
+            </Link>
+          </li>
+          <li css={s.menuItem}>
+            <Link
+              to="/admin/product/add"
+              css={[
+                s.link,
+                (location.pathname === "/admin/product/add") &&
+                  s.activeLink,
+              ]}
+              onClick={handleProductAddClick}
+            >
+              <MdAddShoppingCart size={27} />
+              상품 등록
             </Link>
           </li>
           <li css={s.menuItem}>

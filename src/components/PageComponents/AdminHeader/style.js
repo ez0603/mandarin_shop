@@ -45,6 +45,8 @@ export const logoLayout = css`
     width: 140px; /* 로고 크기를 유튜브와 유사하게 조정 */
     height: 110px;
     cursor: pointer;
+    position: relative;
+    left: 35px;
   }
 `;
 
