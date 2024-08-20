@@ -30,7 +30,7 @@ export const category = css`
   width: 95%;
   display: flex;
   align-items: center;
-  padding: 10px 0;
+  padding: 20px 0 0 0;
 `;
 
 export const list = css`
@@ -58,7 +58,7 @@ export const listItem = css`
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #dbdbdb;
+    background-color: #40a6fa;
     visibility: hidden;
     transition: all 0.3s ease-in-out;
   }
@@ -128,6 +128,14 @@ export const selectedProductContainer = css`
   background-color: #eeeeeeff;
   box-shadow: 0 4px 13px -7px #0000008e;
 `;
+
+export const selectedListItem = css`
+  background-color: #6AB2ED;
+  color: white;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+`;
+
 
 export const checkbox = css`
   width: 20px;

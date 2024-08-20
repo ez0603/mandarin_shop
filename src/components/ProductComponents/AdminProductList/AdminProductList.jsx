@@ -5,7 +5,7 @@ import * as s from "./style";
 import {
   getProductRequest,
   getProductCategoryRequest,
-  deleteProductRequest
+  deleteProductRequest,
 } from "../../../apis/api/product";
 import useCategories from "../../../hooks/useCategories";
 
@@ -15,6 +15,7 @@ function AdminProductList() {
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [filteredProductList, setFilteredProductList] = useState([]);
   const categories = useCategories();
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const navigate = useNavigate();
 
@@ -96,6 +97,7 @@ function AdminProductList() {
   };
 
   const handleCategoryClick = async (categoryId) => {
+    setSelectedCategory(categoryId);
     try {
       let response;
       if (categoryId) {
@@ -122,7 +124,10 @@ function AdminProductList() {
             {categories.map((category) => (
               <li
                 key={category.value}
-                css={s.listItem}
+                css={[
+                  s.listItem,
+                  selectedCategory === category.value && s.selectedListItem, // 선택된 카테고리에 스타일 적용
+                ]}
                 onClick={() => handleCategoryClick(category.value)}
               >
                 {category.label}

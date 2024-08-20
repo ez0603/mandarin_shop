@@ -112,8 +112,8 @@ export const modalContent = css`
 
   label {
     display: block;
-    font-size: 15px;
-    margin: 7px 0;
+    font-size: 14px;
+    margin: 8px 0;
   }
 
   input[type="text"],
@@ -138,7 +138,7 @@ export const modalFooter = css`
     font-size: 15px;
     font-weight: bold;
     color: #fff;
-    background-color: #007bff;
+    background-color: #C3EBFF;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -160,18 +160,20 @@ export const modalFooter = css`
     }
 
     &:first-of-type {
-      background-color: #007bff;
+      background-color: #40A6FA;
 
       &:hover {
-        background-color: #0055b1;
+        background-color: #1d85da;
       }
     }
 
     &:last-of-type {
-      background-color: #6c757d;
+      background-color: #ccc;
+      color: #333;
 
       &:hover {
         background-color: #5a6268;
+        color: white;
       }
     }
 

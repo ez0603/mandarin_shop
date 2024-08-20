@@ -274,7 +274,7 @@ export const input = css`
   label {
     width: 160px;
     text-align: center;
-    background-color: #68b2f1;
+    background-color: #40a6fa;
     padding: 13px 0;
     color: white;
   }
@@ -312,7 +312,7 @@ export const input = css`
     padding-top: 35px;
     height: 55px;
     border-bottom-left-radius: 10px;
-    background-color: #68b2f1;
+    background-color: #40a6fa;
   }
 
   .full-width {
@@ -360,7 +360,7 @@ export const table = css`
   }
 
   th {
-    background-color: #68b2f1;
+    background-color: #40a6fa;
     width: 35%;
     font-weight: 600;
     color: white;
