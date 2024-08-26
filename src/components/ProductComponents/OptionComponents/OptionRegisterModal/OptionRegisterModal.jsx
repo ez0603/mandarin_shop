@@ -15,7 +15,7 @@ function OptionRegisterModal({
   const [optionName, setOptionName] = useState("");
   const [optionTitle, setOptionTitle] = useState("");
   const [optionSelectTitleId, setOptionSlectTitleId] = useState("");
-  const [isLoading, setIsLoading] = useState(true); // 로딩 상태 추가
+  const [isLoading, setIsLoading] = useState(true);
   const { insertOptionTitle, refresh } = useInsertOptionTitle();
   const {
     optionTitleId = [],
@@ -25,6 +25,8 @@ function OptionRegisterModal({
   useEffect(() => {
     if (optionTitleId.length > 0) {
       setIsLoading(false); // 옵션 데이터가 로드되면 로딩 상태를 false로 설정
+    } else {
+      setIsLoading(false); // 옵션 데이터가 없더라도 로딩은 끝난 상태로 설정
     }
   }, [optionTitleId]);
 
@@ -123,7 +125,7 @@ function OptionRegisterModal({
             <label>옵션 타이틀 선택</label>
             {isLoading ? (
               <p>잠시만 기다려주세요...</p>
-            ) : (
+            ) : optionTitleId.length > 0 ? (
               <CustomSelect
                 options={optionTitleId.map((id, index) => ({
                   optionTitleId: id,
@@ -134,6 +136,8 @@ function OptionRegisterModal({
                 )}
                 onSelect={handleOptionSelect}
               />
+            ) : (
+              <p>옵션이 존재하지 않습니다</p>
             )}
           </div>
           <div>

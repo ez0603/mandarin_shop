@@ -23,11 +23,10 @@ function ProductRegister({
     setSelectedImage(url);
   };
 
-  // 이미지가 없을 때 noImg를 기본 이미지로 설정
   const displayedImage = selectedImage || noImg;
 
   const handleCategorySelect = (category) => {
-    setCategoryId(category.value); // 선택된 카테고리의 값을 setCategoryId로 업데이트
+    setCategoryId(category.value); 
   };
 
   return (

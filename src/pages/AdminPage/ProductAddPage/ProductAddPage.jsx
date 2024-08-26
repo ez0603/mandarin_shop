@@ -6,11 +6,11 @@ import ProductRegister from "../../../components/ProductComponents/ProductRegist
 import useCategories from "../../../hooks/useCategories";
 import useInsertProduct from "../../../hooks/useInsertProduct";
 import useCategoryInsert from "../../../hooks/useCategoryInsert";
+import OptionManager from "../../../components/ProductComponents/OptionComponents/OptionManager/OptionManager";
 
 function ProductAddPage(props) {
   const { productId } = useParams();
 
-  const [selectedImage, setSelectedImage] = useState(null);
   const [categoryId, setCategoryId] = useState(0);
   const categories = useCategories();
   const {
@@ -20,7 +20,28 @@ function ProductAddPage(props) {
     setproductPrice,
     insertProduct,
   } = useInsertProduct(categories);
+  const [productDetailState, setProductDetailState] = useState({
+    productId,
+    productName: "",
+    categoryId: "",
+    categoryName: "",
+    productPrice: "",
+    productImg: "",
+    productDescription: "",
+    optionTitles: [],
+    optionNames: [],
+  });
   const { categoryName } = useCategoryInsert();
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleOptionUpdate = (updatedOptionTitles, updatedOptionNames) => {
+    setProductDetailState((prevState) => ({
+      ...prevState,
+      optionTitles: updatedOptionTitles,
+      optionNames: updatedOptionNames,
+    }));
+    setIsEditing(true);
+  };
 
   return (
     <div css={s.layout}>
@@ -30,19 +51,24 @@ function ProductAddPage(props) {
         </div>
         <div css={s.content}>
           <div css={s.productLayout}>
-            <div css={s.productInsert}>
-              <ProductRegister
-                categories={categories}
-                categoryId={categoryId}
-                setCategoryId={setCategoryId}
-                setproductName={setproductName}
-                setproductPrice={setproductPrice}
-                insertProduct={insertProduct}
-                categoryName={categoryName}
-              />
-            </div>
+            <ProductRegister
+              categories={categories}
+              categoryId={categoryId}
+              setCategoryId={setCategoryId}
+              setproductName={setproductName}
+              setproductPrice={setproductPrice}
+              insertProduct={insertProduct}
+              categoryName={categoryName}
+            />
           </div>
-          <div css={s.optionLayout}></div>
+          <div css={s.optionLayout}>
+            <OptionManager
+              productId={productId}
+              optionTitles={productDetailState.optionTitles}
+              optionNames={productDetailState.optionNames}
+              setOptionList={handleOptionUpdate}
+            />
+          </div>
         </div>
       </div>
     </div>

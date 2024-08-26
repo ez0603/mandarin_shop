@@ -33,7 +33,7 @@ export const header = css`
 `;
 
 export const saveButton = css`
-  padding: 10px 20px;
+  padding: 10px 25px;
   background-color: #4caf50;
   color: white;
   border: none;
@@ -58,16 +58,12 @@ export const productLayout = css`
   width: 45%;
   height: 80%;
   border-radius: 10px;
-`;
+  `;
 
 export const optionLayout = css`
-  background-color: orange;
+  background-color: white;
   width: 50%;
   height: 80%;
-`;
-
-export const productInsert = css`
-  width: 100%;
-  height: 100%;
+  border-radius: 10px;
 `;
 

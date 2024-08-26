@@ -21,7 +21,7 @@ export const productImage = css`
 `;
 
 export const fileInput = css`
-  position: relative;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;

@@ -88,7 +88,9 @@ const EditProductPage = () => {
   };
 
   const handleExitClick = () => {
-    if (isEditing) {
+    const hasChanges = JSON.stringify(productDetailState) !== JSON.stringify(initialState);
+  
+    if (hasChanges) {
       const confirmLeave = window.confirm(
         "수정된 내용이 저장되지 않았습니다. 그래도 나가시겠습니까?"
       );
@@ -96,11 +98,12 @@ const EditProductPage = () => {
         return;
       }
     }
-    console.log("Restoring to initial state:", initialState);
+
     setProductDetailState(initialState);
     setSelectedImage(initialState.productImg);
     setIsEditing(false);
   };
+  
 
   const handleUpdateProductDetail = async () => {
     try {
