@@ -1,29 +1,38 @@
 import React from "react";
-import { registerProductRequest } from "../apis/api/product";
+import { registerProduct } from "../apis/api/product";
 
-function useInsertProduct(props) {
-  const insertProduct = async (
+function useInsertProduct() {
+  const insertProduct = async ({
     productName,
-    productPrice,
     categoryId,
-    categoryName
-  ) => {
+    productPrice,
+    productImg,
+    productDescription,
+  }) => {
     try {
+      console.log("insertProduct called");
+
       if (categoryId === 0) {
         alert("카테고리를 선택해주세요");
         throw new Error("카테고리를 선택해주세요.");
       }
+
       const params = {
-        menuCategoryId: categoryId,
-        menuCategoryName: categoryName,
         productName: productName,
-        productPrice: productPrice,
+        categoryId: categoryId,
+        productPrice: parseInt(productPrice, 10),
+        productImg: productImg,
+        productDescription: productDescription,
       };
-      await registerProductRequest(params);
-      alert("메뉴 추가가 완료되었습니다.");
+
+      console.log("Params before sending:", params);
+
+      await registerProduct(params);
+
+      alert("상품 추가가 완료되었습니다.");
       window.location.reload();
     } catch (error) {
-      console.error(error);
+      console.error("Error occurred:", error);
     }
   };
 

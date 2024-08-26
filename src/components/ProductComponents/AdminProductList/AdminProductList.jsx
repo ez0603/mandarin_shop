@@ -14,6 +14,8 @@ function AdminProductList() {
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [filteredProductList, setFilteredProductList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 상태
+  const [productsPerPage] = useState(5); // 페이지 당 보여줄 상품 개수
   const categories = useCategories();
   const [selectedCategory, setSelectedCategory] = useState(null);
 
@@ -116,6 +118,19 @@ function AdminProductList() {
     setFilteredProductList(productList);
   }, [productList]);
 
+  // 페이지네이션을 위한 인덱스 계산
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProductList.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  // 페이지 변경 핸들러
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // 총 페이지 수 계산
+  const totalPages = Math.ceil(filteredProductList.length / productsPerPage);
+
   return (
     <div css={s.layout}>
       <div css={s.container}>
@@ -148,7 +163,7 @@ function AdminProductList() {
             전체 선택
           </button>
         </div>
-        {filteredProductList.map((product) => (
+        {currentProducts.map((product) => (
           <div
             key={product.productId}
             css={[
@@ -180,6 +195,16 @@ function AdminProductList() {
             </div>
           </div>
         ))}
+        <div >
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index + 1}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
 import instance from "../utils/instance";
 
-export const registerProductRequest = async () => {
-  return await instance.post("/product/products");
+export const registerProduct = async (data) => {
+  console.log(data);
+  return await instance.post("/product/products", data);
 };
 
 export const getProductRequest = async () => {

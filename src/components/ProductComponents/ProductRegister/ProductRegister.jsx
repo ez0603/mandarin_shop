@@ -4,26 +4,26 @@ import React, { useState } from "react";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import noImg from "../../../assets/img/noImg.png";
 import CategorySelect from "../../CategorySelect/CategorySelect";
-
 function ProductRegister({
   categories,
   categoryId,
   setCategoryId,
-  inserProduct,
-  categoryName,
-  handleRecommendChange,
+  productName, // 부모 컴포넌트에서 전달된 상태를 사용
+  setProductName, // 부모 컴포넌트에서 전달된 setter 함수를 사용
+  productPrice,
+  setProductPrice,
+  productDescription,
+  setProductDescription,
+  productImg,
+  setProductImg,
 }) {
-  const [productName, setProductName] = useState();
-  const [productPrice, setProductPrice] = useState();
-  const [productDescription, setProductDescription] = useState();
-  const [selectedImage, setSelectedImage] = useState(null);
   const [isEditing, setIsEditing] = useState(true);
 
   const handleImageUpload = (url) => {
-    setSelectedImage(url);
+    setProductImg(url);
   };
 
-  const displayedImage = selectedImage || noImg;
+  const displayedImage = productImg || noImg; // 여기에 올바르게 설정된 productImg를 사용
 
   const handleCategorySelect = (category) => {
     setCategoryId(category.value); 
@@ -34,7 +34,7 @@ function ProductRegister({
       <div css={s.container}>
         <div css={s.imgBox}>
           <ImageUpload
-            initialImage={displayedImage} // noImg가 기본 이미지로 표시됨
+            initialImage={displayedImage}
             onImageUpload={handleImageUpload}
             isEditing={isEditing}
           />
@@ -57,6 +57,7 @@ function ProductRegister({
               <label>상품명</label>
               <input
                 onChange={(e) => setProductName(e.target.value)}
+                value={productName} // 부모 컴포넌트에서 전달된 값을 사용
                 type="text"
               />
             </div>
@@ -64,6 +65,7 @@ function ProductRegister({
               <label>상품 가격</label>
               <input
                 onChange={(e) => setProductPrice(e.target.value)}
+                value={productPrice} // 부모 컴포넌트에서 전달된 값을 사용
                 type="text"
               />
             </div>
@@ -72,6 +74,7 @@ function ProductRegister({
             <label>상품 설명</label>
             <textarea
               onChange={(e) => setProductDescription(e.target.value)}
+              value={productDescription} // 부모 컴포넌트에서 전달된 값을 사용
               rows="7"
             />
           </div>

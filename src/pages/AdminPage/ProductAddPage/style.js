@@ -61,9 +61,25 @@ export const productLayout = css`
   `;
 
 export const optionLayout = css`
-  background-color: white;
   width: 50%;
   height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+`;
+
+export const optionInsert = css`
+  background-color: white;
+  width: 100%;
+  height: 40%;
+  border-radius: 10px;
+`;
+
+export const optionList = css`
+  background-color: white;
+  width: 100%;
+  height: 55%;
   border-radius: 10px;
 `;
 

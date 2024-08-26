@@ -149,7 +149,6 @@ const OptionManager = ({
     ) {
       try {
         const response = await deleteOptionTitle({ optionTitleId });
-        console.log("Delete response:", response);
         alert("옵션 타이틀이 삭제되었습니다.");
         refetch();
       } catch (error) {
@@ -159,6 +158,7 @@ const OptionManager = ({
   };
 
   const handleOpenEditor = (state, title = {}) => {
+
     setUpdateState(state);
     if (state === 2) {
       setUpdateOptionTitleName((prevData) => ({
