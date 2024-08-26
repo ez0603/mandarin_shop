@@ -8,6 +8,7 @@ function useInsertProduct() {
     productPrice,
     productImg,
     productDescription,
+    inventoryQuantity,
   }) => {
     try {
       console.log("insertProduct called");
@@ -23,6 +24,7 @@ function useInsertProduct() {
         productPrice: parseInt(productPrice, 10),
         productImg: productImg,
         productDescription: productDescription,
+        inventoryQuantity: parseInt(inventoryQuantity),
       };
 
       console.log("Params before sending:", params);

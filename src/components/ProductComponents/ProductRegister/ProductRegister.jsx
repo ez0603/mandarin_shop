@@ -16,6 +16,8 @@ function ProductRegister({
   setProductDescription,
   productImg,
   setProductImg,
+  inventoryQuantity,
+  setInventoryQuantity,
 }) {
   const [isEditing, setIsEditing] = useState(true);
 
@@ -26,7 +28,7 @@ function ProductRegister({
   const displayedImage = productImg || noImg; // 여기에 올바르게 설정된 productImg를 사용
 
   const handleCategorySelect = (category) => {
-    setCategoryId(category.value); 
+    setCategoryId(category.value);
   };
 
   return (
@@ -67,6 +69,14 @@ function ProductRegister({
                 onChange={(e) => setProductPrice(e.target.value)}
                 value={productPrice} // 부모 컴포넌트에서 전달된 값을 사용
                 type="text"
+              />
+            </div>
+            <div css={s.productBox}>
+              <label>수량</label>
+              <input
+                onChange={(e) => setInventoryQuantity(e.target.value)}
+                value={inventoryQuantity} // 부모 컴포넌트에서 전달된 값을 사용
+                type="number"
               />
             </div>
           </div>

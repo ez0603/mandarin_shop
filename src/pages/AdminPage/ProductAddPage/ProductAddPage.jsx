@@ -15,6 +15,7 @@ function ProductAddPage(props) {
   const [productPrice, setProductPrice] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [productImg, setProductImg] = useState("");
+  const [inventoryQuantity, setInventoryQuantity] = useState("");
   const [options, setOptions] = useState([]); // 추가된 옵션을 관리하는 상태
   const categories = useCategories();
   const { insertProduct } = useInsertProduct(categories);
@@ -41,6 +42,7 @@ function ProductAddPage(props) {
       productPrice: parseFloat(productPrice),
       productImg,
       productDescription,
+      inventoryQuantity: parseFloat(inventoryQuantity)
     };
 
     try {
@@ -78,6 +80,8 @@ function ProductAddPage(props) {
               setProductDescription={setProductDescription}
               productImg={productImg}
               setProductImg={setProductImg}
+              inventoryQuantity={inventoryQuantity}
+              setInventoryQuantity={setInventoryQuantity}
             />
           </div>
           <div css={s.optionLayout}>
