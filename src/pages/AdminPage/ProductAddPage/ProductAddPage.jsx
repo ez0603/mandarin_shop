@@ -21,6 +21,7 @@ function ProductAddPage(props) {
   const { categoryName } = useCategoryInsert();
 
   const handleSaveProduct = async () => {
+    // 필수 입력값이 모두 채워졌는지 확인
     const missingFields = [];
 
     if (!productName) missingFields.push("상품명");

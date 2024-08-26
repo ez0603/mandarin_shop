@@ -17,13 +17,13 @@ const HomePage = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        let response;
         if (categoryId) {
-          response = await getProductCategoryRequest(categoryId);
+          const response = await getProductCategoryRequest(categoryId);
+          setProductList(response.data);
+          console.log(response.data);
         } else {
-          response = await getProductRequest();
+          setProductList([]); // 카테고리가 선택되지 않았을 때는 빈 리스트
         }
-        setProductList(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -34,8 +34,20 @@ const HomePage = () => {
 
   return (
     <div css={s.layout}>
-      <h1>Products</h1>
-      <ProductList css={s.container} productList={productList} />
+      <h1>홈페이지</h1>
+      {categoryId ? (
+        productList.length > 0 ? (
+          <ProductList css={s.container} productList={productList} />
+        ) : (
+          <p>선택한 카테고리에 해당하는 상품이 없습니다.</p>
+        )
+      ) : (
+        <div>
+          <h2>Welcome to Our Shop!</h2>
+          <p>Select a category to see our products.</p>
+          {/* 여기에 배너나 소개 이미지를 추가할 수 있습니다. */}
+        </div>
+      )}
     </div>
   );
 };

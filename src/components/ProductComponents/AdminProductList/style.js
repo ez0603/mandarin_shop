@@ -146,7 +146,7 @@ export const checkbox = css`
 `;
 
 export const imgBox = css`
-  width: 10%;
+  width: 100px;
   height: 80px;
   display: flex;
   align-items: center;

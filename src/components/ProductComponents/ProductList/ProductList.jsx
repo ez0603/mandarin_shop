@@ -5,9 +5,9 @@ function ProductList({ productList }) {
   // 중복된 product_id를 제거한 새로운 배열 생성
   const uniqueProductList = productList.filter(
     (product, index, self) =>
-      index === self.findIndex((p) => p.product_id === product.product_id)
+      index === self.findIndex((p) => p.productId === product.productId)
   );
-
+  
   return (
     <div css={s.layout}>
       <div css={s.container}>

@@ -16,12 +16,12 @@ export const layout = css`
 `;
 
 export const container = css`
-  width: 100%;
+  width: 80%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
-  gap: 20px;
+  gap: 8%;
   padding: 20px;
 `;
 
@@ -36,7 +36,7 @@ export const imgBox = css`
 export const imgStyle = css`
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   border-radius: 15px;
 `;
 

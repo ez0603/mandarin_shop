@@ -70,27 +70,37 @@ function AdminProductList() {
     setIsAllSelected(!isAllSelected);
   };
 
-  const handleEdit = (productId) => {
-    if (!selectedProducts.includes(productId)) {
-      setSelectedProducts([productId]);
+  const handleEdit = () => {
+    if (selectedProducts.length !== 1) {
+      alert("수정은 하나의 제품만 가능합니다.");
+      return;
     }
-    navigate(`/admin/product/edit/${productId}`);
+    navigate(`/admin/product/edit/${selectedProducts[0]}`);
   };
 
-  const handleDelete = async (productId) => {
-    if (!selectedProducts.includes(productId)) {
-      setSelectedProducts([productId]);
+  const handleDelete = async () => {
+    if (selectedProducts.length === 0) {
+      alert("삭제할 제품을 선택하세요.");
+      return;
     }
-    const confirmDelete = window.confirm("정말로 이 제품을 삭제하시겠습니까?");
+
+    const confirmDelete = window.confirm(
+      "선택된 모든 제품을 삭제하시겠습니까?"
+    );
+
     if (confirmDelete) {
       try {
-        await deleteProductRequest(productId);
+        for (const id of selectedProducts) {
+          await deleteProductRequest(id);
+        }
         alert("제품이 삭제되었습니다.");
+
         const response = await getProductRequest();
         const uniqueProducts = removeDuplicates(response.data);
         setProductList(uniqueProducts);
         setFilteredProductList(uniqueProducts);
         setSelectedProducts([]);
+        setIsAllSelected(false);
       } catch (error) {
         console.error("제품 삭제 실패:", error);
         alert("제품 삭제에 실패했습니다.");
@@ -121,7 +131,10 @@ function AdminProductList() {
   // 페이지네이션을 위한 인덱스 계산
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProductList.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts = filteredProductList.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  );
 
   // 페이지 변경 핸들러
   const handlePageChange = (pageNumber) => {
@@ -152,16 +165,18 @@ function AdminProductList() {
         </div>
         <div css={s.headerContainer}>
           <div css={s.headerItem}>
-            <span>상품명</span>
-            <span>가격</span>
           </div>
-          <button
-            css={s.selectAllCheckbox}
-            onClick={handleSelectAllChange}
-            checked={isAllSelected}
-          >
-            전체 선택
-          </button>
+          <div>
+            <button css={s.selectAllCheckbox} onClick={handleSelectAllChange}>
+              전체 선택
+            </button>
+            <button onClick={handleEdit}>
+              수정
+            </button>
+            <button  onClick={handleDelete}>
+              삭제
+            </button>
+          </div>
         </div>
         {currentProducts.map((product) => (
           <div
@@ -185,22 +200,11 @@ function AdminProductList() {
               <span css={s.productItem}>{product.productName}</span>
               <span css={s.productItem}>{product.productPrice} 원</span>
             </div>
-            <div css={s.buttonBox}>
-              <button onClick={() => handleEdit(product.productId)}>
-                수정
-              </button>
-              <button onClick={() => handleDelete(product.productId)}>
-                삭제
-              </button>
-            </div>
           </div>
         ))}
-        <div >
+        <div>
           {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index + 1}
-              onClick={() => handlePageChange(index + 1)}
-            >
+            <button key={index + 1} onClick={() => handlePageChange(index + 1)}>
               {index + 1}
             </button>
           ))}
