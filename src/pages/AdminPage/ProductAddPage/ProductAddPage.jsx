@@ -6,7 +6,6 @@ import ProductRegister from "../../../components/ProductComponents/ProductRegist
 import useCategories from "../../../hooks/useCategories";
 import useInsertProduct from "../../../hooks/useInsertProduct";
 import useCategoryInsert from "../../../hooks/useCategoryInsert";
-import ImageUpload from "../../../components/ProductComponents/ImageUpload/ImageUpload";
 
 function ProductAddPage(props) {
   const { productId } = useParams();
@@ -26,20 +25,25 @@ function ProductAddPage(props) {
   return (
     <div css={s.layout}>
       <div css={s.container}>
-        <div css={s.productLayout}>
-          <div css={s.productInsert}>
-            <ProductRegister
-              categories={categories}
-              categoryId={categoryId}
-              setCategoryId={setCategoryId}
-              setproductName={setproductName}
-              setproductPrice={setproductPrice}
-              insertProduct={insertProduct}
-              categoryName={categoryName}
-            />
-          </div>
+        <div css={s.header}>
+          <button css={s.saveButton}>저장</button>
         </div>
-        <div css={s.optionLayout}></div>
+        <div css={s.content}>
+          <div css={s.productLayout}>
+            <div css={s.productInsert}>
+              <ProductRegister
+                categories={categories}
+                categoryId={categoryId}
+                setCategoryId={setCategoryId}
+                setproductName={setproductName}
+                setproductPrice={setproductPrice}
+                insertProduct={insertProduct}
+                categoryName={categoryName}
+              />
+            </div>
+          </div>
+          <div css={s.optionLayout}></div>
+        </div>
       </div>
     </div>
   );

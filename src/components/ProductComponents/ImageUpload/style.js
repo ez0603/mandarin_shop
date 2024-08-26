@@ -15,12 +15,13 @@ export const imageContainer = css`
 export const productImage = css`
   width: 100%;
   height: 100%;
-  object-fit: contain; /* 이미지가 중앙에 맞춰지고, 비율을 유지하며 전체가 보이도록 설정 */
+  object-fit: contain;
   object-position: center;
+  border-radius: 8px;
 `;
 
 export const fileInput = css`
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
@@ -41,6 +42,7 @@ export const overlay = css`
   justify-content: center;
   opacity: 0;
   transition: opacity 0.3s ease;
+  border-radius: 8px;
 
   &:hover {
     cursor: pointer;

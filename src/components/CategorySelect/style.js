@@ -3,12 +3,12 @@ import { css } from "@emotion/react";
 
 export const customSelectContainer = css`
   position: relative;
-  width: 96%;
+  width: 100%;
 `;
 
 export const customSelectButton = css`
   width: 100%;
-  padding: 9px;
+  padding: 10px;
   border-radius: 5px;
   border: none;
   background-color: #fff;
@@ -18,13 +18,6 @@ export const customSelectButton = css`
   position: relative;
   appearance: none;
   color: #333;
-  
-  &:focus {
-    border: 1px solid #ccc;
-    outline: none;
-  }
-
-
 `;
 
 export const customSelectOptions = css`

@@ -21,7 +21,6 @@ const EditProductPage = () => {
   const {
     productDetail,
     error: productError,
-    refetch: refetchProductDetail,
   } = useGetProductsDetail(productId);
   const categories = useCategories();
   const [isEditing, setIsEditing] = useState(false);
@@ -75,6 +74,7 @@ const EditProductPage = () => {
       ...prevState,
       productImg: url,
     }));
+    setSelectedImage(url); // 로컬 상태에만 반영
     setIsEditing(true);
   };
 
@@ -85,10 +85,18 @@ const EditProductPage = () => {
 
   const handleBackClick = () => {
     navigate("/admin/product");
-    console.log("Back button clicked");
   };
 
   const handleExitClick = () => {
+    if (isEditing) {
+      const confirmLeave = window.confirm(
+        "수정된 내용이 저장되지 않았습니다. 그래도 나가시겠습니까?"
+      );
+      if (!confirmLeave) {
+        return;
+      }
+    }
+    console.log("Restoring to initial state:", initialState);
     setProductDetailState(initialState);
     setSelectedImage(initialState.productImg);
     setIsEditing(false);
@@ -100,7 +108,7 @@ const EditProductPage = () => {
         productId: productDetailState.productId,
         productName: productDetailState.productName,
         productPrice: productDetailState.productPrice,
-        productImg: productDetailState.productImg,
+        productImg: productDetailState.productImg, // 최종 이미지 URL이 서버에 저장됨
         productDescription: productDetailState.productDescription,
         categoryId: productDetailState.categoryId,
       };
@@ -136,10 +144,6 @@ const EditProductPage = () => {
     }));
     setIsEditing(true);
   };
-
-  if (productError) {
-    return <div>Error: {productError.message}</div>;
-  }
 
   if (!productDetail) {
     return <div>Loading...</div>;

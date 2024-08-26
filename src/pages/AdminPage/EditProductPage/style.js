@@ -88,7 +88,6 @@ export const header = css`
   }
 `;
 
-
 export const container = css`
   width: 97%;
   height: 100%;
@@ -245,6 +244,7 @@ export const input = css`
   border: 1px solid #dbdbdb;
   border-radius: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 10;
 
   box-shadow: 0 5px 5px rgba(136, 136, 136, 0.199);
 

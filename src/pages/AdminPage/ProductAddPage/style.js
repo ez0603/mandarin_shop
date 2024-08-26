@@ -3,40 +3,71 @@ import { css } from "@emotion/react";
 export const layout = css`
   width: 100%;
   height: 100%;
-  overflow: auto; 
-  -ms-overflow-style: none; 
-  scrollbar-width: none; 
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
   }
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
+  align-items: center;
 `;
 
 export const container = css`
-width: 100%;
-height: 100%;
-display: flex;
-align-items: center;
-justify-content: center;
-flex-direction: column;
-gap: 30px;
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const header = css`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end; 
+  padding: 10px;
+  position: sticky;
+  top: 7%;
+`;
+
+export const saveButton = css`
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+
+export const content = css`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
 `;
 
 export const productLayout = css`
-background-color: aqua;
-width: 90%;
-height: 40%;
+  background-color: white;
+  width: 45%;
+  height: 80%;
+  border-radius: 10px;
 `;
 
 export const optionLayout = css`
-background-color: orange;
-width: 90%;
-height: 40%;
+  background-color: orange;
+  width: 50%;
+  height: 80%;
 `;
 
 export const productInsert = css`
-width: 100%;
-height: 100%;
+  width: 100%;
+  height: 100%;
 `;
 
