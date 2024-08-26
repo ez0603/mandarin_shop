@@ -129,7 +129,6 @@ const OptionManager = ({
   };
 
   const handleDeleteOption = async (optionNameId) => {
-    console.log("Attempting to delete option with ID:", optionNameId);
     if (window.confirm("정말로 이 옵션을 삭제하시겠습니까?")) {
       try {
         const response = await deleteOption({ optionNameId });
@@ -143,7 +142,6 @@ const OptionManager = ({
   };
 
   const handleDeleteOptionTitle = async (optionTitleId) => {
-    console.log("Attempting to delete option title with ID:", optionTitleId);
     if (
       window.confirm(
         "이 옵션 타이틀에 속한 모든 옵션이 삭제됩니다. 정말로 삭제하시겠습니까?"

@@ -4,6 +4,7 @@ import { storage } from "../../../apis/firebase/firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import * as s from "./style";
 import { SyncLoader } from "react-spinners";
+
 const ImageUpload = ({ initialImage, onImageUpload, isEditing }) => {
   const [selectedImage, setSelectedImage] = useState(initialImage);
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 추가
@@ -25,7 +26,6 @@ const ImageUpload = ({ initialImage, onImageUpload, isEditing }) => {
       try {
         await uploadBytes(storageRef, file);
         const downloadURL = await getDownloadURL(storageRef);
-        console.log("Uploaded image URL:", downloadURL); // 디버그 로그 추가
         onImageUpload(downloadURL);
       } catch (error) {
         console.error("Failed to upload image", error);
@@ -47,7 +47,7 @@ const ImageUpload = ({ initialImage, onImageUpload, isEditing }) => {
 
   return (
     <div css={s.imageContainer} onClick={handleImageClick}>
-      <img src={selectedImage} alt="Product" css={s.productImage} />
+      <img src={selectedImage} alt="" css={s.productImage} />
       {isEditing && (
         <>
           <input
@@ -58,7 +58,7 @@ const ImageUpload = ({ initialImage, onImageUpload, isEditing }) => {
             onClick={(e) => e.stopPropagation()} // 클릭 이벤트가 버블링되지 않도록 설정
           />
           <div css={s.overlay}>
-            <span>클릭해 이미지를 변경하세요</span>
+            <span>클릭하여 이미지를 선택해주세요</span>
           </div>
         </>
       )}

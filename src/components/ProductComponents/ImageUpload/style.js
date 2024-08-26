@@ -1,4 +1,3 @@
-// style.js
 import { css } from "@emotion/react";
 
 export const imageContainer = css`
@@ -16,7 +15,7 @@ export const imageContainer = css`
 export const productImage = css`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* 이미지가 중앙에 맞춰지고, 비율을 유지하며 전체가 보이도록 설정 */
   object-position: center;
 `;
 
@@ -59,5 +58,5 @@ export const loader = css`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10; 
+  z-index: 10;
 `;
