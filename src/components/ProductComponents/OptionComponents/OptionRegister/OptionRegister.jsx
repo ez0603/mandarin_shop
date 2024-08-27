@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
 import * as s from "./style";
 
-function OptionRegister({ productId, onOptionAdd }) {
-  const [optionName, setOptionName] = useState("");
-  const [optionTitle, setOptionTitle] = useState("");
-
+function OptionRegister({
+  optionTitle,
+  setOptionTitle,
+  optionName,
+  setOptionName,
+  onOptionAdd
+}) {
   const handleAddOption = () => {
     if (!optionTitle || !optionName) {
       alert("옵션 타이틀과 이름을 입력해 주세요.");
@@ -14,15 +16,9 @@ function OptionRegister({ productId, onOptionAdd }) {
 
     const newOption = {
       optionTitle,
-      optionName,
+      optionName
     };
 
-    // 로컬 스토리지에 옵션 저장
-    const existingOptions = JSON.parse(localStorage.getItem("options")) || [];
-    existingOptions.push(newOption);
-    localStorage.setItem("options", JSON.stringify(existingOptions));
-
-    // 상태 업데이트를 통해 옵션을 부모 컴포넌트로 전달
     onOptionAdd(newOption);
 
     // 입력 필드 초기화

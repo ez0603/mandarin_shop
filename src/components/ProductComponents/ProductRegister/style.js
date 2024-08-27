@@ -56,8 +56,13 @@ export const imgBox = css`
 export const productLayout = css`
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 35px;
+  gap: 15px;
+
+  & > * {
+    flex: 1 1 calc(50% - 10px);
+  }
 `;
 
 export const productBox = css`
@@ -65,13 +70,15 @@ export const productBox = css`
   font-size: 15px;
   display: flex;
   align-items: center;
-  gap: 17px;
+  gap: 10px;
 
   label {
+    width: 50px;
     margin-right: 13px;
   }
 
   input {
+    /* flex-grow: 1;  */
     box-sizing: border-box;
     border: 1px solid #dbdbdb;
     border-radius: 5px;
@@ -99,6 +106,20 @@ export const descriptionBox = css`
     resize: none;
     margin-top: 15px;
     font-size: 15px;
+    overflow-y: auto;
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      height: 10%;
+      background: #ababaf;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(179, 179, 179, 0.1);
+    }
 
     &:focus {
       border: 1px solid #bdbdbd;

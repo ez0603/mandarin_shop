@@ -59,15 +59,15 @@ function ProductRegister({
               <label>상품명</label>
               <input
                 onChange={(e) => setProductName(e.target.value)}
-                value={productName} // 부모 컴포넌트에서 전달된 값을 사용
+                value={productName} 
                 type="text"
               />
             </div>
             <div css={s.productBox}>
-              <label>상품 가격</label>
+              <label>가격</label>
               <input
                 onChange={(e) => setProductPrice(e.target.value)}
-                value={productPrice} // 부모 컴포넌트에서 전달된 값을 사용
+                value={productPrice} 
                 type="text"
               />
             </div>
@@ -75,7 +75,7 @@ function ProductRegister({
               <label>수량</label>
               <input
                 onChange={(e) => setInventoryQuantity(e.target.value)}
-                value={inventoryQuantity} // 부모 컴포넌트에서 전달된 값을 사용
+                value={inventoryQuantity}
                 type="number"
               />
             </div>
@@ -85,7 +85,7 @@ function ProductRegister({
             <textarea
               onChange={(e) => setProductDescription(e.target.value)}
               value={productDescription} // 부모 컴포넌트에서 전달된 값을 사용
-              rows="7"
+              rows="4"
             />
           </div>
         </div>

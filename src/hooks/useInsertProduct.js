@@ -19,12 +19,12 @@ function useInsertProduct() {
       }
 
       const params = {
-        productName: productName,
-        categoryId: categoryId,
+        productName,
+        categoryId,
         productPrice: parseInt(productPrice, 10),
-        productImg: productImg,
-        productDescription: productDescription,
-        inventoryQuantity: parseInt(inventoryQuantity),
+        productImg,
+        productDescription,
+        inventoryQuantity: parseInt(inventoryQuantity, 10),
       };
 
       console.log("Params before sending:", params);
@@ -32,7 +32,7 @@ function useInsertProduct() {
       await registerProduct(params);
 
       alert("상품 추가가 완료되었습니다.");
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.error("Error occurred:", error);
     }

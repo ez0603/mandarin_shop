@@ -16,10 +16,12 @@ function ProductAddPage(props) {
   const [productDescription, setProductDescription] = useState("");
   const [productImg, setProductImg] = useState("");
   const [inventoryQuantity, setInventoryQuantity] = useState("");
-  const [options, setOptions] = useState([]); // 추가된 옵션을 관리하는 상태
+  const [options, setOptions] = useState([]); // 배열로 초기화
   const categories = useCategories();
   const { insertProduct } = useInsertProduct(categories);
   const { categoryName } = useCategoryInsert();
+  const [optionTitle, setOptionTitle] = useState("");
+  const [optionName, setOptionName] = useState("");
 
   const handleSaveProduct = async () => {
     // 필수 입력값이 모두 채워졌는지 확인
@@ -55,8 +57,10 @@ function ProductAddPage(props) {
   };
 
   const handleOptionAdd = (newOption) => {
-    setOptions([...options, newOption]); // 새 옵션을 기존 옵션 배열에 추가
+    // prevOptions가 배열로 초기화되었는지 확인 후 배열에 새 옵션 추가
+    setOptions((prevOptions) => Array.isArray(prevOptions) ? [...prevOptions, newOption] : [newOption]);
   };
+  
 
   return (
     <div css={s.layout}>
@@ -87,7 +91,10 @@ function ProductAddPage(props) {
           <div css={s.optionLayout}>
             <div css={s.optionInsert}>
               <OptionRegister
-                productId={productId}
+                optionTitle={optionTitle}
+                setOptionTitle={setOptionTitle}
+                optionName={optionName}
+                setOptionName={setOptionName}
                 onOptionAdd={handleOptionAdd}
               />
             </div>
